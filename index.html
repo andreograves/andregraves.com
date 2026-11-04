@@ -1,0 +1,240 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>André O. Graves | Portfolio</title>
+<meta name="description" content="André O. Graves, photographer. People, places, things.">
+<meta property="og:title" content="André O. Graves | Portfolio">
+<meta property="og:image" content="https://andregraves.com/img/splash.jpg">
+<meta property="og:url" content="https://andregraves.com/">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Courier+Prime:wght@400;700&family=Figtree:wght@400;500;600&display=swap">
+<style>
+/* Portfolio look: white gallery walls, typewriter labels, numbered category drawers. */
+:root{
+  --bg:#fbfaf7; --ink:#111; --muted:#6f6c66; --rule:#e2dfd8; --card:#efede8; --accent:#111;
+  --type:'Courier Prime','American Typewriter','Courier New',Courier,monospace;
+  --sans:'Avenir Next','Avenir','Figtree','Helvetica Neue',Arial,sans-serif;
+  color-scheme:light;
+}
+@media (prefers-color-scheme:dark){:root{--bg:#0f0f0e;--ink:#eeece7;--muted:#97948d;--rule:#2a2926;--card:#1b1a18;--accent:#eeece7;color-scheme:dark}}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%;overflow-x:hidden;background:var(--bg)}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:15px;line-height:1.55;-webkit-font-smoothing:antialiased}
+a{color:inherit}
+img{display:block;max-width:100%;height:auto}
+button{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--ink);outline-offset:3px}
+.wrap{max-width:1400px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+
+/* Splash: full-bleed photo, typed name */
+.splash{position:relative;height:100svh;min-height:520px;overflow:hidden;background:#000;color:#fff}
+.splash img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.78}
+.splash::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.05) 40%,rgba(0,0,0,.65))}
+.splash-in{position:absolute;z-index:1;left:max(16px,4vw);right:16px;bottom:max(28px,7vh)}
+.splash h1{margin:0;font-family:var(--type);font-weight:700;font-size:clamp(34px,6.5vw,88px);line-height:1;letter-spacing:.02em;min-height:1em}
+.splash p{margin:12px 0 0;font-family:var(--type);font-size:clamp(17px,2.2vw,26px);min-height:1.3em}
+.caret{display:inline-block;width:.55em;border-bottom:3px solid currentColor;margin-left:2px;animation:blink 1s steps(1) infinite}
+@keyframes blink{50%{opacity:0}}
+.down{display:inline-block;margin-top:26px;font-family:var(--type);font-size:14px;letter-spacing:.12em;text-transform:uppercase;text-decoration:none;border-bottom:1px solid rgba(255,255,255,.6);padding-bottom:2px}
+
+/* Header */
+.mast{display:flex;align-items:baseline;justify-content:space-between;gap:12px 20px;flex-wrap:wrap;padding-block:22px 16px;border-bottom:1px solid var(--rule)}
+.name{font-family:var(--type);font-weight:700;font-size:20px;text-decoration:none;letter-spacing:.02em}
+.cats{display:flex;flex-wrap:wrap;gap:6px 18px;font-family:var(--type);font-size:14px;text-transform:uppercase;letter-spacing:.06em}
+.cats a{text-decoration:none;color:var(--muted)}
+.cats a:hover,.cats a[aria-current]{color:var(--ink)}
+.cats a[aria-current]{border-bottom:1px solid var(--ink)}
+
+/* Category index */
+.lede{padding-block:clamp(28px,6vw,60px) 22px}
+.lede h2{margin:0;font-family:var(--type);font-weight:400;font-size:clamp(28px,4.5vw,52px);line-height:1.05}
+.drawers{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:clamp(12px,1.8vw,24px);padding-bottom:56px}
+@media (max-width:1000px){.drawers{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:480px){.drawers{grid-template-columns:1fr}}
+.drawer{display:flex;flex-direction:column;gap:10px;text-decoration:none}
+.drawer figure{margin:0;aspect-ratio:1;overflow:hidden;background:var(--card);display:grid;place-items:center}
+.drawer img{width:100%;height:100%;object-fit:cover;transition:transform .5s ease}
+.drawer:hover img{transform:scale(1.03)}
+.drawer .tag{display:flex;justify-content:space-between;gap:10px;font-family:var(--type);font-size:15px;text-transform:uppercase;letter-spacing:.06em;border-top:1px solid var(--rule);padding-top:8px}
+.drawer .tag span{color:var(--muted)}
+.drawer.soon{cursor:default}
+.drawer.soon figure{border:1px dashed var(--rule);background:transparent;font-family:var(--type);color:var(--muted);font-size:13px;letter-spacing:.1em;text-transform:uppercase}
+
+/* Category page */
+.chead{display:flex;justify-content:space-between;align-items:end;gap:12px;flex-wrap:wrap;padding-block:clamp(26px,5vw,52px) 20px}
+.chead h2{margin:0;font-family:var(--type);font-weight:700;font-size:clamp(36px,6vw,72px);line-height:1;text-transform:uppercase}
+.chead h2 span{font-weight:400;color:var(--muted);font-size:.42em;vertical-align:.9em;margin-right:.4em}
+.chead p{margin:0;font-family:var(--type);color:var(--muted)}
+.grid{columns:3 300px;column-gap:16px;padding-bottom:36px}
+.grid button{display:block;width:100%;margin:0 0 16px;padding:0;border:0;background:var(--card);cursor:zoom-in;break-inside:avoid}
+.grid img{width:100%}
+.empty{padding:60px 0 90px;font-family:var(--type);color:var(--muted);font-size:18px}
+.cnav{display:flex;justify-content:space-between;gap:12px;border-top:1px solid var(--rule);padding-block:18px 6px;font-family:var(--type);text-transform:uppercase;letter-spacing:.06em}
+.cnav a{text-decoration:none}
+.cnav small{display:block;color:var(--muted);font-size:11px;letter-spacing:.12em}
+
+/* About */
+.about{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:clamp(20px,4vw,56px);padding-block:clamp(28px,6vw,64px) 60px;align-items:start}
+@media (max-width:760px){.about{grid-template-columns:1fr}}
+.about img{width:100%;aspect-ratio:4/5;object-fit:cover}
+.about h2{margin:0 0 18px;font-family:var(--type);font-size:clamp(30px,4vw,48px);line-height:1}
+.about p{margin:0 0 14px;font-size:17px;max-width:52ch}
+.about ul{list-style:none;padding:0;margin:26px 0 0;font-family:var(--type);display:grid;gap:8px}
+.about ul a{text-decoration:none;border-bottom:1px solid var(--rule)}
+.about ul a:hover{border-color:var(--ink)}
+
+/* Lightbox */
+.lb{position:fixed;inset:0;z-index:60;background:rgba(10,10,10,.96);display:none;align-items:center;justify-content:center;color:#eee}
+.lb.on{display:flex}
+.lb img{max-width:94vw;max-height:88vh;width:auto;height:auto;object-fit:contain}
+.lb button{position:absolute;background:none;border:0;color:#eee;font-size:30px;cursor:pointer;padding:14px 18px}
+.lb .x{top:6px;right:8px}.lb .pv{left:4px;top:50%;transform:translateY(-50%)}.lb .nx{right:4px;top:50%;transform:translateY(-50%)}
+.lb .ct{position:absolute;bottom:14px;left:0;right:0;text-align:center;font-family:var(--type);font-size:13px;color:#999}
+
+footer{border-top:1px solid var(--rule);padding-block:18px 28px;display:flex;justify-content:space-between;gap:12px 24px;flex-wrap:wrap;font-family:var(--type);font-size:13px;color:var(--muted)}
+footer nav{display:flex;gap:18px;flex-wrap:wrap}
+footer a{text-decoration:none}
+footer a:hover{color:var(--ink)}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style>
+</head>
+<body>
+<section class="splash" id="top">
+  <img src="img/splash.jpg" alt="A child standing among jump ropes, in black and white">
+  <div class="splash-in">
+    <h1 id="t1" aria-label="André O. Graves"></h1>
+    <p id="t2" aria-label="People, Places, Things."></p>
+    <a class="down" href="#/">View the work ↓</a>
+  </div>
+</section>
+
+<div class="wrap" id="site">
+  <header class="mast">
+    <a class="name" href="#/">André O. Graves</a>
+    <nav class="cats" id="cats"></nav>
+  </header>
+  <main id="view"></main>
+  <footer>
+    <span>© André O. Graves</span>
+    <nav>
+      <a href="https://www.instagram.com/andreograves">Instagram</a>
+      <a href="https://www.linkedin.com/in/tcoa/">LinkedIn</a>
+      <a href="https://www.flickr.com/photos/195629507@N07/">Flickr</a>
+      <a href="mailto:andreograves@gmail.com">andreograves@gmail.com</a>
+      <a href="https://andreograves.com">a/o/g collection</a>
+    </nav>
+  </footer>
+</div>
+
+<div class="lb" id="lb" role="dialog" aria-modal="true" aria-label="Photo viewer">
+  <img id="lbimg" alt="">
+  <button class="x" id="lbx" aria-label="Close">×</button>
+  <button class="pv" id="lbp" aria-label="Previous">‹</button>
+  <button class="nx" id="lbn" aria-label="Next">›</button>
+  <div class="ct" id="lbc"></div>
+</div>
+
+<script>
+const PHOTOS = {"people":[["people-01.jpg",1066,1600],["people-02.jpg",1067,1600],["people-03.jpg",1066,1600],["people-04.jpg",1066,1600]],"places":[["places-01.jpg",1066,1600],["places-02.jpg",1200,1600],["places-03.jpg",1200,1600],["places-04.jpg",1200,1600]],"music":[["music-01.jpg",1600,1066]],"art":[["art-01.jpg",1600,1072],["art-02.jpg",1066,1600],["art-03.jpg",1600,1059],["art-04.jpg",1600,1066],["art-05.jpg",1600,1067],["art-06.jpg",1600,1088],["art-07.jpg",1600,1058],["art-08.jpg",1067,1600],["art-09.jpg",1600,1067],["art-10.jpg",1600,1067],["art-11.jpg",1600,1067],["art-12.jpg",1600,1067],["art-13.jpg",1600,1067],["art-14.jpg",1600,1067],["art-15.jpg",1600,1067],["art-16.jpg",1600,1066],["art-17.jpg",1067,1600],["art-18.jpg",1067,1600],["art-19.jpg",1600,1067],["art-20.jpg",1600,1067],["art-21.jpg",1600,1066],["art-22.jpg",1048,1600],["art-23.jpg",976,1600],["art-24.jpg",1067,1600],["art-25.jpg",1600,1067],["art-26.jpg",1600,1067]],"sports":[["sports-01.jpg",1067,1600],["sports-02.jpg",1600,1066]]};
+const CATS = [
+  {slug:"people", code:"001", title:"People"},
+  {slug:"places", code:"002", title:"Places"},
+  {slug:"things", code:"003", title:"Things"},
+  {slug:"music", code:"004", title:"Music"},
+  {slug:"art", code:"005", title:"Art"},
+  {slug:"sports", code:"006", title:"Sports"},
+  {slug:"birds", code:"007", title:"Birds"},
+  {slug:"animals", code:"008", title:"Animals"}
+];
+const view = document.getElementById('view'), cats = document.getElementById('cats');
+const ph = c => PHOTOS[c.slug] || [];
+
+function nav(active){
+  cats.innerHTML = CATS.map(c => `<a href="#/${c.slug}"${c.slug===active?' aria-current="page"':''}>${c.title}</a>`).join('') +
+    `<a href="#/about"${active==='about'?' aria-current="page"':''}>About</a>`;
+}
+
+function indexView(){
+  nav(''); document.title = "André O. Graves | Portfolio";
+  view.innerHTML = `<section class="lede"><h2>People, Places, Things.</h2></section>
+  <div class="drawers">${CATS.map(c => {
+    const p = ph(c);
+    if (!p.length) return `<div class="drawer soon"><figure>Coming soon</figure><div class="tag">${c.title}<span>${c.code}</span></div></div>`;
+    return `<a class="drawer" href="#/${c.slug}"><figure><img src="img/${p[0][0]}" alt="" loading="lazy"></figure><div class="tag">${c.title}<span>${c.code} · ${p.length}</span></div></a>`;
+  }).join('')}</div>`;
+}
+
+let cur = [], idx = 0;
+function catView(c){
+  nav(c.slug); const p = ph(c); cur = p;
+  document.title = c.title + " | André O. Graves";
+  const i = CATS.indexOf(c), prev = CATS[(i-1+CATS.length)%CATS.length], next = CATS[(i+1)%CATS.length];
+  view.innerHTML = `<section class="chead"><h2><span>${c.code}</span>${c.title}</h2><p>${p.length ? p.length + (p.length===1?' photo':' photos') : ''}</p></section>
+  ${p.length ? `<div class="grid">${p.map((f,k) => `<button data-i="${k}" aria-label="Open photo ${k+1}"><img src="img/${f[0]}" width="${f[1]}" height="${f[2]}" alt="${c.title}, photo ${k+1}" loading="lazy"></button>`).join('')}</div>`
+    : `<p class="empty">Coming soon.</p>`}
+  <nav class="cnav"><a href="#/${prev.slug}"><small>Previous</small>${prev.title}</a><a href="#/${next.slug}" style="text-align:right"><small>Next</small>${next.title}</a></nav>`;
+  view.querySelectorAll('.grid button').forEach(b => b.onclick = () => openLb(+b.dataset.i));
+}
+
+function aboutView(){
+  nav('about'); document.title = "About | André O. Graves";
+  const a = (PHOTOS.people||[])[0];
+  view.innerHTML = `<section class="about">${a ? `<img src="img/${a[0]}" alt="" loading="lazy">` : ''}<div>
+    <h2>André O. Graves</h2>
+    <p>Currently residing in the Pacific Northwest, but always on the go. And pointing my lens at everything along the way…</p>
+    <ul>
+      <li><a href="mailto:andreograves@gmail.com">andreograves@gmail.com</a></li>
+      <li><a href="https://www.instagram.com/andreograves">Instagram @andreograves</a></li>
+      <li><a href="https://www.linkedin.com/in/tcoa/">LinkedIn</a></li>
+      <li><a href="https://www.flickr.com/photos/195629507@N07/">Flickr</a></li>
+    </ul></div></section>`;
+}
+
+let first = true;
+function route(){
+  const slug = location.hash.replace(/^#\/?/, '');
+  const c = CATS.find(x => x.slug === slug);
+  if (c) catView(c); else if (slug === 'about') aboutView(); else indexView();
+  if (location.hash) document.getElementById('site').scrollIntoView({behavior: first ? 'auto' : 'smooth'});
+  first = false;
+}
+window.addEventListener('hashchange', route);
+
+// Lightbox
+const lb = document.getElementById('lb'), lbimg = document.getElementById('lbimg'), lbc = document.getElementById('lbc');
+function show(){ const f = cur[idx]; lbimg.src = 'img/' + f[0]; lbc.textContent = (idx+1) + ' / ' + cur.length; }
+function openLb(i){ idx = i; show(); lb.classList.add('on'); document.getElementById('lbx').focus(); }
+function closeLb(){ lb.classList.remove('on'); }
+function step(d){ idx = (idx + d + cur.length) % cur.length; show(); }
+document.getElementById('lbx').onclick = closeLb;
+document.getElementById('lbp').onclick = () => step(-1);
+document.getElementById('lbn').onclick = () => step(1);
+lb.addEventListener('click', e => { if (e.target === lb) closeLb(); });
+document.addEventListener('keydown', e => {
+  if (!lb.classList.contains('on')) return;
+  if (e.key === 'Escape') closeLb(); if (e.key === 'ArrowLeft') step(-1); if (e.key === 'ArrowRight') step(1);
+});
+let tx = null;
+lb.addEventListener('touchstart', e => tx = e.touches[0].clientX, {passive:true});
+lb.addEventListener('touchend', e => { if (tx === null) return; const dx = e.changedTouches[0].clientX - tx; if (Math.abs(dx) > 40) step(dx < 0 ? 1 : -1); tx = null; });
+
+// Typewriter splash
+function type(el, text, delay){
+  return new Promise(res => {
+    const c = document.createElement('span'); c.className = 'caret'; el.appendChild(c);
+    let i = 0;
+    const tick = () => { if (i < text.length){ c.before(text[i++]); setTimeout(tick, delay); } else { c.remove(); res(); } };
+    tick();
+  });
+}
+const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const t1 = document.getElementById('t1'), t2 = document.getElementById('t2');
+if (reduce) { t1.textContent = 'ANDRÉ O. GRAVES'; t2.textContent = 'People, Places, Things.'; }
+else type(t1, 'ANDRÉ O. GRAVES', 85).then(() => type(t2, 'People, Places, Things.', 55));
+route();
+</script>
+</body>
+</html>
