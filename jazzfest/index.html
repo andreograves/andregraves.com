@@ -1,0 +1,165 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Jazz Fest Portfolio | André O. Graves</title>
+<meta name="description" content="Music, festival and New Orleans photography by André O. Graves. Portfolio for the New Orleans Jazz Fest Volunteer Photography Program 2027.">
+<meta property="og:title" content="Jazz Fest Portfolio | André O. Graves">
+<meta property="og:description" content="Music, festival and New Orleans photography by André O. Graves.">
+<meta property="og:url" content="https://andregraves.com/jazzfest/">
+<meta property="og:type" content="website">
+<meta property="og:image" content="https://andregraves.com/jazzfest/img/share.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" type="image/png" sizes="32x32" href="../img/favicon-32.png">
+<link rel="apple-touch-icon" href="../img/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Courier+Prime:wght@400;700&family=Figtree:wght@400;500;600&display=swap">
+<style>
+/* Same look as the main portfolio: gallery-white walls, typewriter labels. */
+:root{
+  --bg:#fbfaf7; --ink:#111; --muted:#6f6c66; --rule:#e2dfd8; --card:#efede8;
+  --type:'Courier Prime','American Typewriter','Courier New',Courier,monospace;
+  --sans:'Avenir Next','Avenir','Figtree','Helvetica Neue',Arial,sans-serif;
+  color-scheme:light;
+}
+@media (prefers-color-scheme:dark){:root{--bg:#0f0f0e;--ink:#eeece7;--muted:#97948d;--rule:#2a2926;--card:#1b1a18;color-scheme:dark}}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%;overflow-x:hidden;background:var(--bg);scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased}
+a{color:inherit}
+img{display:block;max-width:100%;height:auto}
+button{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--ink);outline-offset:3px}
+.wrap{max-width:1400px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+
+.mast{display:flex;align-items:baseline;justify-content:space-between;gap:10px 20px;flex-wrap:wrap;padding-block:22px 16px;border-bottom:1px solid var(--rule)}
+.name{font-family:var(--type);font-weight:700;font-size:20px;text-decoration:none}
+.mast nav{display:flex;flex-wrap:wrap;gap:6px 18px;font-family:var(--type);font-size:14px;text-transform:uppercase;letter-spacing:.06em}
+.mast nav a{text-decoration:none;color:var(--muted)}
+.mast nav a:hover{color:var(--ink)}
+
+.hero{display:grid;grid-template-columns:minmax(0,6fr) minmax(0,5fr);gap:clamp(20px,4vw,56px);align-items:end;padding-block:clamp(28px,5vw,56px)}
+@media (max-width:820px){.hero{grid-template-columns:1fr}}
+.hero img{width:100%;max-height:78vh;object-fit:cover}
+.eyebrow{margin:0 0 14px;font-family:var(--type);font-size:13px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.hero h1{margin:0;font-family:var(--type);font-weight:700;font-size:clamp(36px,5.4vw,72px);line-height:1;letter-spacing:.01em}
+.hero p.lede{margin:22px 0 0;font-size:18px;max-width:46ch}
+.facts{list-style:none;padding:0;margin:26px 0 0;font-family:var(--type);font-size:14px;display:grid;gap:6px;border-top:1px solid var(--rule);padding-top:16px}
+.facts span{color:var(--muted);display:inline-block;min-width:9.5em}
+.jump{display:flex;flex-wrap:wrap;gap:8px;margin-top:22px}
+.jump a{font-family:var(--type);font-size:13px;text-decoration:none;border:1px solid var(--rule);padding:6px 12px}
+.jump a:hover{border-color:var(--ink)}
+
+section.set{padding-top:clamp(30px,5vw,56px);scroll-margin-top:12px}
+.shead{display:flex;justify-content:space-between;align-items:end;gap:12px;flex-wrap:wrap;border-top:1px solid var(--rule);padding-top:16px;margin-bottom:20px}
+.shead h2{margin:0;font-family:var(--type);font-weight:700;font-size:clamp(26px,3.6vw,42px);line-height:1.05}
+.shead h2 span{font-weight:400;color:var(--muted);font-size:.5em;vertical-align:.55em;margin-right:.5em}
+.shead p{margin:0;font-family:var(--type);color:var(--muted);font-size:14px}
+.grid{columns:3 300px;column-gap:16px}
+.grid button{display:block;width:100%;margin:0 0 16px;padding:0;border:0;background:var(--card);cursor:zoom-in;break-inside:avoid}
+.grid img{width:100%}
+
+.contact{margin-top:clamp(40px,6vw,72px);border-top:1px solid var(--rule);padding-block:28px;display:grid;grid-template-columns:minmax(0,1fr) auto;gap:16px;align-items:end}
+@media (max-width:640px){.contact{grid-template-columns:1fr}}
+.contact h2{margin:0;font-family:var(--type);font-size:clamp(24px,3vw,34px)}
+.contact p{margin:8px 0 0;color:var(--muted)}
+.contact ul{list-style:none;padding:0;margin:0;font-family:var(--type);display:grid;gap:6px}
+.contact a{text-decoration:none;border-bottom:1px solid var(--rule)}
+.contact a:hover{border-color:var(--ink)}
+
+.lb{position:fixed;inset:0;z-index:60;background:rgba(10,10,10,.96);display:none;align-items:center;justify-content:center;color:#eee}
+.lb.on{display:flex}
+.lb img{max-width:94vw;max-height:86vh;width:auto;height:auto;object-fit:contain}
+.lb button{position:absolute;background:none;border:0;color:#eee;font-size:30px;cursor:pointer;padding:14px 18px}
+.lb .x{top:6px;right:8px}.lb .pv{left:4px;top:50%;transform:translateY(-50%)}.lb .nx{right:4px;top:50%;transform:translateY(-50%)}
+.lb .ct{position:absolute;bottom:14px;left:0;right:0;text-align:center;font-family:var(--type);font-size:13px;color:#aaa}
+footer{border-top:1px solid var(--rule);padding-block:18px 28px;font-family:var(--type);font-size:13px;color:var(--muted);display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="mast">
+    <a class="name" href="/">André O. Graves</a>
+    <nav><a href="/">Portfolio</a><a href="#contact">Contact</a></nav>
+  </header>
+
+  <section class="hero">
+    <img src="img/fest-01.jpg" width="1066" height="1600" alt="Two performers in matching green outfits on stage at Jazz Fest 2022" fetchpriority="high">
+    <div>
+      <p class="eyebrow">Portfolio · Jazz Fest Volunteer Photography Program 2027</p>
+      <h1>Music, and the people around it.</h1>
+      <p class="lede">I photograph stages, streets and crowds: the performers, and everyone who shows up for them. This is a selection from Jazz Fest 2022, the streets of New Orleans, and music venues across the country.</p>
+      <ul class="facts">
+        <li><span>Photographer</span>André O. Graves</li>
+        <li><span>Based in</span>Seattle, WA</li>
+        <li><span>Shoots</span>Canon EOS R5 II, R3</li>
+        <li><span>Credits</span>Getty Images contributor</li>
+        <li><span>Jazz Fest</span>Photographed the Fair Grounds in 2022</li>
+      </ul>
+      <nav class="jump" id="jump" aria-label="Sections"></nav>
+    </div>
+  </section>
+
+  <main id="sets"></main>
+
+  <section class="contact" id="contact">
+    <div>
+      <h2>Contact</h2>
+      <p>All images are my own, unwatermarked, and available in full resolution.</p>
+    </div>
+    <ul>
+      <li><a href="mailto:andreograves@gmail.com">andreograves@gmail.com</a></li>
+      <li><a href="https://www.instagram.com/andreograves">Instagram @andreograves</a></li>
+      <li><a href="/">andregraves.com</a></li>
+    </ul>
+  </section>
+  <footer><span>© André O. Graves</span><span>New Orleans · Jazz &amp; Heritage</span></footer>
+</div>
+
+<div class="lb" id="lb" role="dialog" aria-modal="true" aria-label="Photo viewer">
+  <img id="lbimg" alt="">
+  <button class="x" id="lbx" aria-label="Close">×</button>
+  <button class="pv" id="lbp" aria-label="Previous">‹</button>
+  <button class="nx" id="lbn" aria-label="Next">›</button>
+  <div class="ct" id="lbc"></div>
+</div>
+
+<script>
+const SETS = [{"key":"fest","title":"Jazz Fest, 2022","sub":"Fair Grounds Race Course, New Orleans","photos":[["fest-01.jpg",1066,1600],["fest-02.jpg",1066,1600],["fest-03.jpg",1600,1066],["fest-04.jpg",1066,1600],["fest-05.jpg",1066,1600],["fest-06.jpg",1600,1066],["fest-07.jpg",1066,1600],["fest-08.jpg",1600,1066],["fest-09.jpg",1066,1600],["fest-10.jpg",1066,1600],["fest-11.jpg",1066,1600],["fest-12.jpg",1066,1600]]},{"key":"streets","title":"New Orleans, 2023","sub":"Street music","photos":[["streets-01.jpg",1600,1066],["streets-02.jpg",1066,1600],["streets-03.jpg",1600,1066],["streets-04.jpg",1066,1600],["streets-05.jpg",1600,1066]]},{"key":"stage","title":"On stage","sub":"Musicians at work","photos":[["stage-01.jpg",1067,1600],["stage-02.jpg",1067,1600],["stage-03.jpg",1600,1068],["stage-04.jpg",1600,1143],["stage-05.jpg",1066,1600],["stage-06.jpg",1067,1600],["stage-07.jpg",1066,1600],["stage-08.jpg",1067,1600],["stage-09.jpg",1170,1600],["stage-10.jpg",1600,1067],["stage-11.jpg",1066,1600],["stage-12.jpg",1600,1067]]},{"key":"crowd","title":"The crowd and the culture","sub":"The people who make the music matter","photos":[["crowd-01.jpg",1600,1067],["crowd-02.jpg",1066,1600],["crowd-03.jpg",1066,1600],["crowd-04.jpg",1600,1067],["crowd-05.jpg",1600,1067],["crowd-06.jpg",1066,1600],["crowd-07.jpg",1066,1600],["crowd-08.jpg",1066,1600],["crowd-09.jpg",1066,1600],["crowd-10.jpg",967,1600]]}];
+const esc = s => s.replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const all = [];
+document.getElementById('jump').innerHTML = SETS.map(s => `<a href="#${s.key}">${esc(s.title)}</a>`).join('');
+document.getElementById('sets').innerHTML = SETS.map((s, si) => {
+  const html = s.photos.map(p => {
+    const i = all.push({src: 'img/' + p[0], label: s.title}) - 1;
+    return `<button data-i="${i}" aria-label="Open ${esc(s.title)} photo"><img src="img/${p[0]}" width="${p[1]}" height="${p[2]}" alt="${esc(s.title)}" loading="lazy"></button>`;
+  }).join('');
+  return `<section class="set" id="${s.key}"><div class="shead"><h2><span>0${si+1}</span>${esc(s.title)}</h2><p>${esc(s.sub)} · ${s.photos.length} photos</p></div><div class="grid">${html}</div></section>`;
+}).join('');
+
+const lb = document.getElementById('lb'), lbimg = document.getElementById('lbimg'), lbc = document.getElementById('lbc');
+let idx = 0;
+function show(){ const p = all[idx]; lbimg.src = p.src; lbimg.alt = p.label; lbc.textContent = p.label + ' · ' + (idx+1) + ' / ' + all.length; }
+function openLb(i){ idx = i; show(); lb.classList.add('on'); document.getElementById('lbx').focus(); }
+function closeLb(){ lb.classList.remove('on'); }
+function step(d){ idx = (idx + d + all.length) % all.length; show(); }
+document.getElementById('sets').addEventListener('click', e => { const b = e.target.closest('button[data-i]'); if (b) openLb(+b.dataset.i); });
+document.getElementById('lbx').onclick = closeLb;
+document.getElementById('lbp').onclick = () => step(-1);
+document.getElementById('lbn').onclick = () => step(1);
+lb.addEventListener('click', e => { if (e.target === lb) closeLb(); });
+document.addEventListener('keydown', e => {
+  if (!lb.classList.contains('on')) return;
+  if (e.key === 'Escape') closeLb(); if (e.key === 'ArrowLeft') step(-1); if (e.key === 'ArrowRight') step(1);
+});
+let tx = null;
+lb.addEventListener('touchstart', e => tx = e.touches[0].clientX, {passive:true});
+lb.addEventListener('touchend', e => { if (tx === null) return; const dx = e.changedTouches[0].clientX - tx; if (Math.abs(dx) > 40) step(dx < 0 ? 1 : -1); tx = null; });
+</script>
+</body>
+</html>
