@@ -3,10 +3,10 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>André O. Graves | Portfolio</title>
+<title>André | Portfolio</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <meta name="description" content="André O. Graves, photographer. People, Places, Things.">
-<meta property="og:title" content="André O. Graves | Portfolio">
+<meta property="og:title" content="André | Portfolio">
 <meta property="og:description" content="People, Places, Things. Photography by André O. Graves.">
 <meta property="og:url" content="https://andregraves.com/">
 <meta property="og:type" content="website">
@@ -241,7 +241,7 @@ function startLiveCovers(){
 function stopLiveCovers(){ clearInterval(liveTimer); liveTimer = null; }
 
 function splashView(){
-  document.title = "André O. Graves | Portfolio";
+  document.title = "André | Portfolio";
   app.innerHTML = `<section class="splash view"><div>
     <h1>${NAME}</h1>
     <a href="#work">People, Places, Things.</a>
@@ -249,7 +249,7 @@ function splashView(){
 }
 
 function workView(){
-  document.title = "André O. Graves | Portfolio";
+  document.title = "André | Portfolio";
   app.innerHTML = `<div class="view">${header('work')}<div class="wrap">
     <div class="masthead" role="heading" aria-level="1" aria-label="${NAME}">
       <div class="m1" aria-hidden="true">${NAME}</div><div class="m2" aria-hidden="true">${NAME}</div><div class="m3" aria-hidden="true">${NAME}</div>
@@ -276,7 +276,7 @@ let cur = [], idx = 0;
 let curSlug = '';
 function galleryView(p){
   const photos = PHOTOS[p.key] || []; cur = photos; curSlug = p.slug;
-  document.title = p.title.charAt(0) + p.title.slice(1).toLowerCase() + " | André O. Graves";
+  document.title = p.title.charAt(0) + p.title.slice(1).toLowerCase() + " | André";
   app.innerHTML = `<div class="view">${header('')}<div class="wrap">
     <div class="page-header"><h1>${p.title}</h1></div>
     <div class="rows" id="rows"></div>
@@ -303,7 +303,7 @@ function layoutRows(){
 let rz; window.addEventListener('resize', () => { clearTimeout(rz); rz = setTimeout(layoutRows, 120); });
 
 function aboutView(){
-  document.title = "About | André O. Graves";
+  document.title = "About | André";
   app.innerHTML = `<div class="view about-page on-photo">${header('about')}<div class="wrap">
     <div class="about-text"><h1>${NAME}</h1>
     <p>Currently residing in the Pacific Northwest, but always on the GO. And pointing my lens at everything along the way...</p></div>
