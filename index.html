@@ -129,6 +129,38 @@ button{font:inherit;color:inherit}
 .about-text p{margin:0;font-size:clamp(18px,1.55vw,22px);line-height:1.38;max-width:34em;text-shadow:0 1px 8px rgba(0,0,0,.35)}
 @media (max-width:768px){.about-text{padding-block:40px 120px}.about-text h1{margin-bottom:60px}}
 
+/* View switch under gallery titles */
+.modes{display:flex;justify-content:center;gap:22px;margin-top:22px;font-size:13px;letter-spacing:.14em}
+.modes a{color:var(--nav);transition:color .2s}
+.modes a:hover,.modes a.active{color:#000}
+.modes a.active{border-bottom:1px solid #000}
+
+/* Contact sheet: 35mm strips of six laid on photo paper */
+.sheet{--film:#141311;--edge:#d9973b;--paper:#f2f0ea;--hole:#f2f0ea;
+  background:var(--paper);padding:clamp(18px,3vw,44px) clamp(12px,3vw,44px) clamp(22px,3.4vw,48px);box-shadow:0 1px 2px rgba(0,0,0,.12),0 12px 34px -18px rgba(0,0,0,.35);margin-bottom:16px}
+.sheet-note{display:flex;justify-content:space-between;gap:8px 20px;flex-wrap:wrap;margin-bottom:clamp(14px,2vw,26px);font-size:13px;letter-spacing:.12em;color:#555}
+.strips{display:grid;gap:clamp(10px,1.6vw,22px)}
+.strip{position:relative;display:flex;gap:clamp(4px,.6vw,8px);background:var(--film);padding:30px clamp(8px,1vw,14px);
+  box-shadow:0 1px 2px rgba(0,0,0,.25)}
+.strip:nth-child(3n+1){transform:rotate(-.25deg)}
+.strip:nth-child(3n+2){transform:rotate(.18deg) translateX(3px)}
+.strip:nth-child(3n){transform:rotate(-.08deg) translateX(-2px)}
+.strip::before,.strip::after{content:"";position:absolute;left:0;right:0;height:7px;
+  background:repeating-linear-gradient(90deg,transparent 0 5px,var(--hole) 5px 11px,transparent 11px 14px);border-radius:1px}
+.strip::before{top:3px}.strip::after{bottom:3px}
+.strip .brand{position:absolute;top:14px;left:clamp(8px,1vw,14px);font-family:ui-monospace,Menlo,monospace;font-size:9px;letter-spacing:.18em;color:var(--edge);white-space:nowrap}
+.fr{position:relative;flex:1 1 0;min-width:0;aspect-ratio:3/2;max-width:100%;padding:0;border:0;background:#000;cursor:zoom-in;transition:transform .25s ease,box-shadow .25s ease}
+.fr.blank{cursor:default;background:#0b0b0a}
+.fr .px{position:absolute;inset:0;overflow:hidden}
+.fr img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.fr.tall img{inset:auto;left:50%;top:50%;width:66.667%;height:150%;transform:translate(-50%,-50%) rotate(-90deg)}
+.fr .no{position:absolute;bottom:-19px;left:2px;right:2px;display:flex;justify-content:space-between;font-family:ui-monospace,Menlo,monospace;font-size:9px;letter-spacing:.08em;color:var(--edge);pointer-events:none}
+@media (hover:hover){
+  .fr:not(.blank):hover{transform:scale(1.85);z-index:3;box-shadow:0 18px 40px -10px rgba(0,0,0,.6)}
+  .fr:first-child:hover{transform-origin:left center}.fr:last-child:hover{transform-origin:right center}
+  .fr:hover .no{opacity:0}
+}
+
 /* Footer */
 .site-footer{padding-block:60px 22px;display:flex;justify-content:center;gap:15px}
 .site-footer a{display:grid;place-items:center;width:45px;height:45px;border-radius:50%;background:var(--chip);color:var(--chip-ink);transition:background .2s,color .2s}
@@ -228,28 +260,53 @@ function workView(){
 
 const GALLERIES = PAGES.filter(p => p.key !== 'about');
 const nice = s => s.charAt(0) + s.slice(1).toLowerCase();
-function pager(current){
+function pager(current, mode = ''){
   const i = GALLERIES.findIndex(p => p.slug === current);
   const all = `<a class="all" href="#work">ALL GALLERIES</a>`;
   if (i < 0) return `<nav class="pager" aria-label="Galleries"><span></span>${all}<span></span></nav>`;
   const prev = GALLERIES[(i - 1 + GALLERIES.length) % GALLERIES.length], next = GALLERIES[(i + 1) % GALLERIES.length];
   return `<nav class="pager" aria-label="Galleries">
-    <a class="pv" href="#${prev.slug}"><small>‹ PREVIOUS</small><b>${prev.title}</b></a>
+    <a class="pv" href="#${prev.slug}${mode}"><small>‹ PREVIOUS</small><b>${prev.title}</b></a>
     ${all}
-    <a class="nx" href="#${next.slug}"><small>NEXT ›</small><b>${next.title}</b></a></nav>`;
+    <a class="nx" href="#${next.slug}${mode}"><small>NEXT ›</small><b>${next.title}</b></a></nav>`;
 }
 document.getElementById('menugal').innerHTML = GALLERIES.map(p => `<a href="#${p.slug}">${nice(p.title)}</a>`).join('');
 
 let cur = [], idx = 0;
-function galleryView(p){
+const modes = (p, sheet) => `<nav class="modes" aria-label="View">
+  <a href="#${p.slug}"${sheet?'':' class="active" aria-current="page"'}>GRID</a>
+  <a href="#${p.slug}-sheet"${sheet?' class="active" aria-current="page"':''}>CONTACT SHEET</a></nav>`;
+
+function galleryView(p, sheet){
   const photos = PHOTOS[p.key] || []; cur = photos;
-  document.title = p.title.charAt(0) + p.title.slice(1).toLowerCase() + " | André O. Graves";
+  document.title = nice(p.title) + (sheet ? " Contact Sheet" : "") + " | André O. Graves";
+  const no = GALLERIES.indexOf(p) + 1;
   app.innerHTML = `<div class="view">${header('')}<div class="wrap">
-    <div class="page-header"><h1>${p.title}</h1></div>
-    <div class="rows" id="rows"></div>
-    ${pager(p.slug)}
+    <div class="page-header"><h1>${p.title}</h1>${modes(p, sheet)}</div>
+    ${sheet ? `<section class="sheet" aria-label="${nice(p.title)} contact sheet">
+        <div class="sheet-note"><span>A.O.G. · ${p.title}</span><span>ROLL ${String(no).padStart(3,'0')} · ${photos.length} EXP.</span></div>
+        <div class="strips" id="strips"></div></section>`
+      : `<div class="rows" id="rows"></div>`}
+    ${pager(p.slug, sheet ? '-sheet' : '')}
     ${footer()}</div></div>`;
-  layoutRows();
+  sheet ? layoutSheet() : layoutRows();
+}
+
+// Strips of six frames (three on phones), like cut 35mm negatives. Vertical frames lie sideways, as on film.
+function layoutSheet(){
+  const box = document.getElementById('strips'); if (!box) return;
+  const per = box.clientWidth < 620 ? 3 : 6, title = app.querySelector('h1').textContent, out = [];
+  for (let s = 0; s < cur.length; s += per){
+    let frames = '';
+    for (let k = s; k < s + per; k++){
+      const f = cur[k];
+      frames += f ? `<button class="fr${f[2] > f[1] ? ' tall' : ''}" data-i="${k}" aria-label="Open photo ${k+1}"><span class="px"><img src="img/${f[0]}" alt="${title}, frame ${k+1}" loading="lazy"></span><span class="no" aria-hidden="true"><span>▸ ${k+1}</span><span>${k+1}A</span></span></button>`
+                  : `<span class="fr blank" aria-hidden="true"></span>`;
+    }
+    out.push(`<div class="strip"><span class="brand" aria-hidden="true">A.O.G. 400 ◂ SAFETY FILM</span>${frames}</div>`);
+  }
+  box.innerHTML = out.join('');
+  box.querySelectorAll('button.fr').forEach(b => b.onclick = () => openLb(+b.dataset.i));
 }
 
 // Justified rows with no gaps, like the live "media collection" module.
@@ -267,7 +324,7 @@ function layoutRows(){
     return `<button data-i="${k}" style="width:${(w/W*100).toFixed(4)}%;height:${Math.round(h)}px" aria-label="Open photo ${k+1}"><img src="img/${f[0]}" alt="${title}, photo ${k+1}" loading="lazy"></button>`; }).join('')}</div>`).join('');
   box.querySelectorAll('button').forEach(b => b.onclick = () => openLb(+b.dataset.i));
 }
-let rz; window.addEventListener('resize', () => { clearTimeout(rz); rz = setTimeout(layoutRows, 120); });
+let rz; window.addEventListener('resize', () => { clearTimeout(rz); rz = setTimeout(() => { layoutRows(); layoutSheet(); }, 120); });
 
 function aboutView(){
   document.title = "About | André O. Graves";
@@ -281,10 +338,10 @@ function aboutView(){
 function route(){
   const slug = location.hash.replace(/^#\/?/, '');
   closeLb(); menu.hidden = true;
-  const p = PAGES.find(x => x.slug === slug);
+  const sheet = slug.endsWith('-sheet'), p = PAGES.find(x => x.slug === slug.replace(/-sheet$/, ''));
   if (slug === 'work') workView();
   else if (p && p.key === 'about') aboutView();
-  else if (p) galleryView(p);
+  else if (p) galleryView(p, sheet);
   else splashView();
   window.scrollTo(0, 0);
 }
