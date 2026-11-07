@@ -131,66 +131,6 @@ button{font:inherit;color:inherit}
 .about-text p{margin:0;font-size:clamp(18px,1.55vw,22px);line-height:1.38;max-width:34em;text-shadow:0 1px 8px rgba(0,0,0,.35)}
 @media (max-width:768px){.about-text{padding-block:40px 120px}.about-text h1{margin-bottom:60px}}
 
-/* ---------- Layout previews (#work-mosaic, #work-index, #work-chapters) ---------- */
-.switcher{position:fixed;z-index:30;left:50%;transform:translateX(-50%);bottom:calc(14px + env(safe-area-inset-bottom,0px));
-  display:flex;align-items:center;gap:4px;max-width:calc(100vw - 24px);overflow-x:auto;padding:6px;background:#111;border-radius:999px;box-shadow:0 8px 24px -8px rgba(0,0,0,.5)}
-.switcher b{font-weight:400;font-size:11px;letter-spacing:.16em;color:#888;padding:0 8px 0 10px;white-space:nowrap}
-.switcher a{font-size:12px;letter-spacing:.1em;color:#ddd;padding:7px 12px;border-radius:999px;white-space:nowrap;transition:background .2s,color .2s}
-.switcher a:hover{color:#fff;background:#2a2a2a}
-.switcher a.active{background:#fff;color:#000}
-.has-switcher .site-footer{padding-bottom:90px}
-@media (max-width:540px){.switcher b{display:none}.switcher a{font-size:11px;padding:7px 9px;letter-spacing:.06em}}
-
-/* 3. Mosaic */
-.mosaic{display:grid;gap:6px;grid-template-columns:repeat(4,minmax(0,1fr));grid-auto-rows:clamp(150px,17vw,250px);
-  grid-template-areas:"people people places about" "people people things about" "music music art sports" "birds animals animals sports"}
-.mosaic .cover{aspect-ratio:auto;height:100%}
-.mosaic .cover span{font-size:clamp(28px,3.6vw,56px)}
-.mosaic .a-people span{font-size:clamp(40px,5.6vw,90px)}
-@media (max-width:768px){.mosaic{grid-template-columns:repeat(2,minmax(0,1fr));grid-auto-rows:clamp(130px,34vw,220px);
-  grid-template-areas:"people people" "places things" "about music" "about art" "sports birds" "animals animals"}}
-
-/* 4. Typed index */
-.tindex{display:grid;grid-template-columns:minmax(0,7fr) minmax(0,5fr);gap:clamp(24px,4vw,64px);align-items:start;padding-top:10px}
-.tlist{list-style:none;margin:0;padding:0}
-.tlist a{display:grid;grid-template-columns:3.2em minmax(0,auto) 1fr auto;align-items:baseline;gap:12px;padding-block:6px;color:#000;transition:color .25s}
-.tlist small{font-size:13px;letter-spacing:.1em;color:var(--nav)}
-.tlist .t{font-size:clamp(30px,4.6vw,66px);line-height:1.05;white-space:nowrap}
-.tlist .lead{border-bottom:2px dotted #c9c9c9;transform:translateY(-.35em)}
-.tlist .ct{font-size:15px;color:var(--nav);font-variant-numeric:tabular-nums}
-.tlist .th{display:none}
-.tlist:hover a,.tlist:focus-within a{color:#c4c4c4}
-.tlist a:hover,.tlist a:focus-visible{color:#000}
-.tprev{position:sticky;top:24px;aspect-ratio:4/5;max-width:100%;overflow:hidden;background:#eee}
-.tprev img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:grayscale(1);opacity:0;transition:opacity .45s ease}
-.tprev img.on{opacity:1}
-.tprev figcaption{position:absolute;left:14px;bottom:12px;color:#fff;font-size:13px;letter-spacing:.14em;text-shadow:0 1px 6px rgba(0,0,0,.6)}
-@media (max-width:860px){
-  .tindex{grid-template-columns:1fr}.tprev{display:none}
-  .tlist a{grid-template-columns:64px 2.6em minmax(0,1fr) auto;align-items:center;gap:12px;padding-block:8px}
-  .tlist .th{display:block;width:64px;height:48px;object-fit:cover;filter:grayscale(1)}
-  .tlist .lead{display:none}.tlist .t{font-size:clamp(24px,7vw,40px)}
-}
-
-/* 5. Chapters */
-html.snap{scroll-snap-type:y proximity}
-.chapters-page .site-header{position:absolute;left:0;right:0;top:0}
-.chapters-page .site-header .pages a{color:rgba(255,255,255,.75)}
-.chapters-page .site-header .pages a:hover,.chapters-page .site-header .pages a.active{color:#fff}
-.chapter{position:relative;min-height:100svh;display:flex;align-items:flex-end;scroll-snap-align:start;overflow:hidden;background:#111;color:#fff}
-.chapter img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:grayscale(1);transform:scale(1.04);transition:transform 6s ease,filter 1.2s ease}
-.chapter.seen img{transform:scale(1)}
-.chapter::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.15) 30%,rgba(0,0,0,.7))}
-.chapter .in{position:relative;z-index:1;width:100%;padding-block:0 clamp(48px,11vh,110px);padding-left:max(var(--gutter),env(safe-area-inset-left,0px));padding-right:max(var(--gutter),env(safe-area-inset-right,0px));
-  display:flex;justify-content:space-between;align-items:flex-end;gap:16px 32px;flex-wrap:wrap}
-.chapter small{display:block;font-size:13px;letter-spacing:.16em;color:#bbb;margin-bottom:10px}
-.chapter h2{margin:0;font-weight:400;font-size:clamp(48px,10vw,150px);line-height:.95;min-height:.95em}
-.chapter .go{font-size:15px;letter-spacing:.12em;border-bottom:1px solid rgba(255,255,255,.6);padding-bottom:3px;white-space:nowrap}
-.chapter .go:hover{border-color:#fff}
-.chapter .caret{display:inline-block;width:.5em;border-bottom:.06em solid currentColor;margin-left:.04em;animation:blink 1s steps(1) infinite}
-@keyframes blink{50%{opacity:0}}
-.chapters-end{padding-block:10px 0}
-
 /* Footer */
 .site-footer{padding-block:60px 22px;display:flex;justify-content:center;gap:15px}
 .site-footer a{display:grid;place-items:center;width:45px;height:45px;border-radius:50%;background:var(--chip);color:var(--chip-ink);transition:background .2s,color .2s}
@@ -303,67 +243,14 @@ function splashView(){
   </div></section>`;
 }
 
-const SWITCH = [["work","CURRENT"],["work-mosaic","3 · MOSAIC"],["work-index","4 · INDEX"],["work-chapters","5 · CHAPTERS"]];
-const switcher = active => `<nav class="switcher" aria-label="Layout previews"><b>PREVIEW</b>${SWITCH.map(([h,l]) =>
-  `<a href="#${h}"${h===active?' class="active" aria-current="page"':''}>${l}</a>`).join('')}</nav>`;
-const masthead = () => `<div class="masthead" role="heading" aria-level="1" aria-label="${NAME}">
-      <div class="m1" aria-hidden="true">${NAME}</div><div class="m2" aria-hidden="true">${NAME}</div><div class="m3" aria-hidden="true">${NAME}</div></div>`;
-
-function mosaicView(){
-  document.title = "Mosaic preview | André O. Graves";
-  app.innerHTML = `<div class="view has-switcher">${header('work')}<div class="wrap">${masthead()}
-    <div class="mosaic">${PAGES.map(p => cover(p).replace('class="cover"', `class="cover a-${p.key}" style="grid-area:${p.key}"`)).join('')}</div>
-    ${footer()}</div>${switcher('work-mosaic')}</div>`;
-}
-
-function indexView(){
-  document.title = "Index preview | André O. Graves";
-  const rows = PAGES.filter(p => p.key !== 'about').concat(PAGES.find(p => p.key === 'about'));
-  app.innerHTML = `<div class="view has-switcher">${header('work')}<div class="wrap">${masthead()}
-    <div class="tindex"><ul class="tlist">${rows.map((p, i) => {
-      const n = (PHOTOS[p.key] || []).length;
-      return `<li><a href="#${p.slug}" data-key="${p.key}"><img class="th" src="img/cover-${p.key}.jpg" alt=""><small>${p.key === 'about' ? '———' : String(i+1).padStart(3,'0')}</small><span class="t">${p.title}</span><span class="lead"></span><span class="ct">${n || ''}</span></a></li>`;
-    }).join('')}</ul>
-    <figure class="tprev" aria-hidden="true">${rows.map((p, i) => `<img class="${i ? '' : 'on'}" data-key="${p.key}" src="img/cover-${p.key}.jpg" alt="">`).join('')}<figcaption id="tcap">001 · PEOPLE</figcaption></figure></div>
-    ${footer()}</div>${switcher('work-index')}</div>`;
-  const imgs = [...app.querySelectorAll('.tprev img')], cap = document.getElementById('tcap');
-  app.querySelectorAll('.tlist a').forEach(a => {
-    const show = () => { imgs.forEach(im => im.classList.toggle('on', im.dataset.key === a.dataset.key)); cap.textContent = a.querySelector('small').textContent + ' · ' + a.querySelector('.t').textContent; };
-    a.addEventListener('mouseenter', show); a.addEventListener('focus', show);
-  });
-}
-
-let chapterObs = null;
-function chaptersView(){
-  document.title = "Chapters preview | André O. Graves";
-  const rows = PAGES.filter(p => p.key !== 'about').concat(PAGES.find(p => p.key === 'about'));
-  app.innerHTML = `<div class="view chapters-page has-switcher">${header('work')}
-    ${rows.map((p, i) => `<section class="chapter" aria-label="${nice(p.title)}"><img src="img/cover-${p.key}.jpg" alt="" ${i ? 'loading="lazy"' : ''}>
-      <div class="in"><div><small>${p.key === 'about' ? 'ANDRÉ O. GRAVES' : String(i+1).padStart(3,'0') + ' / 008'}</small><h2 data-text="${p.title}">${p.title}</h2></div>
-      <a class="go" href="#${p.slug}">${p.key === 'about' ? 'READ MORE →' : 'VIEW ' + (PHOTOS[p.key]||[]).length + ' PHOTOS →'}</a></div></section>`).join('')}
-    <div class="wrap chapters-end">${footer()}</div>${switcher('work-chapters')}</div>`;
-  document.documentElement.classList.add('snap');
-  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
-  chapterObs = new IntersectionObserver(entries => entries.forEach(e => {
-    if (!e.isIntersecting || e.target.classList.contains('seen')) return;
-    e.target.classList.add('seen');
-    const h = e.target.querySelector('h2'), text = h.dataset.text;
-    if (reduce) return;
-    h.textContent = ''; const c = document.createElement('span'); c.className = 'caret'; h.appendChild(c);
-    let i = 0; const tick = () => { if (!h.isConnected) return; if (i < text.length){ c.before(text[i++]); setTimeout(tick, 70); } else setTimeout(() => c.remove(), 900); };
-    setTimeout(tick, 250);
-  }), { threshold: 0.55 });
-  app.querySelectorAll('.chapter').forEach(s => chapterObs.observe(s));
-}
-
 function workView(){
   document.title = "André O. Graves | Portfolio";
-  app.innerHTML = `<div class="view has-switcher">${header('work')}<div class="wrap">
+  app.innerHTML = `<div class="view">${header('work')}<div class="wrap">
     <div class="masthead" role="heading" aria-level="1" aria-label="${NAME}">
       <div class="m1" aria-hidden="true">${NAME}</div><div class="m2" aria-hidden="true">${NAME}</div><div class="m3" aria-hidden="true">${NAME}</div>
     </div>
     <div class="covers">${PAGES.map(cover).join('')}</div>
-    ${footer()}</div>${switcher('work')}</div>`;
+    ${footer()}</div></div>`;
 }
 
 const GALLERIES = PAGES.filter(p => p.key !== 'about');
@@ -421,12 +308,8 @@ function aboutView(){
 function route(){
   const slug = location.hash.replace(/^#\/?/, '');
   closeLb(); menu.hidden = true; stopLiveCovers();
-  document.documentElement.classList.remove('snap'); if (chapterObs) { chapterObs.disconnect(); chapterObs = null; }
   const p = PAGES.find(x => x.slug === slug);
   if (slug === 'work') { workView(); startLiveCovers(); }
-  else if (slug === 'work-mosaic') { mosaicView(); startLiveCovers(); }
-  else if (slug === 'work-index') indexView();
-  else if (slug === 'work-chapters') chaptersView();
   else if (p && p.key === 'about') aboutView();
   else if (p) galleryView(p);
   else splashView();
