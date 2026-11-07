@@ -145,6 +145,9 @@ button{font:inherit;color:inherit}
 .lb .x{top:calc(4px + env(safe-area-inset-top,0px));right:max(4px,env(safe-area-inset-right,0px))}
 .lb .pv{left:max(0px,env(safe-area-inset-left,0px));top:50%;transform:translateY(-50%)}
 .lb .nx{right:max(0px,env(safe-area-inset-right,0px));top:50%;transform:translateY(-50%)}
+.lb .cp{top:calc(10px + env(safe-area-inset-top,0px));left:max(8px,env(safe-area-inset-left,0px));font-family:var(--type);font-size:12px;letter-spacing:.14em;font-weight:400;padding:10px 12px;color:#555}
+.lb .cp:hover{color:#000}
+.lb .cpurl{position:absolute;top:calc(52px + env(safe-area-inset-top,0px));left:max(16px,env(safe-area-inset-left,0px));width:min(420px,calc(100vw - 32px));font:13px var(--type);padding:8px 10px;border:1px solid #ccc;background:#fff;color:#111}
 .lb .ct{position:absolute;bottom:calc(14px + env(safe-area-inset-bottom,0px));left:0;right:0;text-align:center;font-size:13px;color:#888}
 @media (max-width:540px){.lb{padding-left:max(8px,env(safe-area-inset-left,0px));padding-right:max(8px,env(safe-area-inset-right,0px))}.lb .pv,.lb .nx{top:auto;bottom:calc(2px + env(safe-area-inset-bottom,0px));transform:none}}
 
@@ -167,6 +170,8 @@ button{font:inherit;color:inherit}
   <button class="x" id="lbx" aria-label="Close">×</button>
   <button class="pv" id="lbp" aria-label="Previous photo">‹</button>
   <button class="nx" id="lbn" aria-label="Next photo">›</button>
+  <button class="cp" id="lbcopy">COPY LINK</button>
+  <input class="cpurl" id="lburl" aria-label="Link to this photo" readonly hidden>
   <div class="ct" id="lbc"></div>
 </div>
 
@@ -268,8 +273,9 @@ function pager(current){
 document.getElementById('menugal').innerHTML = GALLERIES.map(p => `<a href="#${p.slug}">${nice(p.title)}</a>`).join('');
 
 let cur = [], idx = 0;
+let curSlug = '';
 function galleryView(p){
-  const photos = PHOTOS[p.key] || []; cur = photos;
+  const photos = PHOTOS[p.key] || []; cur = photos; curSlug = p.slug;
   document.title = p.title.charAt(0) + p.title.slice(1).toLowerCase() + " | André O. Graves";
   app.innerHTML = `<div class="view">${header('')}<div class="wrap">
     <div class="page-header"><h1>${p.title}</h1></div>
@@ -307,7 +313,15 @@ function aboutView(){
 
 function route(){
   const slug = location.hash.replace(/^#\/?/, '');
-  closeLb(); menu.hidden = true; stopLiveCovers();
+  lb.hidden = true; menu.hidden = true; stopLiveCovers(); curSlug = '';
+  // A photo link looks like #001-people-5: the gallery, then the photo number.
+  const m = slug.match(/^(.+)-(\d+)$/), pm = m && PAGES.find(x => x.slug === m[1] && x.key !== 'about');
+  if (pm) {
+    galleryView(pm); window.scrollTo(0, 0);
+    const n = +m[2];
+    if (n >= 1 && n <= cur.length) openLb(n - 1); else setHash(pm.slug);
+    return;
+  }
   const p = PAGES.find(x => x.slug === slug);
   if (slug === 'work') { workView(); startLiveCovers(); }
   else if (p && p.key === 'about') aboutView();
@@ -323,9 +337,26 @@ document.getElementById('menux').onclick = () => menu.hidden = true;
 
 // Lightbox
 const lb = document.getElementById('lb'), lbimg = document.getElementById('lbimg'), lbc = document.getElementById('lbc');
-function show(){ const f = cur[idx]; lbimg.src = 'img/' + f[0]; lbimg.alt = 'Photo ' + (idx+1); lbc.textContent = (idx+1) + ' / ' + cur.length; }
+// The address follows the photo on screen, without reloading the page or adding history entries.
+function setHash(h){ try { history.replaceState(null, '', '#' + h); } catch (e) {} }
+const lburl = document.getElementById('lburl'), lbcopy = document.getElementById('lbcopy');
+function show(){
+  const f = cur[idx]; lbimg.src = 'img/' + f[0]; lbimg.alt = 'Photo ' + (idx+1); lbc.textContent = (idx+1) + ' / ' + cur.length;
+  if (curSlug) setHash(curSlug + '-' + (idx+1));
+  lburl.hidden = true; lbcopy.textContent = 'COPY LINK';
+}
 function openLb(i){ idx = i; show(); lb.hidden = false; document.getElementById('lbx').focus(); }
-function closeLb(){ lb.hidden = true; }
+function closeLb(){ if (lb.hidden) return; lb.hidden = true; if (curSlug) setHash(curSlug); }
+// On andregraves.com copy the page address; anywhere else (the artifact preview), copy the public andregraves.com link.
+function photoLink(){
+  const own = /(^|\.)andregraves\.com$/.test(location.hostname);
+  return (own ? location.origin + location.pathname : 'https://andregraves.com/') + '#' + curSlug + '-' + (idx+1);
+}
+lbcopy.onclick = () => {
+  const url = photoLink();
+  const fallback = () => { lburl.value = url; lburl.hidden = false; lburl.focus(); lburl.select(); lbcopy.textContent = 'COPY THIS LINK'; };
+  try { navigator.clipboard.writeText(url).then(() => { lbcopy.textContent = 'LINK COPIED'; }, fallback); } catch (e) { fallback(); }
+};
 function step(d){ idx = (idx + d + cur.length) % cur.length; show(); }
 document.getElementById('lbx').onclick = closeLb;
 document.getElementById('lbp').onclick = () => step(-1);
