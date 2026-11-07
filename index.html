@@ -328,6 +328,24 @@ function route(){
   else if (p) galleryView(p);
   else splashView();
   window.scrollTo(0, 0);
+  track();
+}
+
+// Visitor stats (GoatCounter). Loads only on andregraves.com, so previews and local tests are never counted.
+// The site changes pages without reloading, so each view is sent by hand: /work, /001-people, /001-people-5 …
+const GC_ON = /(^|\.)andregraves\.com$/.test(location.hostname), gcQueue = [];
+function track(){
+  if (!GC_ON) return;
+  const hit = { path: '/' + location.hash.replace(/^#\/?/, ''), title: document.title };
+  if (window.goatcounter && window.goatcounter.count) window.goatcounter.count(hit); else gcQueue.push(hit);
+}
+if (GC_ON) {
+  const s = document.createElement('script');
+  s.async = true; s.src = 'https://gc.zgo.at/count.js';
+  s.dataset.goatcounter = 'https://andreograves.goatcounter.com/count';
+  s.dataset.goatcounterSettings = '{"no_onload": true}';
+  s.onload = () => { if (window.goatcounter && window.goatcounter.count) gcQueue.splice(0).forEach(h => window.goatcounter.count(h)); };
+  document.head.appendChild(s);
 }
 
 // Mobile menu
@@ -342,7 +360,7 @@ function setHash(h){ try { history.replaceState(null, '', '#' + h); } catch (e) 
 const lburl = document.getElementById('lburl'), lbcopy = document.getElementById('lbcopy');
 function show(){
   const f = cur[idx]; lbimg.src = 'img/' + f[0]; lbimg.alt = 'Photo ' + (idx+1); lbc.textContent = (idx+1) + ' / ' + cur.length;
-  if (curSlug) setHash(curSlug + '-' + (idx+1));
+  if (curSlug) { setHash(curSlug + '-' + (idx+1)); track(); }
   lburl.hidden = true; lbcopy.textContent = 'COPY LINK';
 }
 function openLb(i){ idx = i; show(); lb.hidden = false; document.getElementById('lbx').focus(); }
