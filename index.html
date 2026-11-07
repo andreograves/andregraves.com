@@ -4,9 +4,10 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>André O. Graves | Portfolio</title>
-<meta name="description" content="André O. Graves, photographer. People, places, things.">
+<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="description" content="André O. Graves, photographer. People, Places, Things.">
 <meta property="og:title" content="André O. Graves | Portfolio">
-<meta property="og:description" content="People, places, things. Photography by André O. Graves.">
+<meta property="og:description" content="People, Places, Things. Photography by André O. Graves.">
 <meta property="og:url" content="https://andregraves.com/">
 <meta property="og:type" content="website">
 <meta property="og:image" content="https://andregraves.com/img/share.jpg">
@@ -18,232 +19,377 @@
 <link rel="apple-touch-icon" href="img/apple-touch-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Courier+Prime:wght@400;700&family=Figtree:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Special+Elite&display=swap">
 <style>
-/* Portfolio look: white gallery walls, typewriter labels, numbered category drawers. */
+/* Mirrors the live Adobe Portfolio site (theme "Jess"): white walls, distressed typewriter type,
+   edge-to-edge grayscale covers, justified photo rows, round social buttons. Single light look by design. */
 :root{
-  --bg:#fbfaf7; --ink:#111; --muted:#6f6c66; --rule:#e2dfd8; --card:#efede8; --accent:#111;
-  --type:'Courier Prime','American Typewriter','Courier New',Courier,monospace;
-  --sans:'Avenir Next','Avenir','Figtree','Helvetica Neue',Arial,sans-serif;
+  --bg:#fff;        /* page */
+  --ink:#111;       /* page titles */
+  --masthead:#222;  /* masthead line 1 */
+  --ghost:#8d8d8d;  /* masthead line 2 */
+  --nav:#aaa;       /* nav links at rest */
+  --chip:#eee;      /* social button fill */
+  --chip-ink:#6b6b6b;
+  --sub:#c0c6cc;    /* splash subtitle */
+  --white:#fff;
+  /* Live site uses Adobe Fonts "Typeka"; Special Elite is the closest free face. */
+  --type:'Typeka','Special Elite','American Typewriter','Courier New',Courier,monospace;
+  --gutter:48px;
   color-scheme:light;
 }
-@media (prefers-color-scheme:dark){:root{--bg:#0f0f0e;--ink:#eeece7;--muted:#97948d;--rule:#2a2926;--card:#1b1a18;--accent:#eeece7;color-scheme:dark}}
 *{box-sizing:border-box}
+[hidden]{display:none!important}
 html{-webkit-text-size-adjust:100%;overflow-x:hidden;background:var(--bg)}
-body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:15px;line-height:1.55;-webkit-font-smoothing:antialiased}
-a{color:inherit}
-img{display:block;max-width:100%;height:auto}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--type);font-size:16px;line-height:1.4;-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}
+img{display:block;max-width:100%}
 button{font:inherit;color:inherit}
-:focus-visible{outline:2px solid var(--ink);outline-offset:3px}
-.wrap{max-width:1400px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+:focus-visible{outline:2px solid currentColor;outline-offset:3px}
+@media (max-width:768px){:root{--gutter:16px}}
 
-/* Splash: full-bleed photo, typed name */
-.splash{position:relative;height:100svh;min-height:520px;overflow:hidden;background:#000;color:#fff}
-.splash img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.78}
-.splash::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.05) 40%,rgba(0,0,0,.65))}
-.splash-in{position:absolute;z-index:1;left:max(16px,4vw);right:16px;bottom:max(28px,7vh)}
-.splash h1{margin:0;font-family:var(--type);font-weight:700;font-size:clamp(34px,6.5vw,88px);line-height:1;letter-spacing:.02em;min-height:1em}
-.splash p{margin:12px 0 0;font-family:var(--type);font-size:clamp(17px,2.2vw,26px);min-height:1.3em}
-.caret{display:inline-block;width:.55em;border-bottom:3px solid currentColor;margin-left:2px;animation:blink 1s steps(1) infinite}
-@keyframes blink{50%{opacity:0}}
-.down{display:inline-block;margin-top:26px;font-family:var(--type);font-size:14px;letter-spacing:.12em;text-transform:uppercase;text-decoration:none;border-bottom:1px solid rgba(255,255,255,.6);padding-bottom:2px}
+.view{animation:fade .35s ease}
+@keyframes fade{from{opacity:.001}to{opacity:1}}
 
-/* Header */
-.mast{display:flex;align-items:baseline;justify-content:space-between;gap:12px 20px;flex-wrap:wrap;padding-block:22px 16px;border-bottom:1px solid var(--rule)}
-.name{font-family:var(--type);font-weight:700;font-size:20px;text-decoration:none;letter-spacing:.02em}
-.cats{display:flex;flex-wrap:wrap;gap:6px 18px;font-family:var(--type);font-size:14px;text-transform:uppercase;letter-spacing:.06em}
-.cats a{text-decoration:none;color:var(--muted)}
-.cats a:hover,.cats a[aria-current]{color:var(--ink)}
-.cats a[aria-current]{border-bottom:1px solid var(--ink)}
+/* Splash (live homepage) */
+.splash{position:relative;min-height:100svh;display:grid;place-items:center;text-align:center;background:#000 url(img/splash.jpg) 0% 50%/cover no-repeat;color:var(--white);
+  padding-block:70px 180px;padding-left:max(20px,env(safe-area-inset-left,0px));padding-right:max(20px,env(safe-area-inset-right,0px))}
+.splash h1{margin:0;font-weight:400;font-size:clamp(34px,4.2vw,60px);line-height:1.1;letter-spacing:.01em}
+.splash a{display:inline-block;margin-top:.15em;font-size:clamp(18px,1.95vw,28px);color:var(--sub);transition:color .2s}
+.splash a:hover{color:var(--white)}
 
-/* Category index */
-.lede{padding-block:clamp(28px,6vw,60px) 22px}
-.lede h2{margin:0;font-family:var(--type);font-weight:400;font-size:clamp(28px,4.5vw,52px);line-height:1.05}
-.drawers{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:clamp(12px,1.8vw,24px);padding-bottom:56px}
-@media (max-width:1000px){.drawers{grid-template-columns:repeat(2,minmax(0,1fr))}}
-@media (max-width:480px){.drawers{grid-template-columns:1fr}}
-.drawer{display:flex;flex-direction:column;gap:10px;text-decoration:none}
-.drawer figure{margin:0;aspect-ratio:1;overflow:hidden;background:var(--card);display:grid;place-items:center}
-.drawer img{width:100%;height:100%;object-fit:cover;transition:transform .5s ease}
-.drawer:hover img{transform:scale(1.03)}
-.drawer .tag{display:flex;justify-content:space-between;gap:10px;font-family:var(--type);font-size:15px;text-transform:uppercase;letter-spacing:.06em;border-top:1px solid var(--rule);padding-top:8px}
-.drawer .tag span{color:var(--muted)}
-.drawer.soon{cursor:default}
-.drawer.soon figure{border:1px dashed var(--rule);background:transparent;font-family:var(--type);color:var(--muted);font-size:13px;letter-spacing:.1em;text-transform:uppercase}
+/* Header / nav */
+.site-header{position:relative;z-index:5;padding-block:14px 60px;text-align:center}
+.pages{display:flex;justify-content:center;gap:35px}
+.pages a{font-size:16px;line-height:16px;text-transform:uppercase;color:var(--nav);transition:color .2s}
+.pages a:hover,.pages a.active{color:#000}
+.burger{display:none}
+.menu{position:fixed;inset:0;z-index:40;background:var(--bg);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:28px}
+.menu a{font-size:28px;text-transform:uppercase;color:#000}
+.menu .gal{display:grid;grid-template-columns:1fr 1fr;gap:14px 32px;text-align:center}
+.menu .gal a{font-size:18px;color:#555}
+.menu .close{position:absolute;top:calc(14px + env(safe-area-inset-top,0px));right:max(16px,env(safe-area-inset-right,0px));background:none;border:0;font-size:40px;line-height:1;cursor:pointer;color:#000}
+@media (max-width:768px){
+  .site-header{padding-block:20px 40px;text-align:right;padding-right:max(16px,env(safe-area-inset-right,0px))}
+  .pages{display:none}
+  .burger{display:inline-flex;flex-direction:column;gap:6px;background:none;border:0;padding:6px;cursor:pointer}
+  .burger i{display:block;width:26px;height:2px;background:#000}
+  .on-photo .burger i{background:var(--white)}
+}
 
-/* Category page */
-.chead{display:flex;justify-content:space-between;align-items:end;gap:12px;flex-wrap:wrap;padding-block:clamp(26px,5vw,52px) 20px}
-.chead h2{margin:0;font-family:var(--type);font-weight:700;font-size:clamp(36px,6vw,72px);line-height:1;text-transform:uppercase}
-.chead h2 span{font-weight:400;color:var(--muted);font-size:.42em;vertical-align:.9em;margin-right:.4em}
-.chead p{margin:0;font-family:var(--type);color:var(--muted)}
-.grid{columns:3 300px;column-gap:16px;padding-bottom:36px}
-.grid button{display:block;width:100%;margin:0 0 16px;padding:0;border:0;background:var(--card);cursor:zoom-in;break-inside:avoid}
-.grid img{width:100%}
-.empty{padding:60px 0 90px;font-family:var(--type);color:var(--muted);font-size:18px}
-.cnav{display:flex;justify-content:space-between;gap:12px;border-top:1px solid var(--rule);padding-block:18px 6px;font-family:var(--type);text-transform:uppercase;letter-spacing:.06em}
-.cnav a{text-decoration:none}
-.cnav small{display:block;color:var(--muted);font-size:11px;letter-spacing:.12em}
+.wrap{padding-left:max(var(--gutter),env(safe-area-inset-left,0px));padding-right:max(var(--gutter),env(safe-area-inset-right,0px))}
 
-/* About */
-.about{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:clamp(20px,4vw,56px);padding-block:clamp(28px,6vw,64px) 60px;align-items:start}
-@media (max-width:760px){.about{grid-template-columns:1fr}}
-.about img{width:100%;aspect-ratio:4/5;object-fit:cover}
-.about h2{margin:0 0 18px;font-family:var(--type);font-size:clamp(30px,4vw,48px);line-height:1}
-.about p{margin:0 0 14px;font-size:17px;max-width:52ch}
-.about ul{list-style:none;padding:0;margin:26px 0 0;font-family:var(--type);display:grid;gap:8px}
-.about ul a{text-decoration:none;border-bottom:1px solid var(--rule)}
-.about ul a:hover{border-color:var(--ink)}
+/* Masthead: three offset lines, as on the live Portfolio page */
+.masthead{width:min(800px,100%);margin:0 auto;padding-bottom:40px;font-size:clamp(28px,4.9vw,70px);line-height:.72}
+.masthead div{white-space:nowrap}
+.masthead .m1{text-align:right;color:var(--masthead)}
+.masthead .m2{text-align:left;color:var(--ghost);margin-top:.05em}
+.masthead .m3{text-align:center;color:#000;margin-top:-.05em}
+@media (max-width:768px){.masthead{padding-bottom:50px}}
 
-/* Lightbox */
-.lb{position:fixed;inset:0;z-index:60;background:rgba(10,10,10,.96);display:none;align-items:center;justify-content:center;color:#eee}
-.lb.on{display:flex}
-.lb img{max-width:94vw;max-height:88vh;width:auto;height:auto;object-fit:contain}
-.lb button{position:absolute;background:none;border:0;color:#eee;font-size:30px;cursor:pointer;padding:14px 18px}
-.lb .x{top:6px;right:8px}.lb .pv{left:4px;top:50%;transform:translateY(-50%)}.lb .nx{right:4px;top:50%;transform:translateY(-50%)}
-.lb .ct{position:absolute;bottom:14px;left:0;right:0;text-align:center;font-family:var(--type);font-size:13px;color:#999}
+/* Cover grid */
+.covers{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px}
+@media (max-width:768px){.covers{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:540px){.covers{grid-template-columns:1fr}}
+.cover{position:relative;display:block;aspect-ratio:457/350;max-width:100%;overflow:hidden;background:#222}
+.cover img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:grayscale(1);opacity:0;transition:opacity 1.4s ease,filter .6s ease}
+.cover img.on{opacity:1}
+.cover:hover img,.cover:focus-visible img{filter:grayscale(0)}
+.cover::after{content:"";position:absolute;inset:0;background:#000;opacity:0;transition:opacity .3s}
+.cover span{position:absolute;inset:0;z-index:1;display:grid;place-items:center;text-align:center;padding:0 10%;color:var(--white);font-size:clamp(34px,4.9vw,70px);line-height:1.05;opacity:0;transition:opacity .15s}
+.cover:hover::after,.cover:focus-visible::after{opacity:.22}
+.cover:hover span,.cover:focus-visible span{opacity:1}
 
-footer{border-top:1px solid var(--rule);padding-block:18px 28px;display:flex;justify-content:space-between;gap:12px 24px;flex-wrap:wrap;font-family:var(--type);font-size:13px;color:var(--muted)}
-footer nav{display:flex;gap:18px;flex-wrap:wrap}
-footer a{text-decoration:none}
-footer a:hover{color:var(--ink)}
+/* Previous / all / next, under each gallery */
+.pager{display:grid;grid-template-columns:1fr auto 1fr;align-items:end;gap:16px;padding-block:24px 0}
+.pager a{display:flex;flex-direction:column;gap:6px;color:#000;transition:color .2s}
+.pager a:hover{color:var(--nav)}
+.pager small{font-size:12px;letter-spacing:.14em;color:var(--nav)}
+.pager b{font-weight:400;font-size:clamp(20px,2vw,28px);line-height:1}
+.pager .all{align-items:center;font-size:14px;letter-spacing:.1em;padding-bottom:4px}
+.pager .nx{align-items:flex-end;text-align:right}
+.on-photo .pager a{color:var(--white)}
+.on-photo .pager a:hover{color:var(--sub)}
+@media (max-width:540px){.pager{grid-template-columns:1fr 1fr}.pager .all{grid-column:1/-1;order:3;padding-top:20px}}
+
+/* Gallery page */
+.page-header{width:min(800px,100%);margin:0 auto;padding-block:20px 70px;text-align:center}
+.page-header h1{margin:0;font-weight:400;font-size:clamp(40px,4.2vw,60px);line-height:1.07;color:var(--ink);text-wrap:balance}
+@media (max-width:768px){.page-header{padding-block:10px 40px}}
+.rows{padding-bottom:16px}
+.row{display:flex}
+.row button{display:block;flex:0 0 auto;padding:0;border:0;background:#eee;cursor:zoom-in;overflow:hidden}
+.row img{width:100%;height:100%;object-fit:cover}
+
+/* About page */
+.about-page{position:relative;z-index:0;min-height:100svh;color:var(--white)}
+.about-page::before{content:"";position:fixed;inset:0;z-index:-1;background:#222 url(img/about-bg.jpg) center/cover no-repeat}
+.about-page .site-header .pages a{color:rgba(255,255,255,.7)}
+.about-page .site-header .pages a:hover,.about-page .site-header .pages a.active{color:var(--white)}
+.about-text{width:min(800px,100%);margin-left:auto;margin-right:max(0px,calc(50vw - 670px));padding-block:100px 200px}
+.about-text h1{margin:0 0 150px;font-weight:400;font-size:clamp(44px,6.4vw,92px);line-height:1}
+.about-text p{margin:0;font-size:clamp(18px,1.55vw,22px);line-height:1.38;max-width:34em;text-shadow:0 1px 8px rgba(0,0,0,.35)}
+@media (max-width:768px){.about-text{padding-block:40px 120px}.about-text h1{margin-bottom:60px}}
+
+/* Footer */
+.site-footer{padding-block:60px 22px;display:flex;justify-content:center;gap:15px}
+.site-footer a{display:grid;place-items:center;width:45px;height:45px;border-radius:50%;background:var(--chip);color:var(--chip-ink);transition:background .2s,color .2s}
+.site-footer a:hover{background:#ddd;color:#000}
+.site-footer svg{width:30px;height:24px;fill:currentColor}
+
+/* Lightbox: white, as on the live site */
+.lb{position:fixed;inset:0;z-index:60;background:rgba(255,255,255,.96);display:flex;align-items:center;justify-content:center;
+  padding:calc(50px + env(safe-area-inset-top,0px)) max(56px,env(safe-area-inset-right,0px)) calc(50px + env(safe-area-inset-bottom,0px)) max(56px,env(safe-area-inset-left,0px))}
+.lb img{max-width:100%;max-height:100%;width:auto;height:auto;object-fit:contain}
+.lb button{position:absolute;background:none;border:0;color:#111;font-size:34px;line-height:1;cursor:pointer;padding:12px 16px;font-family:system-ui,sans-serif;font-weight:200}
+.lb .x{top:calc(4px + env(safe-area-inset-top,0px));right:max(4px,env(safe-area-inset-right,0px))}
+.lb .pv{left:max(0px,env(safe-area-inset-left,0px));top:50%;transform:translateY(-50%)}
+.lb .nx{right:max(0px,env(safe-area-inset-right,0px));top:50%;transform:translateY(-50%)}
+.lb .cp{top:calc(10px + env(safe-area-inset-top,0px));left:max(8px,env(safe-area-inset-left,0px));font-family:var(--type);font-size:12px;letter-spacing:.14em;font-weight:400;padding:10px 12px;color:#555}
+.lb .cp:hover{color:#000}
+.lb .cpurl{position:absolute;top:calc(52px + env(safe-area-inset-top,0px));left:max(16px,env(safe-area-inset-left,0px));width:min(420px,calc(100vw - 32px));font:13px var(--type);padding:8px 10px;border:1px solid #ccc;background:#fff;color:#111}
+.lb .ct{position:absolute;bottom:calc(14px + env(safe-area-inset-bottom,0px));left:0;right:0;text-align:center;font-size:13px;color:#888}
+@media (max-width:540px){.lb{padding-left:max(8px,env(safe-area-inset-left,0px));padding-right:max(8px,env(safe-area-inset-right,0px))}.lb .pv,.lb .nx{top:auto;bottom:calc(2px + env(safe-area-inset-bottom,0px));transform:none}}
+
 @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
 </style>
 </head>
 <body>
-<section class="splash" id="top">
-  <img src="img/splash.jpg" alt="A child standing among jump ropes, in black and white">
-  <div class="splash-in">
-    <h1 id="t1" aria-label="André O. Graves"></h1>
-    <p id="t2" aria-label="People, Places, Things."></p>
-    <a class="down" href="#/">View the work ↓</a>
-  </div>
-</section>
+<div id="app"></div>
 
-<div class="wrap" id="site">
-  <header class="mast">
-    <a class="name" href="#/">André O. Graves</a>
-    <nav class="cats" id="cats"></nav>
-  </header>
-  <main id="view"></main>
-  <footer>
-    <span>© André O. Graves</span>
-    <nav>
-      <a href="https://www.instagram.com/andreograves">Instagram</a>
-      <a href="https://www.linkedin.com/in/tcoa/">LinkedIn</a>
-      <a href="https://www.flickr.com/photos/195629507@N07/">Flickr</a>
-      <a href="mailto:andreograves@gmail.com">andreograves@gmail.com</a>
-      <a href="/jazzfest/">Jazz Fest portfolio</a>
-      <a href="https://andreograves.com">a/o/g collection</a>
-    </nav>
-  </footer>
+<div class="menu" id="menu" hidden>
+  <button class="close" id="menux" aria-label="Close menu">×</button>
+  <a href="#home">Home</a>
+  <a href="#work">Portfolio</a>
+  <div class="gal" id="menugal"></div>
+  <a href="#about-me">About</a>
 </div>
 
-<div class="lb" id="lb" role="dialog" aria-modal="true" aria-label="Photo viewer">
+<div class="lb" id="lb" role="dialog" aria-modal="true" aria-label="Photo viewer" hidden>
   <img id="lbimg" alt="">
   <button class="x" id="lbx" aria-label="Close">×</button>
-  <button class="pv" id="lbp" aria-label="Previous">‹</button>
-  <button class="nx" id="lbn" aria-label="Next">›</button>
+  <button class="pv" id="lbp" aria-label="Previous photo">‹</button>
+  <button class="nx" id="lbn" aria-label="Next photo">›</button>
+  <button class="cp" id="lbcopy">COPY LINK</button>
+  <input class="cpurl" id="lburl" aria-label="Link to this photo" readonly hidden>
   <div class="ct" id="lbc"></div>
 </div>
 
 <script>
 const PHOTOS = {"people":[["people-01.jpg",1600,1068],["people-02.jpg",1066,1600],["people-03.jpg",1066,1600],["people-04.jpg",1600,1068],["people-05.jpg",1066,1600],["people-06.jpg",1066,1600],["people-07.jpg",1600,1067],["people-08.jpg",967,1600],["people-09.jpg",1067,1600],["people-10.jpg",1600,1067],["people-11.jpg",1067,1600],["people-12.jpg",1066,1600],["people-13.jpg",1600,1068],["people-14.jpg",1600,1067]],"places":[["places-01.jpg",1066,1600],["places-02.jpg",1066,1600],["places-03.jpg",1066,1600],["places-04.jpg",1067,1600],["places-05.jpg",1048,1600],["places-06.jpg",1600,1098],["places-07.jpg",1600,1067],["places-08.jpg",1600,1067],["places-09.jpg",1600,1068],["places-10.jpg",1600,1068],["places-11.jpg",1067,1600]],"things":[["things-01.jpg",1067,1600],["things-02.jpg",1600,1068],["things-03.jpg",1600,1068],["things-04.jpg",1600,1067],["things-05.jpg",1600,1143],["things-06.jpg",1600,1143],["things-07.jpg",1600,1143],["things-08.jpg",1600,1067]],"music":[["music-01.jpg",1600,1067],["music-02.jpg",1600,1078],["music-03.jpg",1066,1600],["music-04.jpg",1600,1067],["music-05.jpg",1066,1600],["music-06.jpg",1067,1600],["music-07.jpg",1600,1068],["music-08.jpg",1067,1600],["music-09.jpg",1066,1600],["music-10.jpg",1600,1067],["music-11.jpg",1067,1600],["music-12.jpg",1067,1600],["music-13.jpg",1600,1067],["music-14.jpg",1600,1067],["music-15.jpg",1066,1600],["music-16.jpg",1600,1067],["music-17.jpg",1600,1067],["music-18.jpg",1170,1600],["music-19.jpg",1600,1067],["music-20.jpg",1600,1143],["music-21.jpg",1066,1600],["music-22.jpg",1600,1067],["music-23.jpg",1600,1067]],"art":[["art-01.jpg",1066,1600],["art-02.jpg",1600,1073],["art-03.jpg",1066,1600],["art-04.jpg",1066,1600],["art-05.jpg",1066,1600],["art-06.jpg",1600,1059],["art-07.jpg",1600,1067],["art-08.jpg",1600,1067],["art-09.jpg",1600,1067],["art-10.jpg",1600,1067],["art-11.jpg",1600,1068],["art-12.jpg",1600,1088],["art-13.jpg",1600,1058],["art-14.jpg",1067,1600],["art-15.jpg",1600,1068],["art-16.jpg",1600,1068],["art-17.jpg",1600,1068],["art-18.jpg",1600,1068],["art-19.jpg",1600,1068],["art-20.jpg",1600,1068],["art-21.jpg",1600,1068],["art-22.jpg",1600,1067],["art-23.jpg",1066,1600],["art-24.jpg",1066,1600],["art-25.jpg",1600,1068],["art-26.jpg",1600,1068],["art-27.jpg",1066,1600],["art-28.jpg",1600,1067],["art-29.jpg",1048,1600],["art-30.jpg",976,1600],["art-31.jpg",1067,1600],["art-32.jpg",1600,1068],["art-33.jpg",1600,1068]],"sports":[["sports-01.jpg",1066,1600],["sports-02.jpg",1600,1067],["sports-03.jpg",1600,1053],["sports-04.jpg",1600,1067],["sports-05.jpg",1600,1067],["sports-06.jpg",1600,1068],["sports-07.jpg",1600,1068],["sports-08.jpg",1066,1600],["sports-09.jpg",1600,1067],["sports-10.jpg",1600,1067],["sports-11.jpg",1600,1104]],"birds":[["birds-01.jpg",1066,1600],["birds-02.jpg",1067,1600],["birds-03.jpg",1146,1600],["birds-04.jpg",1066,1600],["birds-05.jpg",1127,1600],["birds-06.jpg",1600,1067],["birds-07.jpg",1600,1067],["birds-08.jpg",1600,1600],["birds-09.jpg",1225,1600],["birds-10.jpg",1600,1067],["birds-11.jpg",1066,1600],["birds-12.jpg",1600,1067],["birds-13.jpg",1031,1600],["birds-14.jpg",1600,1066]],"animals":[["animals-01.jpg",1600,1091],["animals-02.jpg",1600,1068],["animals-03.jpg",1600,1144],["animals-04.jpg",1600,1067],["animals-05.jpg",1600,1068],["animals-06.jpg",1600,1067],["animals-07.jpg",1600,1096],["animals-08.jpg",1555,1555],["animals-09.jpg",1066,1600],["animals-10.jpg",1600,1067]]};
-const CATS = [
-  {slug:"people", code:"001", title:"People"},
-  {slug:"places", code:"002", title:"Places"},
-  {slug:"things", code:"003", title:"Things"},
-  {slug:"music", code:"004", title:"Music"},
-  {slug:"art", code:"005", title:"Art"},
-  {slug:"sports", code:"006", title:"Sports"},
-  {slug:"birds", code:"007", title:"Birds"},
-  {slug:"animals", code:"008", title:"Animals"}
+// Same order and covers as the live Portfolio grid; About sits in the centre.
+const PAGES = [
+  {slug:"001-people",  key:"people",  title:"PEOPLE"},
+  {slug:"002-places",  key:"places",  title:"PLACES"},
+  {slug:"003-things",  key:"things",  title:"THINGS"},
+  {slug:"004-music",   key:"music",   title:"MUSIC"},
+  {slug:"about-me",    key:"about",   title:"ABOUT"},
+  {slug:"005-art",     key:"art",     title:"ART"},
+  {slug:"006-sports",  key:"sports",  title:"SPORTS"},
+  {slug:"007-birds",   key:"birds",   title:"BIRDS"},
+  {slug:"008-animals", key:"animals", title:"ANIMALS"}
 ];
-const view = document.getElementById('view'), cats = document.getElementById('cats');
-const ph = c => PHOTOS[c.slug] || [];
+const ICONS = {
+  linkedin:'<path d="M19.6,19v-5.8c0-1.4-0.5-2.4-1.7-2.4c-1,0-1.5,0.7-1.8,1.3C16,12.3,16,12.6,16,13v6h-3.4c0,0,0.1-9.8,0-10.8H16v1.5c0,0,0,0,0,0h0v0C16.4,9,17.2,7.9,19,7.9c2.3,0,4,1.5,4,4.9V19H19.6z M8.9,6.7L8.9,6.7C7.7,6.7,7,5.9,7,4.9C7,3.8,7.8,3,8.9,3s1.9,0.8,1.9,1.9C10.9,5.9,10.1,6.7,8.9,6.7z M10.6,19H7.2V8.2h3.4V19z"/>',
+  instagram:'<path d="M15,5.4c2.1,0,2.4,0,3.2,0c0.8,0,1.2,0.2,1.5,0.3c0.4,0.1,0.6,0.3,0.9,0.6c0.3,0.3,0.5,0.5,0.6,0.9c0.1,0.3,0.2,0.7,0.3,1.5c0,0.8,0,1.1,0,3.2s0,2.4,0,3.2c0,0.8-0.2,1.2-0.3,1.5c-0.1,0.4-0.3,0.6-0.6,0.9c-0.3,0.3-0.5,0.5-0.9,0.6c-0.3,0.1-0.7,0.2-1.5,0.3c-0.8,0-1.1,0-3.2,0s-2.4,0-3.2,0c-0.8,0-1.2-0.2-1.5-0.3c-0.4-0.1-0.6-0.3-0.9-0.6c-0.3-0.3-0.5-0.5-0.6-0.9c-0.1-0.3-0.2-0.7-0.3-1.5c0-0.8,0-1.1,0-3.2s0-2.4,0-3.2c0-0.8,0.2-1.2,0.3-1.5c0.1-0.4,0.3-0.6,0.6-0.9c0.3-0.3,0.5-0.5,0.9-0.6c0.3-0.1,0.7-0.2,1.5-0.3C12.6,5.4,12.9,5.4,15,5.4 M15,4c-2.2,0-2.4,0-3.3,0c-0.9,0-1.4,0.2-1.9,0.4c-0.5,0.2-1,0.5-1.4,0.9C7.9,5.8,7.6,6.2,7.4,6.8C7.2,7.3,7.1,7.9,7,8.7C7,9.6,7,9.8,7,12s0,2.4,0,3.3c0,0.9,0.2,1.4,0.4,1.9c0.2,0.5,0.5,1,0.9,1.4c0.4,0.4,0.9,0.7,1.4,0.9c0.5,0.2,1.1,0.3,1.9,0.4c0.9,0,1.1,0,3.3,0s2.4,0,3.3,0c0.9,0,1.4-0.2,1.9-0.4c0.5-0.2,1-0.5,1.4-0.9c0.4-0.4,0.7-0.9,0.9-1.4c0.2-0.5,0.3-1.1,0.4-1.9c0-0.9,0-1.1,0-3.3s0-2.4,0-3.3c0-0.9-0.2-1.4-0.4-1.9c-0.2-0.5-0.5-1-0.9-1.4c-0.4-0.4-0.9-0.7-1.4-0.9c-0.5-0.2-1.1-0.3-1.9-0.4C17.4,4,17.2,4,15,4L15,4L15,4z"/><path d="M15,7.9c-2.3,0-4.1,1.8-4.1,4.1s1.8,4.1,4.1,4.1s4.1-1.8,4.1-4.1S17.3,7.9,15,7.9L15,7.9z M15,14.7c-1.5,0-2.7-1.2-2.7-2.7c0-1.5,1.2-2.7,2.7-2.7s2.7,1.2,2.7,2.7C17.7,13.5,16.5,14.7,15,14.7L15,14.7z"/><path d="M20.2,7.7c0,0.5-0.4,1-1,1s-1-0.4-1-1s0.4-1,1-1S20.2,7.2,20.2,7.7L20.2,7.7z"/>',
+  flickr:'<circle cx="9" cy="12" r="5"/><circle cx="21" cy="12" r="5"/>',
+  email:'<path d="M15,13L7.1,7.1c0-0.5,0.4-1,1-1h13.8c0.5,0,1,0.4,1,1L15,13z M15,14.8l7.9-5.9v8.1c0,0.5-0.4,1-1,1H8.1c-0.5,0-1-0.4-1-1V8.8L15,14.8z"/>'
+};
+const SOCIAL = [
+  ["https://www.linkedin.com/in/tcoa/","LinkedIn","linkedin"],
+  ["https://www.instagram.com/andreograves","Instagram","instagram"],
+  ["https://www.flickr.com/photos/195629507@N07/","Flickr","flickr"],
+  ["mailto:andreograves@gmail.com","Email andreograves@gmail.com","email"]
+];
+const NAME = "ANDRÉ O. GRAVES";
+const app = document.getElementById('app');
 
-function nav(active){
-  cats.innerHTML = CATS.map(c => `<a href="#/${c.slug}"${c.slug===active?' aria-current="page"':''}>${c.title}</a>`).join('') +
-    `<a href="#/about"${active==='about'?' aria-current="page"':''}>About</a>`;
+function header(active){
+  return `<header class="site-header"><nav class="pages" aria-label="Site">
+    <a href="#home"${active==='home'?' class="active"':''}>Home</a>
+    <a href="#work"${active==='work'?' class="active"':''}>Portfolio</a>
+    <a href="#about-me"${active==='about'?' class="active"':''}>About</a>
+  </nav><button class="burger" data-menu aria-label="Open menu"><i></i><i></i><i></i></button></header>`;
+}
+const footer = () => `<footer class="site-footer">${SOCIAL.map(([h,l,i]) =>
+  `<a href="${h}" target="_blank" rel="noopener" aria-label="${l}" title="${l}"><svg viewBox="0 0 30 24" aria-hidden="true">${ICONS[i]}</svg></a>`).join('')}</footer>`;
+const cover = p => `<a class="cover" href="#${p.slug}" data-key="${p.key}" aria-label="${p.title}"><img class="on" src="img/cover-${p.key}.jpg" alt=""><img alt=""><span aria-hidden="true">${p.title}</span></a>`;
+
+// Living covers: every ~1.2s one tile (never the one under the pointer) fades to another photo from its gallery.
+let liveTimer = null;
+function startLiveCovers(){
+  stopLiveCovers();
+  if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  const tiles = [...app.querySelectorAll('.cover')].filter(c => (PHOTOS[c.dataset.key] || []).length > 1).map(c => {
+    const list = PHOTOS[c.dataset.key].map(f => 'img/' + f[0]);
+    for (let i = list.length - 1; i > 0; i--){ const j = Math.floor(Math.random() * (i + 1)); [list[i], list[j]] = [list[j], list[i]]; }
+    return { el: c, list, n: 0, busy: false };
+  });
+  let last = null;
+  liveTimer = setInterval(() => {
+    if (document.hidden) return;
+    const pool = tiles.filter(t => t !== last && !t.busy && !t.el.matches(':hover'));
+    if (!pool.length) return;
+    const t = pool[Math.floor(Math.random() * pool.length)]; last = t;
+    const [a, b] = t.el.querySelectorAll('img'), front = a.classList.contains('on') ? a : b, back = front === a ? b : a;
+    t.busy = true;
+    back.onload = () => { back.classList.add('on'); front.classList.remove('on'); setTimeout(() => t.busy = false, 1500); };
+    back.onerror = () => { t.busy = false; };
+    back.src = t.list[t.n++ % t.list.length];
+  }, 1200);
+}
+function stopLiveCovers(){ clearInterval(liveTimer); liveTimer = null; }
+
+function splashView(){
+  document.title = "André O. Graves | Portfolio";
+  app.innerHTML = `<section class="splash view"><div>
+    <h1>${NAME}</h1>
+    <a href="#work">People, Places, Things.</a>
+  </div></section>`;
 }
 
-function indexView(){
-  nav(''); document.title = "André O. Graves | Portfolio";
-  view.innerHTML = `<section class="lede"><h2>People, Places, Things.</h2></section>
-  <div class="drawers">${CATS.map(c => {
-    const p = ph(c);
-    if (!p.length) return `<div class="drawer soon"><figure>Coming soon</figure><div class="tag">${c.title}<span>${c.code}</span></div></div>`;
-    return `<a class="drawer" href="#/${c.slug}"><figure><img src="img/${p[0][0]}" alt="" loading="lazy"></figure><div class="tag">${c.title}<span>${c.code} · ${p.length}</span></div></a>`;
-  }).join('')}</div>`;
+function workView(){
+  document.title = "André O. Graves | Portfolio";
+  app.innerHTML = `<div class="view">${header('work')}<div class="wrap">
+    <div class="masthead" role="heading" aria-level="1" aria-label="${NAME}">
+      <div class="m1" aria-hidden="true">${NAME}</div><div class="m2" aria-hidden="true">${NAME}</div><div class="m3" aria-hidden="true">${NAME}</div>
+    </div>
+    <div class="covers">${PAGES.map(cover).join('')}</div>
+    ${footer()}</div></div>`;
 }
+
+const GALLERIES = PAGES.filter(p => p.key !== 'about');
+const nice = s => s.charAt(0) + s.slice(1).toLowerCase();
+function pager(current){
+  const i = GALLERIES.findIndex(p => p.slug === current);
+  const all = `<a class="all" href="#work">ALL GALLERIES</a>`;
+  if (i < 0) return `<nav class="pager" aria-label="Galleries"><span></span>${all}<span></span></nav>`;
+  const prev = GALLERIES[(i - 1 + GALLERIES.length) % GALLERIES.length], next = GALLERIES[(i + 1) % GALLERIES.length];
+  return `<nav class="pager" aria-label="Galleries">
+    <a class="pv" href="#${prev.slug}"><small>‹ PREVIOUS</small><b>${prev.title}</b></a>
+    ${all}
+    <a class="nx" href="#${next.slug}"><small>NEXT ›</small><b>${next.title}</b></a></nav>`;
+}
+document.getElementById('menugal').innerHTML = GALLERIES.map(p => `<a href="#${p.slug}">${nice(p.title)}</a>`).join('');
 
 let cur = [], idx = 0;
-function catView(c){
-  nav(c.slug); const p = ph(c); cur = p;
-  document.title = c.title + " | André O. Graves";
-  const i = CATS.indexOf(c), prev = CATS[(i-1+CATS.length)%CATS.length], next = CATS[(i+1)%CATS.length];
-  view.innerHTML = `<section class="chead"><h2><span>${c.code}</span>${c.title}</h2><p>${p.length ? p.length + (p.length===1?' photo':' photos') : ''}</p></section>
-  ${p.length ? `<div class="grid">${p.map((f,k) => `<button data-i="${k}" aria-label="Open photo ${k+1}"><img src="img/${f[0]}" width="${f[1]}" height="${f[2]}" alt="${c.title}, photo ${k+1}" loading="lazy"></button>`).join('')}</div>`
-    : `<p class="empty">Coming soon.</p>`}
-  <nav class="cnav"><a href="#/${prev.slug}"><small>Previous</small>${prev.title}</a><a href="#/${next.slug}" style="text-align:right"><small>Next</small>${next.title}</a></nav>`;
-  view.querySelectorAll('.grid button').forEach(b => b.onclick = () => openLb(+b.dataset.i));
+let curSlug = '';
+function galleryView(p){
+  const photos = PHOTOS[p.key] || []; cur = photos; curSlug = p.slug;
+  document.title = p.title.charAt(0) + p.title.slice(1).toLowerCase() + " | André O. Graves";
+  app.innerHTML = `<div class="view">${header('')}<div class="wrap">
+    <div class="page-header"><h1>${p.title}</h1></div>
+    <div class="rows" id="rows"></div>
+    ${pager(p.slug)}
+    ${footer()}</div></div>`;
+  layoutRows();
 }
+
+// Justified rows with no gaps, like the live "media collection" module.
+function layoutRows(){
+  const box = document.getElementById('rows'); if (!box) return;
+  const W = box.clientWidth, target = Math.max(160, Math.min(300, W * 0.2)), title = app.querySelector('h1').textContent;
+  // Pick a row count from the target height, then fill every row edge to edge.
+  const total = cur.reduce((s, f) => s + f[1]/f[2], 0), n = Math.max(1, Math.round(total * target / W)), per = total / n;
+  const rows = []; let row = [], sum = 0, done = 0;
+  cur.forEach((f, k) => { const ar = f[1]/f[2];
+    if (row.length && rows.length < n - 1 && done + sum + ar/2 > per * (rows.length + 1)){ rows.push([row, W / sum]); done += sum; row = []; sum = 0; }
+    row.push(k); sum += ar; });
+  if (row.length) rows.push([row, W / sum]);
+  box.innerHTML = rows.map(([r, h]) => `<div class="row">${r.map(k => { const f = cur[k], w = h * f[1]/f[2];
+    return `<button data-i="${k}" style="width:${(w/W*100).toFixed(4)}%;height:${Math.round(h)}px" aria-label="Open photo ${k+1}"><img src="img/${f[0]}" alt="${title}, photo ${k+1}" loading="lazy"></button>`; }).join('')}</div>`).join('');
+  box.querySelectorAll('button').forEach(b => b.onclick = () => openLb(+b.dataset.i));
+}
+let rz; window.addEventListener('resize', () => { clearTimeout(rz); rz = setTimeout(layoutRows, 120); });
 
 function aboutView(){
-  nav('about'); document.title = "About | André O. Graves";
-  const a = (PHOTOS.people||[])[0];
-  view.innerHTML = `<section class="about">${a ? `<img src="img/${a[0]}" alt="" loading="lazy">` : ''}<div>
-    <h2>André O. Graves</h2>
-    <p>Currently residing in the Pacific Northwest, but always on the go. And pointing my lens at everything along the way…</p>
-    <ul>
-      <li><a href="mailto:andreograves@gmail.com">andreograves@gmail.com</a></li>
-      <li><a href="https://www.instagram.com/andreograves">Instagram @andreograves</a></li>
-      <li><a href="https://www.linkedin.com/in/tcoa/">LinkedIn</a></li>
-      <li><a href="https://www.flickr.com/photos/195629507@N07/">Flickr</a></li>
-      <li><a href="/jazzfest/">Jazz Fest portfolio</a></li>
-    </ul></div></section>`;
+  document.title = "About | André O. Graves";
+  app.innerHTML = `<div class="view about-page on-photo">${header('about')}<div class="wrap">
+    <div class="about-text"><h1>${NAME}</h1>
+    <p>Currently residing in the Pacific Northwest, but always on the GO. And pointing my lens at everything along the way...</p></div>
+    ${pager('about-me')}
+    ${footer()}</div></div>`;
 }
 
-let first = true;
 function route(){
   const slug = location.hash.replace(/^#\/?/, '');
-  const c = CATS.find(x => x.slug === slug);
-  if (c) catView(c); else if (slug === 'about') aboutView(); else indexView();
-  if (location.hash) document.getElementById('site').scrollIntoView({behavior: first ? 'auto' : 'smooth'});
-  first = false;
+  lb.hidden = true; menu.hidden = true; stopLiveCovers(); curSlug = '';
+  // A photo link looks like #001-people-5: the gallery, then the photo number.
+  const m = slug.match(/^(.+)-(\d+)$/), pm = m && PAGES.find(x => x.slug === m[1] && x.key !== 'about');
+  if (pm) {
+    galleryView(pm); window.scrollTo(0, 0);
+    const n = +m[2];
+    if (n >= 1 && n <= cur.length) openLb(n - 1); else setHash(pm.slug);
+    return;
+  }
+  const p = PAGES.find(x => x.slug === slug);
+  if (slug === 'work') { workView(); startLiveCovers(); }
+  else if (p && p.key === 'about') aboutView();
+  else if (p) galleryView(p);
+  else splashView();
+  window.scrollTo(0, 0);
+  track();
 }
-window.addEventListener('hashchange', route);
+
+// Visitor stats (GoatCounter). Loads only on andregraves.com, so previews and local tests are never counted.
+// The site changes pages without reloading, so each view is sent by hand: /work, /001-people, /001-people-5 …
+const GC_ON = /(^|\.)andregraves\.com$/.test(location.hostname), gcQueue = [];
+function track(){
+  if (!GC_ON) return;
+  const hit = { path: '/' + location.hash.replace(/^#\/?/, ''), title: document.title };
+  if (window.goatcounter && window.goatcounter.count) window.goatcounter.count(hit); else gcQueue.push(hit);
+}
+if (GC_ON) {
+  const s = document.createElement('script');
+  s.async = true; s.src = 'https://gc.zgo.at/count.js';
+  s.dataset.goatcounter = 'https://andreograves.goatcounter.com/count';
+  s.dataset.goatcounterSettings = '{"no_onload": true}';
+  s.onload = () => { if (window.goatcounter && window.goatcounter.count) gcQueue.splice(0).forEach(h => window.goatcounter.count(h)); };
+  document.head.appendChild(s);
+}
+
+// Mobile menu
+const menu = document.getElementById('menu');
+app.addEventListener('click', e => { if (e.target.closest('[data-menu]')) { menu.hidden = false; document.getElementById('menux').focus(); } });
+document.getElementById('menux').onclick = () => menu.hidden = true;
 
 // Lightbox
 const lb = document.getElementById('lb'), lbimg = document.getElementById('lbimg'), lbc = document.getElementById('lbc');
-function show(){ const f = cur[idx]; lbimg.src = 'img/' + f[0]; lbc.textContent = (idx+1) + ' / ' + cur.length; }
-function openLb(i){ idx = i; show(); lb.classList.add('on'); document.getElementById('lbx').focus(); }
-function closeLb(){ lb.classList.remove('on'); }
+// The address follows the photo on screen, without reloading the page or adding history entries.
+function setHash(h){ try { history.replaceState(null, '', '#' + h); } catch (e) {} }
+const lburl = document.getElementById('lburl'), lbcopy = document.getElementById('lbcopy');
+function show(){
+  const f = cur[idx]; lbimg.src = 'img/' + f[0]; lbimg.alt = 'Photo ' + (idx+1); lbc.textContent = (idx+1) + ' / ' + cur.length;
+  if (curSlug) { setHash(curSlug + '-' + (idx+1)); track(); }
+  lburl.hidden = true; lbcopy.textContent = 'COPY LINK';
+}
+function openLb(i){ idx = i; show(); lb.hidden = false; document.getElementById('lbx').focus(); }
+function closeLb(){ if (lb.hidden) return; lb.hidden = true; if (curSlug) setHash(curSlug); }
+// On andregraves.com copy the page address; anywhere else (the artifact preview), copy the public andregraves.com link.
+function photoLink(){
+  const own = /(^|\.)andregraves\.com$/.test(location.hostname);
+  return (own ? location.origin + location.pathname : 'https://andregraves.com/') + '#' + curSlug + '-' + (idx+1);
+}
+lbcopy.onclick = () => {
+  const url = photoLink();
+  const fallback = () => { lburl.value = url; lburl.hidden = false; lburl.focus(); lburl.select(); lbcopy.textContent = 'COPY THIS LINK'; };
+  try { navigator.clipboard.writeText(url).then(() => { lbcopy.textContent = 'LINK COPIED'; }, fallback); } catch (e) { fallback(); }
+};
 function step(d){ idx = (idx + d + cur.length) % cur.length; show(); }
 document.getElementById('lbx').onclick = closeLb;
 document.getElementById('lbp').onclick = () => step(-1);
 document.getElementById('lbn').onclick = () => step(1);
-lb.addEventListener('click', e => { if (e.target === lb) closeLb(); });
+lb.addEventListener('click', e => { if (e.target === lb) closeLb(); else if (e.target === lbimg) step(1); });
 document.addEventListener('keydown', e => {
-  if (!lb.classList.contains('on')) return;
-  if (e.key === 'Escape') closeLb(); if (e.key === 'ArrowLeft') step(-1); if (e.key === 'ArrowRight') step(1);
+  if (e.key === 'Escape') { closeLb(); menu.hidden = true; }
+  if (lb.hidden) return;
+  if (e.key === 'ArrowLeft') step(-1); if (e.key === 'ArrowRight') step(1);
 });
 let tx = null;
 lb.addEventListener('touchstart', e => tx = e.touches[0].clientX, {passive:true});
 lb.addEventListener('touchend', e => { if (tx === null) return; const dx = e.changedTouches[0].clientX - tx; if (Math.abs(dx) > 40) step(dx < 0 ? 1 : -1); tx = null; });
 
-// Typewriter splash
-function type(el, text, delay){
-  return new Promise(res => {
-    const c = document.createElement('span'); c.className = 'caret'; el.appendChild(c);
-    let i = 0;
-    const tick = () => { if (i < text.length){ c.before(text[i++]); setTimeout(tick, delay); } else { c.remove(); res(); } };
-    tick();
-  });
-}
-const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
-const t1 = document.getElementById('t1'), t2 = document.getElementById('t2');
-if (reduce) { t1.textContent = 'ANDRÉ O. GRAVES'; t2.textContent = 'People, Places, Things.'; }
-else type(t1, 'ANDRÉ O. GRAVES', 85).then(() => type(t2, 'People, Places, Things.', 55));
+window.addEventListener('hashchange', route);
 route();
 </script>
 </body>
