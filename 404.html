@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>André O. Graves | Portfolio</title>
+<meta name="robots" content="noindex">
+<script>
+// GitHub Pages serves this file for any unknown path. Old Adobe Portfolio addresses
+// (/work, /001-people, /about-me, /homepage) are sent to the matching page of the new site.
+(function () {
+  var p = location.pathname.replace(/^\/+|\/+$/g, '').toLowerCase();
+  var known = ['work', 'about-me', '001-people', '002-places', '003-things', '004-music',
+               '005-art', '006-sports', '007-birds', '008-animals'];
+  var hash = p === 'homepage' || p === '' ? '' : (known.indexOf(p) > -1 ? '#' + p : '#work');
+  location.replace('/' + hash);
+})();
+</script>
+<style>body{margin:0;font:16px 'Courier New',monospace;background:#fff;color:#111;display:grid;place-items:center;min-height:100vh;text-align:center;padding:16px}a{color:inherit}</style>
+</head>
+<body>
+<p>Taking you to the portfolio… <a href="/">andregraves.com</a></p>
+</body>
+</html>
