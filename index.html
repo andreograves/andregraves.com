@@ -92,10 +92,12 @@ button{font:inherit;color:inherit}
 @media (max-width:768px){.covers{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media (max-width:540px){.covers{grid-template-columns:1fr}}
 .cover{position:relative;display:block;aspect-ratio:457/350;max-width:100%;overflow:hidden;background:#222}
-.cover img{width:100%;height:100%;object-fit:cover;filter:grayscale(1)}
-.cover::after{content:"";position:absolute;inset:0;background:#000;opacity:0;transition:opacity .2s}
+.cover img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:grayscale(1);opacity:0;transition:opacity 1.4s ease,filter .6s ease}
+.cover img.on{opacity:1}
+.cover:hover img,.cover:focus-visible img{filter:grayscale(0)}
+.cover::after{content:"";position:absolute;inset:0;background:#000;opacity:0;transition:opacity .3s}
 .cover span{position:absolute;inset:0;z-index:1;display:grid;place-items:center;text-align:center;padding:0 10%;color:var(--white);font-size:clamp(34px,4.9vw,70px);line-height:1.05;opacity:0;transition:opacity .15s}
-.cover:hover::after,.cover:focus-visible::after{opacity:.35}
+.cover:hover::after,.cover:focus-visible::after{opacity:.22}
 .cover:hover span,.cover:focus-visible span{opacity:1}
 
 /* Previous / all / next, under each gallery */
@@ -206,7 +208,32 @@ function header(active){
 }
 const footer = () => `<footer class="site-footer">${SOCIAL.map(([h,l,i]) =>
   `<a href="${h}" target="_blank" rel="noopener" aria-label="${l}" title="${l}"><svg viewBox="0 0 30 24" aria-hidden="true">${ICONS[i]}</svg></a>`).join('')}</footer>`;
-const cover = p => `<a class="cover" href="#${p.slug}" aria-label="${p.title}"><img src="img/cover-${p.key}.jpg" alt="" loading="lazy"><span aria-hidden="true">${p.title}</span></a>`;
+const cover = p => `<a class="cover" href="#${p.slug}" data-key="${p.key}" aria-label="${p.title}"><img class="on" src="img/cover-${p.key}.jpg" alt=""><img alt=""><span aria-hidden="true">${p.title}</span></a>`;
+
+// Living covers: every ~1.2s one tile (never the one under the pointer) fades to another photo from its gallery.
+let liveTimer = null;
+function startLiveCovers(){
+  stopLiveCovers();
+  if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  const tiles = [...app.querySelectorAll('.cover')].filter(c => (PHOTOS[c.dataset.key] || []).length > 1).map(c => {
+    const list = PHOTOS[c.dataset.key].map(f => 'img/' + f[0]);
+    for (let i = list.length - 1; i > 0; i--){ const j = Math.floor(Math.random() * (i + 1)); [list[i], list[j]] = [list[j], list[i]]; }
+    return { el: c, list, n: 0, busy: false };
+  });
+  let last = null;
+  liveTimer = setInterval(() => {
+    if (document.hidden) return;
+    const pool = tiles.filter(t => t !== last && !t.busy && !t.el.matches(':hover'));
+    if (!pool.length) return;
+    const t = pool[Math.floor(Math.random() * pool.length)]; last = t;
+    const [a, b] = t.el.querySelectorAll('img'), front = a.classList.contains('on') ? a : b, back = front === a ? b : a;
+    t.busy = true;
+    back.onload = () => { back.classList.add('on'); front.classList.remove('on'); setTimeout(() => t.busy = false, 1500); };
+    back.onerror = () => { t.busy = false; };
+    back.src = t.list[t.n++ % t.list.length];
+  }, 1200);
+}
+function stopLiveCovers(){ clearInterval(liveTimer); liveTimer = null; }
 
 function splashView(){
   document.title = "André O. Graves | Portfolio";
@@ -280,9 +307,9 @@ function aboutView(){
 
 function route(){
   const slug = location.hash.replace(/^#\/?/, '');
-  closeLb(); menu.hidden = true;
+  closeLb(); menu.hidden = true; stopLiveCovers();
   const p = PAGES.find(x => x.slug === slug);
-  if (slug === 'work') workView();
+  if (slug === 'work') { workView(); startLiveCovers(); }
   else if (p && p.key === 'about') aboutView();
   else if (p) galleryView(p);
   else splashView();
