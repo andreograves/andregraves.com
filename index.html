@@ -182,6 +182,14 @@ button{font:inherit;color:inherit}
 .music-grid img[src="img/music-06.jpg"]{object-position:50% 0%}
 .music-grid img[src="img/music-08.jpg"]{object-position:50% 0%}
 .music-grid img[src="img/music-09.jpg"]{object-position:50% 10%}
+
+/* Give the Music collection breathing room and a centered title. */
+.music-view .page-header{width:100%;padding:20px 24px 32px;text-align:center}
+.music-grid{margin-inline:clamp(20px,4vw,80px)}
+@media(max-width:700px){
+  .music-view .page-header{width:100%;margin:0;padding:16px 20px 26px;text-align:center}
+  .music-grid{margin-inline:16px}
+}
 </style>
 </head>
 <body>
