@@ -152,6 +152,24 @@ button{font:inherit;color:inherit}
 @media (max-width:540px){.lb{padding-left:max(8px,env(safe-area-inset-left,0px));padding-right:max(8px,env(safe-area-inset-right,0px))}.lb .pv,.lb .nx{top:auto;bottom:calc(2px + env(safe-area-inset-bottom,0px));transform:none}}
 
 @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+
+/* Music: compact masthead and edge-to-edge photographic contact sheet. */
+.music-view .music-header{min-height:72px;display:flex;align-items:center;justify-content:space-between;gap:32px;padding:24px 5%;font-size:12px}
+.music-brand{font-size:22px;letter-spacing:.04em;line-height:1.1}
+.music-header nav{display:flex;gap:28px;align-items:center}
+.music-header nav a{font-size:11px;letter-spacing:.05em}
+.music-header nav a:hover{text-decoration:underline;text-underline-offset:5px}
+.music-view .page-header{width:65%;margin:auto;padding:0 0 10px;text-align:left}
+.music-view .page-header h1{font-size:26px;line-height:1.2;text-transform:none;letter-spacing:.04em}
+.music-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr))}
+.music-grid button{display:block;width:100%;aspect-ratio:4/3;border:0;padding:0;background:#eee;cursor:zoom-in;overflow:hidden}
+.music-grid img{width:100%;height:100%;object-fit:cover;transition:opacity .2s}
+.music-grid button:hover img{opacity:.9}
+.music-view .music-bottom{padding:0 var(--gutter)}
+@media(max-width:1000px){.music-header nav{gap:16px}.music-brand{font-size:18px}.music-grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media(max-width:700px){.music-view .music-header{padding:22px 20px;align-items:flex-start;gap:20px}.music-header nav{gap:12px;flex-wrap:wrap;justify-content:flex-end}.music-brand{max-width:150px;font-size:18px}.music-view .page-header{width:auto;margin:0 20px;padding:8px 0 16px}.music-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:420px){.music-header nav a{font-size:10px}.music-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+
 </style>
 </head>
 <body>
@@ -277,6 +295,17 @@ let curSlug = '';
 function galleryView(p){
   const photos = PHOTOS[p.key] || []; cur = photos; curSlug = p.slug;
   document.title = p.title.charAt(0) + p.title.slice(1).toLowerCase() + " | André";
+  if (p.key === 'music') {
+    app.innerHTML = `<div class="view music-view">
+      <header class="music-header"><a class="music-brand" href="#work">${NAME}</a>
+        <nav aria-label="Site"><a href="#work">PORTFOLIO</a><a href="#004-music" aria-current="page">MUSIC</a><a href="#about-me">ABOUT</a><a href="mailto:andreograves@gmail.com">CONNECT</a></nav>
+      </header>
+      <div class="page-header"><h1>Music</h1></div>
+      <div class="music-grid">${photos.map((f,k) => `<button data-i="${k}" aria-label="Open music photo ${k+1}"><img src="img/${f[0]}" width="${f[1]}" height="${f[2]}" alt="Music, photo ${k+1}" loading="${k<4?'eager':'lazy'}"></button>`).join('')}</div>
+      <div class="music-bottom">${pager(p.slug)}${footer()}</div></div>`;
+    app.querySelectorAll('.music-grid button').forEach(b => b.onclick = () => openLb(+b.dataset.i));
+    return;
+  }
   app.innerHTML = `<div class="view">${header('')}<div class="wrap">
     <div class="page-header"><h1>${p.title}</h1></div>
     <div class="rows" id="rows"></div>
