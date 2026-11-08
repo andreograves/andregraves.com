@@ -316,12 +316,18 @@ function galleryView(p){
   const photos = PHOTOS[p.key] || []; cur = photos; curSlug = p.slug;
   document.title = p.title.charAt(0) + p.title.slice(1).toLowerCase() + " | André";
   if (p.key === 'music') {
+    // Shuffle display indices; keep the source indices stable for photo links.
+    const order = photos.map((_, k) => k);
+    for (let i = order.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [order[i], order[j]] = [order[j], order[i]];
+    }
     app.innerHTML = `<div class="view music-view">
       <header class="music-header"><a class="music-brand" href="#work">${NAME}</a>
         <nav aria-label="Site"><a href="#work">PORTFOLIO</a><a href="#004-music" aria-current="page">MUSIC</a><a href="#about-me">ABOUT</a><a href="mailto:andreograves@gmail.com">CONNECT</a></nav>
       </header>
       <div class="page-header"><h1>Music</h1></div>
-      <div class="music-grid">${photos.map((f,k) => `<button data-i="${k}" aria-label="Open music photo ${k+1}"><img src="img/${f[0]}" width="${f[1]}" height="${f[2]}" alt="Music, photo ${k+1}" loading="${k<4?'eager':'lazy'}"></button>`).join('')}</div>
+      <div class="music-grid">${order.map((k,position) => { const f = photos[k]; return `<button data-i="${k}" aria-label="Open music photo ${k+1}"><img src="img/${f[0]}" width="${f[1]}" height="${f[2]}" alt="Music, photo ${k+1}" loading="${position<4?'eager':'lazy'}"></button>`; }).join('')}</div>
       <div class="music-bottom">${pager(p.slug)}${footer()}</div></div>`;
     app.querySelectorAll('.music-grid button').forEach(b => b.onclick = () => openLb(+b.dataset.i));
     return;
