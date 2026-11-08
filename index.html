@@ -171,6 +171,8 @@ button{font:inherit;color:inherit}
 @media(max-width:420px){.music-header nav a{font-size:10px}.music-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
 
 
+/* Portrait previews favor faces; individual Music focal points override this. */
+.music-grid img{object-position:50% 20%}
 /* Per-photo focal points keep performers in the preview crop. */
 .music-grid img[src="img/music-11.jpg"]{object-position:50% 0%}
 .music-grid img[src="img/music-12.jpg"]{object-position:50% 15%}
@@ -315,7 +317,7 @@ let curSlug = '';
 function galleryView(p){
   const photos = PHOTOS[p.key] || []; cur = photos; curSlug = p.slug;
   document.title = p.title.charAt(0) + p.title.slice(1).toLowerCase() + " | André";
-  if (p.key === 'music') {
+  if (photos.length) {
     // Shuffle display indices; keep the source indices stable for photo links.
     const order = photos.map((_, k) => k);
     for (let i = order.length - 1; i > 0; i--) {
@@ -324,10 +326,10 @@ function galleryView(p){
     }
     app.innerHTML = `<div class="view music-view">
       <header class="music-header"><a class="music-brand" href="#work">${NAME}</a>
-        <nav aria-label="Site"><a href="#work">PORTFOLIO</a><a href="#004-music" aria-current="page">MUSIC</a><a href="#about-me">ABOUT</a><a href="mailto:andreograves@gmail.com">CONNECT</a></nav>
+        <nav aria-label="Site"><a href="#work">PORTFOLIO</a><a href="#${p.slug}" aria-current="page">${p.title}</a><a href="#about-me">ABOUT</a><a href="mailto:andreograves@gmail.com">CONNECT</a></nav>
       </header>
-      <div class="page-header"><h1>Music</h1></div>
-      <div class="music-grid">${order.map((k,position) => { const f = photos[k]; return `<button data-i="${k}" aria-label="Open music photo ${k+1}"><img src="img/${f[0]}" width="${f[1]}" height="${f[2]}" alt="Music, photo ${k+1}" loading="${position<4?'eager':'lazy'}"></button>`; }).join('')}</div>
+      <div class="page-header"><h1>${nice(p.title)}</h1></div>
+      <div class="music-grid">${order.map((k,position) => { const f = photos[k]; return `<button data-i="${k}" aria-label="Open ${nice(p.title)} photo ${k+1}"><img src="img/${f[0]}" width="${f[1]}" height="${f[2]}" alt="${nice(p.title)}, photo ${k+1}" loading="${position<4?'eager':'lazy'}"></button>`; }).join('')}</div>
       <div class="music-bottom">${pager(p.slug)}${footer()}</div></div>`;
     app.querySelectorAll('.music-grid button').forEach(b => b.onclick = () => openLb(+b.dataset.i));
     return;
