@@ -167,19 +167,6 @@ button{font:inherit;color:inherit}
 @media(max-width:420px){.music-header nav a{font-size:10px}.music-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
 
 
-/* Portrait previews favor faces; individual Music focal points override this. */
-.music-grid img{object-position:50% 20%}
-/* Per-photo focal points keep performers in the preview crop. */
-.music-grid img[src="img/music-11.jpg"]{object-position:50% 0%}
-.music-grid img[src="img/music-12.jpg"]{object-position:50% 15%}
-.music-grid img[src="img/music-15.jpg"]{object-position:50% 10%}
-.music-grid img[src="img/music-18.jpg"]{object-position:50% 0%}
-.music-grid img[src="img/music-21.jpg"]{object-position:50% 10%}
-.music-grid img[src="img/music-03.jpg"]{object-position:50% 20%}
-.music-grid img[src="img/music-05.jpg"]{object-position:50% 15%}
-.music-grid img[src="img/music-06.jpg"]{object-position:50% 0%}
-.music-grid img[src="img/music-08.jpg"]{object-position:50% 0%}
-.music-grid img[src="img/music-09.jpg"]{object-position:50% 10%}
 
 /* Give the Music collection breathing room and a centered title. */
 .music-view .page-header{width:100%;padding:20px 24px 32px;text-align:center}
@@ -221,7 +208,8 @@ button{font:inherit;color:inherit}
 </div>
 
 <script>
-const PHOTOS = {"people":[["people-01.jpg",1600,1068],["people-02.jpg",1066,1600],["people-03.jpg",1066,1600],["people-04.jpg",1600,1068],["people-05.jpg",1066,1600],["people-06.jpg",1066,1600],["people-07.jpg",1600,1067],["people-08.jpg",967,1600],["people-09.jpg",1067,1600],["people-10.jpg",1600,1067],["people-11.jpg",1067,1600],["people-12.jpg",1066,1600],["people-13.jpg",1600,1068],["people-14.jpg",1600,1067]],"places":[["places-01.jpg",1066,1600],["places-02.jpg",1066,1600],["places-03.jpg",1066,1600],["places-04.jpg",1067,1600],["places-05.jpg",1048,1600],["places-06.jpg",1600,1098],["places-07.jpg",1600,1067],["places-08.jpg",1600,1067],["places-09.jpg",1600,1068],["places-10.jpg",1600,1068],["places-11.jpg",1067,1600]],"things":[["things-01.jpg",1067,1600],["things-02.jpg",1600,1068],["things-03.jpg",1600,1068],["things-04.jpg",1600,1067],["things-05.jpg",1600,1143],["things-06.jpg",1600,1143],["things-07.jpg",1600,1143],["things-08.jpg",1600,1067]],"music":[["music-01.jpg",1600,1067],["music-02.jpg",1600,1078],["music-03.jpg",1066,1600],["music-04.jpg",1600,1067],["music-05.jpg",1066,1600],["music-06.jpg",1067,1600],["music-07.jpg",1600,1068],["music-08.jpg",1067,1600],["music-09.jpg",1066,1600],["music-10.jpg",1600,1067],["music-11.jpg",1067,1600],["music-12.jpg",1067,1600],["music-13.jpg",1600,1067],["music-14.jpg",1600,1067],["music-15.jpg",1066,1600],["music-16.jpg",1600,1067],["music-17.jpg",1600,1067],["music-18.jpg",1170,1600],["music-19.jpg",1600,1067],["music-20.jpg",1600,1143],["music-21.jpg",1066,1600],["music-22.jpg",1600,1067],["music-23.jpg",1600,1067]],"art":[["art-01.jpg",1066,1600],["art-02.jpg",1600,1073],["art-03.jpg",1066,1600],["art-04.jpg",1066,1600],["art-05.jpg",1066,1600],["art-06.jpg",1600,1059],["art-07.jpg",1600,1067],["art-08.jpg",1600,1067],["art-09.jpg",1600,1067],["art-10.jpg",1600,1067],["art-11.jpg",1600,1068],["art-12.jpg",1600,1088],["art-13.jpg",1600,1058],["art-14.jpg",1067,1600],["art-15.jpg",1600,1068],["art-16.jpg",1600,1068],["art-17.jpg",1600,1068],["art-18.jpg",1600,1068],["art-19.jpg",1600,1068],["art-20.jpg",1600,1068],["art-21.jpg",1600,1068],["art-22.jpg",1600,1067],["art-23.jpg",1066,1600],["art-24.jpg",1066,1600],["art-25.jpg",1600,1068],["art-26.jpg",1600,1068],["art-27.jpg",1066,1600],["art-28.jpg",1600,1067],["art-29.jpg",1048,1600],["art-30.jpg",976,1600],["art-31.jpg",1067,1600],["art-32.jpg",1600,1068],["art-33.jpg",1600,1068]],"sports":[["sports-01.jpg",1066,1600],["sports-02.jpg",1600,1067],["sports-03.jpg",1600,1053],["sports-04.jpg",1600,1067],["sports-05.jpg",1600,1067],["sports-06.jpg",1600,1068],["sports-07.jpg",1600,1068],["sports-08.jpg",1066,1600],["sports-09.jpg",1600,1067],["sports-10.jpg",1600,1067],["sports-11.jpg",1600,1104]],"birds":[["birds-01.jpg",1066,1600],["birds-02.jpg",1067,1600],["birds-03.jpg",1146,1600],["birds-04.jpg",1066,1600],["birds-05.jpg",1127,1600],["birds-06.jpg",1600,1067],["birds-07.jpg",1600,1067],["birds-08.jpg",1600,1600],["birds-09.jpg",1225,1600],["birds-10.jpg",1600,1067],["birds-11.jpg",1066,1600],["birds-12.jpg",1600,1067],["birds-13.jpg",1031,1600],["birds-14.jpg",1600,1066]],"animals":[["animals-01.jpg",1600,1091],["animals-02.jpg",1600,1068],["animals-03.jpg",1600,1144],["animals-04.jpg",1600,1067],["animals-05.jpg",1600,1068],["animals-06.jpg",1600,1067],["animals-07.jpg",1600,1096],["animals-08.jpg",1555,1555],["animals-09.jpg",1066,1600],["animals-10.jpg",1600,1067]]};
+// [file, width, height, focusX, focusY]: focus is the subject centre (0–1) used to aim cropped previews.
+const PHOTOS = {"people":[["people-01.jpg",1600,1068,0.47,0.4],["people-02.jpg",1066,1600,0.45,0.35],["people-03.jpg",1066,1600,0.5,0.35],["people-04.jpg",1600,1068,0.55,0.4],["people-05.jpg",1066,1600,0.5,0.33],["people-06.jpg",1066,1600,0.45,0.35],["people-07.jpg",1600,1067,0.45,0.5],["people-08.jpg",967,1600,0.5,0.35],["people-09.jpg",1067,1600,0.5,0.3],["people-10.jpg",1600,1067,0.62,0.4],["people-11.jpg",1067,1600,0.5,0.3],["people-12.jpg",1066,1600,0.5,0.4],["people-13.jpg",1600,1068,0.45,0.5],["people-14.jpg",1600,1067,0.45,0.5]],"places":[["places-01.jpg",1066,1600,0.3,0.42],["places-02.jpg",1066,1600,0.5,0.5],["places-03.jpg",1066,1600,0.5,0.5],["places-04.jpg",1067,1600,0.5,0.3],["places-05.jpg",1048,1600,0.5,0.45],["places-06.jpg",1600,1098,0.5,0.5],["places-07.jpg",1600,1067,0.5,0.4],["places-08.jpg",1600,1067,0.55,0.45],["places-09.jpg",1600,1068,0.6,0.4],["places-10.jpg",1600,1068,0.5,0.55],["places-11.jpg",1067,1600,0.5,0.45]],"things":[["things-01.jpg",1067,1600,0.4,0.4],["things-02.jpg",1600,1068,0.5,0.6],["things-03.jpg",1600,1068,0.6,0.5],["things-04.jpg",1600,1067,0.5,0.65],["things-05.jpg",1600,1143,0.6,0.55],["things-06.jpg",1600,1143,0.45,0.5],["things-07.jpg",1600,1143,0.45,0.45],["things-08.jpg",1600,1067,0.55,0.55]],"music":[["music-01.jpg",1600,1067,0.6,0.45],["music-02.jpg",1600,1078,0.55,0.4],["music-03.jpg",1066,1600,0.5,0.35],["music-04.jpg",1600,1067,0.5,0.4],["music-05.jpg",1066,1600,0.5,0.35],["music-06.jpg",1067,1600,0.5,0.25],["music-07.jpg",1600,1068,0.5,0.4],["music-08.jpg",1067,1600,0.5,0.27],["music-09.jpg",1066,1600,0.6,0.38],["music-10.jpg",1600,1067,0.7,0.4],["music-11.jpg",1067,1600,0.5,0.25],["music-12.jpg",1067,1600,0.5,0.33],["music-13.jpg",1600,1067,0.5,0.5],["music-14.jpg",1600,1067,0.5,0.5],["music-15.jpg",1066,1600,0.5,0.3],["music-16.jpg",1600,1067,0.4,0.4],["music-17.jpg",1600,1067,0.4,0.4],["music-18.jpg",1170,1600,0.5,0.25],["music-19.jpg",1600,1067,0.6,0.45],["music-20.jpg",1600,1143,0.55,0.5],["music-21.jpg",1066,1600,0.5,0.45],["music-22.jpg",1600,1067,0.4,0.5],["music-23.jpg",1600,1067,0.55,0.5]],"art":[["art-01.jpg",1066,1600,0.5,0.5],["art-02.jpg",1600,1073,0.6,0.5],["art-03.jpg",1066,1600,0.5,0.4],["art-04.jpg",1066,1600,0.5,0.4],["art-05.jpg",1066,1600,0.5,0.3],["art-06.jpg",1600,1059,0.45,0.4],["art-07.jpg",1600,1067,0.4,0.45],["art-08.jpg",1600,1067,0.6,0.4],["art-09.jpg",1600,1067,0.45,0.5],["art-10.jpg",1600,1067,0.4,0.5],["art-11.jpg",1600,1068,0.5,0.5],["art-12.jpg",1600,1088,0.55,0.5],["art-13.jpg",1600,1058,0.72,0.5],["art-14.jpg",1067,1600,0.5,0.35],["art-15.jpg",1600,1068,0.5,0.5],["art-16.jpg",1600,1068,0.6,0.5],["art-17.jpg",1600,1068,0.45,0.5],["art-18.jpg",1600,1068,0.4,0.5],["art-19.jpg",1600,1068,0.55,0.5],["art-20.jpg",1600,1068,0.55,0.5],["art-21.jpg",1600,1068,0.45,0.5],["art-22.jpg",1600,1067,0.6,0.5],["art-23.jpg",1066,1600,0.5,0.35],["art-24.jpg",1066,1600,0.5,0.32],["art-25.jpg",1600,1068,0.45,0.5],["art-26.jpg",1600,1068,0.4,0.5],["art-27.jpg",1066,1600,0.5,0.3],["art-28.jpg",1600,1067,0.65,0.45],["art-29.jpg",1048,1600,0.5,0.3],["art-30.jpg",976,1600,0.5,0.32],["art-31.jpg",1067,1600,0.5,0.35],["art-32.jpg",1600,1068,0.6,0.5],["art-33.jpg",1600,1068,0.6,0.5]],"sports":[["sports-01.jpg",1066,1600,0.5,0.55],["sports-02.jpg",1600,1067,0.6,0.45],["sports-03.jpg",1600,1053,0.5,0.5],["sports-04.jpg",1600,1067,0.6,0.5],["sports-05.jpg",1600,1067,0.5,0.35],["sports-06.jpg",1600,1068,0.55,0.4],["sports-07.jpg",1600,1068,0.6,0.5],["sports-08.jpg",1066,1600,0.5,0.35],["sports-09.jpg",1600,1067,0.65,0.4],["sports-10.jpg",1600,1067,0.45,0.5],["sports-11.jpg",1600,1104,0.55,0.5]],"birds":[["birds-01.jpg",1066,1600,0.5,0.42],["birds-02.jpg",1067,1600,0.5,0.38],["birds-03.jpg",1146,1600,0.5,0.48],["birds-04.jpg",1066,1600,0.5,0.35],["birds-05.jpg",1127,1600,0.5,0.8],["birds-06.jpg",1600,1067,0.5,0.5],["birds-07.jpg",1600,1067,0.4,0.45],["birds-08.jpg",1600,1600,0.45,0.55],["birds-09.jpg",1225,1600,0.5,0.45],["birds-10.jpg",1600,1067,0.55,0.5],["birds-11.jpg",1066,1600,0.5,0.45],["birds-12.jpg",1600,1067,0.3,0.5],["birds-13.jpg",1031,1600,0.5,0.42],["birds-14.jpg",1600,1066,0.35,0.45]],"animals":[["animals-01.jpg",1600,1091,0.4,0.5],["animals-02.jpg",1600,1068,0.45,0.5],["animals-03.jpg",1600,1144,0.55,0.6],["animals-04.jpg",1600,1067,0.6,0.6],["animals-05.jpg",1600,1068,0.5,0.4],["animals-06.jpg",1600,1067,0.5,0.5],["animals-07.jpg",1600,1096,0.4,0.4],["animals-08.jpg",1555,1555,0.5,0.45],["animals-09.jpg",1066,1600,0.5,0.4],["animals-10.jpg",1600,1067,0.4,0.45]]};
 // Same order and covers as the live Portfolio grid; About sits in the centre.
 const PAGES = [
   {slug:"001-people",  key:"people",  title:"PEOPLE"},
@@ -258,6 +246,14 @@ function header(active){
 }
 const footer = () => `<footer class="site-footer">${SOCIAL.map(([h,l,i]) =>
   `<a href="${h}" target="_blank" rel="noopener" aria-label="${l}" title="${l}"><svg viewBox="0 0 30 24" aria-hidden="true">${ICONS[i]}</svg></a>`).join('')}</footer>`;
+// Aim an object-fit:cover crop at the photo's subject for a box of the given aspect ratio.
+function focus(f, box){
+  const [, w, h, fx = .5, fy = .5] = f, ar = w / h, c = v => Math.min(100, Math.max(0, v * 100)).toFixed(1);
+  if (ar > box){ const v = box / ar; return `${c((fx - v/2) / (1 - v))}% 50%`; }
+  if (ar < box){ const v = ar / box; return `50% ${c((fy - v/2) / (1 - v))}%`; }
+  return '50% 50%';
+}
+const COVER_AR = 457 / 350, GRID_AR = 4 / 3;
 const cover = p => `<a class="cover" href="#${p.slug}" data-key="${p.key}" aria-label="${p.title}"><img class="on" src="img/cover-${p.key}.jpg" alt=""><img alt=""><span aria-hidden="true">${p.title}</span></a>`;
 
 // Living covers: every ~1.2s one tile (never the one under the pointer) fades to another photo from its gallery.
@@ -266,7 +262,7 @@ function startLiveCovers(){
   stopLiveCovers();
   if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
   const tiles = [...app.querySelectorAll('.cover')].filter(c => (PHOTOS[c.dataset.key] || []).length > 1).map(c => {
-    const list = PHOTOS[c.dataset.key].map(f => 'img/' + f[0]);
+    const list = PHOTOS[c.dataset.key].slice();
     for (let i = list.length - 1; i > 0; i--){ const j = Math.floor(Math.random() * (i + 1)); [list[i], list[j]] = [list[j], list[i]]; }
     return { el: c, list, n: 0, busy: false };
   });
@@ -280,7 +276,8 @@ function startLiveCovers(){
     t.busy = true;
     back.onload = () => { back.classList.add('on'); front.classList.remove('on'); setTimeout(() => t.busy = false, 1500); };
     back.onerror = () => { t.busy = false; };
-    back.src = t.list[t.n++ % t.list.length];
+    const f = t.list[t.n++ % t.list.length];
+    back.style.objectPosition = focus(f, COVER_AR); back.src = 'img/' + f[0];
   }, 1200);
 }
 function stopLiveCovers(){ clearInterval(liveTimer); liveTimer = null; }
@@ -334,7 +331,7 @@ function galleryView(p){
         <nav aria-label="Site"><a href="#work">PORTFOLIO</a><a href="#${p.slug}" aria-current="page">${p.title}</a><a href="#about-me">ABOUT</a><a href="mailto:andreograves@gmail.com">CONNECT</a></nav>
       </header>
       <div class="page-header"><h1>${nice(p.title)}</h1></div>
-      <div class="music-grid">${order.map((k,position) => { const f = photos[k]; return `<button data-i="${k}" aria-label="Open ${nice(p.title)} photo ${k+1}"><img src="img/${f[0]}" width="${f[1]}" height="${f[2]}" alt="${nice(p.title)}, photo ${k+1}" loading="${position<4?'eager':'lazy'}"></button>`; }).join('')}</div>
+      <div class="music-grid">${order.map((k,position) => { const f = photos[k]; return `<button data-i="${k}" aria-label="Open ${nice(p.title)} photo ${k+1}"><img src="img/${f[0]}" style="object-position:${focus(f, GRID_AR)}" width="${f[1]}" height="${f[2]}" alt="${nice(p.title)}, photo ${k+1}" loading="${position<4?'eager':'lazy'}"></button>`; }).join('')}</div>
       <div class="music-bottom">${pager(p.slug)}${footer()}</div></div>`;
     app.querySelectorAll('.music-grid button').forEach(b => b.onclick = () => openLb(+b.dataset.i));
     return;
