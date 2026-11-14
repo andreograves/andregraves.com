@@ -130,6 +130,18 @@ button{font:inherit;color:inherit}
 .about-text p{margin:0;font-size:clamp(18px,1.55vw,22px);line-height:1.38;max-width:34em;text-shadow:0 1px 8px rgba(0,0,0,.35)}
 @media (max-width:768px){.about-text{padding-block:40px 120px}.about-text h1{margin-bottom:60px}}
 
+/* Postmarks behind the About page content. */
+.postmarks{position:absolute;inset:0;z-index:0;overflow:hidden;pointer-events:none}
+.about-page>.site-header,.about-page>.wrap{position:relative;z-index:1}
+.pm{position:absolute;width:calc(clamp(120px,15vw,230px) * var(--s));height:auto;transform:translate(-8%,-10%) rotate(var(--r));opacity:.42;fill:none;stroke-width:2.6;font-family:var(--type);overflow:visible}
+.pm text{fill:currentColor;stroke:none;letter-spacing:.06em;font-weight:700}
+.pm circle,.pm-bars path{stroke:currentColor}
+.pm-bars path{stroke-width:2}
+.pm-c{color:#f1e7d0}
+.pm-r{color:#ff6b5e;opacity:.55}
+.pm-b{color:#8cc4ff;opacity:.52}
+@media (max-width:700px){.pm{width:calc(96px * var(--s));opacity:.3}.pm-r,.pm-b{opacity:.4}}
+
 /* Footer */
 .site-footer{padding-block:60px 22px;display:flex;justify-content:center;gap:15px}
 .site-footer a{display:grid;place-items:center;width:45px;height:45px;border-radius:50%;background:var(--chip);color:var(--chip-ink);transition:background .2s,color .2s}
@@ -325,6 +337,27 @@ const SOCIAL = [
   ["mailto:andreograves@gmail.com","Email andreograves@gmail.com","email"]
 ];
 const NAME = "ANDRÉ O. GRAVES";
+// Postmarks scattered over the About page: [city, state/country, left %, top %, rotation, size, ink, cancel lines]
+const POSTMARKS = [
+  ["ERIE","PA",4,6,-14,1,"c",1],["PHILADELPHIA","PA",30,3,9,1.1,"r",0],["LOS ANGELES","CA",58,5,-6,1.05,"c",1],
+  ["DENVER","CO",84,9,16,.95,"b",0],["SAN FRANCISCO","CA",12,28,7,1.1,"c",0],["DUBLIN","IRELAND",44,24,-18,.95,"c",1],
+  ["MELBOURNE","AUSTRALIA",70,27,11,1.05,"r",0],["SYDNEY","AUSTRALIA",90,40,-9,.9,"c",1],["QUEENSTOWN","NEW ZEALAND",2,50,12,1.1,"b",0],
+  ["CHRISTCHURCH","NEW ZEALAND",28,47,-7,1.15,"c",1],["AUSTIN","TX",56,50,19,.9,"c",0],["HOUSTON","TX",78,62,-15,1,"r",1],
+  ["WASHINGTON","DC",14,71,-3,1.05,"c",0],["NEW YORK","NY",40,70,14,1.1,"b",1],["PORTLAND","OR",64,78,-11,.95,"c",0],
+  ["SEATTLE","WA",88,82,6,1.15,"r",1],["VANCOUVER","CANADA",4,88,-17,1,"c",1],["NIAGARA FALLS","CANADA",30,90,8,1.1,"c",0]
+];
+function postmark([city, region, x, y, rot, size, ink, cancel], i){
+  const fit = (t, max) => Math.min(11, max / (t.length * 0.62));
+  const bars = cancel ? `<g class="pm-bars">${[0,1,2,3,4].map(k => `<path d="M118 ${40+k*10} q12 -6 24 0 t24 0 t24 0 t24 0"/>`).join('')}</g>` : '';
+  return `<svg class="pm pm-${ink}" viewBox="0 0 220 120" style="left:${x}%;top:${y}%;--r:${rot}deg;--s:${size}">
+    <g filter="url(#pm-rough)"><circle cx="60" cy="60" r="54"/><circle cx="60" cy="60" r="38"/>
+    <path id="pmt${i}" d="M17 60 A43 43 0 0 1 103 60" fill="none" stroke="none"/><path id="pmb${i}" d="M14 60 A46 46 0 0 0 106 60" fill="none" stroke="none"/>
+    <text font-size="${fit(city,128)}" text-anchor="middle"><textPath href="#pmt${i}" startOffset="50%">${city}</textPath></text>
+    <text font-size="${fit(region,118)}" text-anchor="middle" dominant-baseline="hanging"><textPath href="#pmb${i}" startOffset="50%">${region}</textPath></text>
+    <text class="pm-star" x="60" y="67" font-size="20" text-anchor="middle">★</text>${bars}</g></svg>`;
+}
+const postmarks = () => `<div class="postmarks" aria-hidden="true"><svg width="0" height="0" style="position:absolute"><filter id="pm-rough"><feTurbulence type="fractalNoise" baseFrequency=".9" numOctaves="2" seed="7"/><feColorMatrix values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 -1.6 1.25"/><feComposite in="SourceGraphic" operator="in"/></filter></svg>${POSTMARKS.map(postmark).join('')}</div>`;
+
 const app = document.getElementById('app');
 
 function header(active){
@@ -444,7 +477,7 @@ let rz; window.addEventListener('resize', () => { clearTimeout(rz); rz = setTime
 
 function aboutView(){
   document.title = "About | André";
-  app.innerHTML = `<div class="view about-page on-photo">${header('about')}<div class="wrap">
+  app.innerHTML = `<div class="view about-page on-photo">${postmarks()}${header('about')}<div class="wrap">
     <div class="about-text"><h1>${NAME}</h1>
     <p>Currently residing in the Pacific Northwest, but always on the GO. Pointing my lens at everything along the way...</p>
     <p>Home base is Seattle, but the camera goes wherever I do: trumpet players and festival crowds in New Orleans, comics under the lights at The Comedy Store, skaters in the Venice bowl, eagles, gorillas and the occasional total solar eclipse. It's all about the adventure, the people I meet along the way, and getting a little better every time I press the shutter. Practice makes…practice.</p></div>
