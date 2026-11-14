@@ -125,7 +125,7 @@ button{font:inherit;color:inherit}
   .about-page::before{background:#070606}
   .about-page{display:flex;flex-direction:column}
   .about-page>.wrap{flex:1;display:flex;flex-direction:column}
-  .about-page>.wrap::after{content:"";flex:1;min-height:120px;margin-inline:calc(-1 * max(var(--gutter),env(safe-area-inset-left,0px)));
+  .about-page>.wrap::after{content:"";flex:1;min-height:60px;margin-inline:calc(-1 * max(var(--gutter),env(safe-area-inset-left,0px)));
     background:#070606 url(img/about-bg.jpg) 48% 42%/cover no-repeat;
     -webkit-mask-image:linear-gradient(to bottom,transparent 0,#000 34%);mask-image:linear-gradient(to bottom,transparent 0,#000 34%)}
   .about-page .site-footer{padding-bottom:6px}
@@ -264,16 +264,15 @@ button{font:inherit;color:inherit}
 @media (min-width:701px){
   .site-header{padding-bottom:clamp(16px,3.5vh,60px)}
   .masthead{font-size:clamp(28px,min(4.9vw,7vh),70px);padding-bottom:clamp(14px,3vh,40px)}
-  .covers{--ar:1.306;--chrome:calc(136px + 22vh);width:min(100%,calc((var(--vh) - var(--chrome,0px)) * var(--ar)));margin-inline:auto}
+  .covers{max-width:100%;margin-inline:auto}
   .music-view .music-header{padding-block:clamp(10px,2vh,24px)}
   .music-view .page-header{padding-block:clamp(4px,1.2vh,20px) clamp(10px,2.4vh,32px)}
-  .music-grid,.music-view .music-bottom{--ar:calc(16/9);--chrome:calc(208px + 11.5vh);width:min(calc(100% - 2*clamp(20px,4vw,80px)),calc((var(--vh) - var(--chrome,0px)) * var(--ar)));margin-inline:auto;padding-inline:0}
+  .music-grid,.music-view .music-bottom{max-width:calc(100% - 2*clamp(20px,4vw,80px));margin-inline:auto;padding-inline:0}
   .pager{padding-top:clamp(10px,2vh,24px)}
   .about-text{padding-block:clamp(16px,6vh,100px) clamp(16px,5vh,200px)}
   .about-text h1{margin-bottom:clamp(20px,9vh,150px)}
   .about-text p{font-size:clamp(16px,min(1.55vw,2.4vh),22px)}
 }
-@media (min-width:701px) and (max-width:1000px){.music-grid,.music-view .music-bottom{--ar:1}}
 /* Phones: the same layout, scaled down. Three columns keep the 3x3 portfolio and 12-photo galleries in full rows. */
 .covers{grid-template-columns:repeat(3,minmax(0,1fr))}
 @media (max-width:700px){
@@ -296,14 +295,6 @@ button{font:inherit;color:inherit}
   .work-view .cover{aspect-ratio:auto;min-height:90px}
 }
 
-/* Desktop and tablet: the Portfolio grid matches the gallery grid's width and stretches to fill the height down to the footer. */
-@media (min-width:701px){
-  .work-view{min-height:var(--vh);display:flex;flex-direction:column}
-  .work-view>.wrap{flex:1;display:flex;flex-direction:column}
-  .work-view .covers{flex:1;grid-auto-rows:1fr;min-height:0;--ar:calc(16/9);--chrome:calc(208px + 11.5vh);width:min(calc(100% - 2*clamp(20px,4vw,80px)),calc((var(--vh) - var(--chrome)) * var(--ar)))}
-  .work-view .cover{aspect-ratio:auto;min-height:0}
-}
-@media (min-width:701px) and (max-width:1000px){.work-view .covers{--ar:1}}
 </style>
 <meta property="og:image" content="https://andregraves.com/img/link-preview-20261108.jpg">
 <meta property="og:image:secure_url" content="https://andregraves.com/img/link-preview-20261108.jpg">
@@ -535,6 +526,7 @@ function route(){
   else if (p) galleryView(p);
   else splashView();
   window.scrollTo(0, 0);
+  fitGrid();
   track();
 }
 
@@ -596,6 +588,28 @@ let tx = null;
 lb.addEventListener('touchstart', e => tx = e.touches[0].clientX, {passive:true});
 lb.addEventListener('touchend', e => { if (tx === null) return; const dx = e.changedTouches[0].clientX - tx; if (Math.abs(dx) > 40) step(dx < 0 ? 1 : -1); tx = null; });
 
+// Desktop/tablet: size the grid so the whole page (header, title, grid, pager, footer) fits the window exactly.
+// Measures the real height of everything else, so it works for any window size, browser toolbar or font.
+function fitGrid(){
+  const g = document.querySelector('.covers, .music-grid');
+  const fitted = document.querySelectorAll('[data-fit]');
+  fitted.forEach(el => { el.style.width = ''; el.removeAttribute('data-fit'); });
+  if (!g || innerWidth <= 700) return;
+  const gap = parseFloat(getComputedStyle(g).columnGap) || 0;
+  const cols = getComputedStyle(g).gridTemplateColumns.split(' ').length;
+  const rows = Math.ceil(g.children.length / cols);
+  const gx = gap * (cols - 1), gy = gap * (rows - 1);
+  const w0 = g.getBoundingClientRect().width, h0 = g.getBoundingClientRect().height;
+  const chrome = document.documentElement.scrollHeight - h0;
+  const room = innerHeight - chrome - 1;
+  if (room <= gy || h0 <= gy) return;
+  const w = Math.max(160, gx + (w0 - gx) * (room - gy) / (h0 - gy));
+  [g, document.querySelector('.music-view .music-bottom')].forEach(el => { if (el){ el.style.width = w + 'px'; el.setAttribute('data-fit',''); } });
+}
+let fitRaf = 0;
+const queueFit = () => { cancelAnimationFrame(fitRaf); fitRaf = requestAnimationFrame(fitGrid); };
+addEventListener('resize', queueFit);
+if (document.fonts) document.fonts.ready.then(queueFit);
 window.addEventListener('hashchange', route);
 route();
 </script>
