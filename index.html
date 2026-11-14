@@ -120,7 +120,16 @@ button{font:inherit;color:inherit}
 /* About page */
 .about-page{position:relative;z-index:0;min-height:100svh;color:var(--white)}
 .about-page::before{content:"";position:fixed;inset:0;z-index:-1;background:#222 url(img/about-bg.jpg) center/cover no-repeat}
-@media (max-width:768px){.about-page::before{background:linear-gradient(rgba(0,0,0,.5),rgba(0,0,0,.5)),#222 url(img/about-bg.jpg) center/cover no-repeat}}
+@media (max-width:768px){
+  /* Phones: the portrait fills whatever space is left under the footer, so text and icons never sit on the face. */
+  .about-page::before{background:#070606}
+  .about-page{display:flex;flex-direction:column}
+  .about-page>.wrap{flex:1;display:flex;flex-direction:column}
+  .about-page>.wrap::after{content:"";flex:1;min-height:120px;margin-inline:calc(-1 * max(var(--gutter),env(safe-area-inset-left,0px)));
+    background:#070606 url(img/about-bg.jpg) 48% 42%/cover no-repeat;
+    -webkit-mask-image:linear-gradient(to bottom,transparent 0,#000 34%);mask-image:linear-gradient(to bottom,transparent 0,#000 34%)}
+  .about-page .site-footer{padding-bottom:6px}
+}
 @media (min-width:769px){.about-page::before{background:#080707 url(img/about-bg-wide.jpg) center/cover no-repeat}}
 .about-page .site-header .pages a{color:rgba(255,255,255,.7)}
 .about-page .site-header .pages a:hover,.about-page .site-header .pages a.active{color:var(--white)}
