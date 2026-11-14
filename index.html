@@ -158,6 +158,9 @@ button{font:inherit;color:inherit}
 .music-header nav{display:flex;gap:28px;align-items:center}
 .music-header nav a{font-size:11px;letter-spacing:.05em}
 .music-header nav a:hover{text-decoration:underline;text-underline-offset:5px}
+/* Hand-drawn camera (the favicon, in the masthead grey) sketched behind the current gallery's name. */
+.music-header nav a[aria-current]{position:relative;isolation:isolate;text-shadow:0 0 2px var(--bg),0 0 2px var(--bg),0 0 3px var(--bg)}
+.music-header nav a[aria-current]::before{content:"";position:absolute;left:50%;top:50%;z-index:-1;width:52px;height:52px;transform:translate(-50%,-54%) rotate(-7deg);background:url(img/camera-mark.svg) center/contain no-repeat;pointer-events:none}
 .music-view .page-header{width:65%;margin:auto;padding:0 0 10px;text-align:left}
 .music-view .page-header h1{font-size:26px;line-height:1.2;text-transform:none;letter-spacing:.04em}
 .music-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr))}
