@@ -135,12 +135,21 @@ button{font:inherit;color:inherit}
 .about-page>.site-header,.about-page>.wrap{position:relative;z-index:1}
 .pm{position:absolute;width:calc(clamp(120px,15vw,230px) * var(--s));height:auto;transform:translate(-8%,-10%) rotate(var(--r));opacity:.42;fill:none;stroke-width:2.6;font-family:var(--type);overflow:visible}
 .pm text{fill:currentColor;stroke:none;letter-spacing:.06em;font-weight:700}
-.pm circle,.pm-bars path{stroke:currentColor}
+.pm circle,.pm-bars path,.pm-pp rect,.pm-pp ellipse{stroke:currentColor}
 .pm-bars path{stroke-width:2}
 .pm-c{color:#f1e7d0}
 .pm-r{color:#ff6b5e;opacity:.55}
 .pm-b{color:#8cc4ff;opacity:.52}
-@media (max-width:700px){.pm{width:calc(96px * var(--s));opacity:.3}.pm-r,.pm-b{opacity:.4}}
+.pm-g{color:#7fe0a8;opacity:.5}
+.pm-p{color:#c9a3ff;opacity:.5}
+.pm-pp{width:calc(clamp(120px,14vw,210px) * var(--s))}
+.pm-st{width:calc(clamp(70px,8vw,120px) * var(--s));opacity:.3}
+.pm-st .st-paper{fill:#efe6d2;stroke:none}
+.pm-st .st-panel{fill:none;stroke:currentColor;stroke-width:1.5}
+.pm-st .st-ink{fill:#2a2522;font-weight:700}
+.pm-st .st-cancel path{stroke:#2a2522;stroke-width:1.6;opacity:.7}
+.pm-st.pm-c{color:#8a6d4a}
+@media (max-width:700px){.pm{width:calc(96px * var(--s));opacity:.3}.pm-r,.pm-b,.pm-g,.pm-p{opacity:.4}.pm-st{width:calc(58px * var(--s));opacity:.26}}
 
 /* Footer */
 .site-footer{padding-block:60px 22px;display:flex;justify-content:center;gap:15px}
@@ -337,27 +346,64 @@ const SOCIAL = [
   ["mailto:andreograves@gmail.com","Email andreograves@gmail.com","email"]
 ];
 const NAME = "ANDRÉ O. GRAVES";
-// Postmarks scattered over the About page: [city, state/country, left %, top %, rotation, size, ink, cancel lines]
+// Travel marks scattered over the About page.
+// [city, region, postal code, international?, left %, top %, rotation, size, ink, cancel lines]
 const POSTMARKS = [
-  ["ERIE","PA",4,6,-14,1,"c",1],["PHILADELPHIA","PA",30,3,9,1.1,"r",0],["LOS ANGELES","CA",58,5,-6,1.05,"c",1],
-  ["DENVER","CO",84,9,16,.95,"b",0],["SAN FRANCISCO","CA",12,28,7,1.1,"c",0],["DUBLIN","IRELAND",44,24,-18,.95,"c",1],
-  ["MELBOURNE","AUSTRALIA",70,27,11,1.05,"r",0],["SYDNEY","AUSTRALIA",90,40,-9,.9,"c",1],["QUEENSTOWN","NEW ZEALAND",2,50,12,1.1,"b",0],
-  ["CHRISTCHURCH","NEW ZEALAND",28,47,-7,1.15,"c",1],["AUSTIN","TX",56,50,19,.9,"c",0],["HOUSTON","TX",78,62,-15,1,"r",1],
-  ["WASHINGTON","DC",14,71,-3,1.05,"c",0],["NEW YORK","NY",40,70,14,1.1,"b",1],["PORTLAND","OR",64,78,-11,.95,"c",0],
-  ["SEATTLE","WA",88,82,6,1.15,"r",1],["VANCOUVER","CANADA",4,88,-17,1,"c",1],["NIAGARA FALLS","CANADA",30,90,8,1.1,"c",0],
-  ["ATLANTA","GA",72,44,-12,.95,"c",0],["NEW ORLEANS","LA",54,89,-8,1.1,"r",1],["TAMPA","FL",94,58,13,.95,"b",0]
+  ["ERIE","PENNSYLVANIA","16501",0,4,6,-14,1,"c",1],["PHILADELPHIA","PENNSYLVANIA","19107",0,30,3,9,1.1,"r",0],
+  ["LOS ANGELES","CALIFORNIA","90012",0,58,5,-6,1.05,"c",1],["DENVER","COLORADO","80202",0,84,9,16,.95,"b",0],
+  ["SAN FRANCISCO","CALIFORNIA","94102",0,12,28,7,1.1,"c",0],["DUBLIN","IRELAND","D01",1,44,24,-18,.95,"g",1],
+  ["MELBOURNE","AUSTRALIA","3000",1,70,27,11,1.05,"r",0],["SYDNEY","AUSTRALIA","2000",1,90,40,-9,.9,"p",1],
+  ["QUEENSTOWN","NEW ZEALAND","9300",1,2,50,12,1.1,"b",0],["CHRISTCHURCH","NEW ZEALAND","8011",1,28,47,-7,1.15,"c",1],
+  ["AUSTIN","TEXAS","78701",0,56,50,19,.9,"c",0],["HOUSTON","TEXAS","77002",0,78,62,-15,1,"r",1],
+  ["WASHINGTON","DISTRICT OF COLUMBIA","20001",0,14,71,-3,1.05,"c",0],["NEW YORK","NEW YORK","10001",0,40,70,14,1.1,"b",1],
+  ["PORTLAND","OREGON","97204",0,64,78,-11,.95,"c",0],["SEATTLE","WASHINGTON","98101",0,88,82,6,1.15,"r",1],
+  ["VANCOUVER","CANADA","V6B",1,4,88,-17,1,"g",1],["NIAGARA FALLS","CANADA","L2E",1,30,90,8,1.1,"c",0],
+  ["ATLANTA","GEORGIA","30303",0,72,44,-12,.95,"c",0],["NEW ORLEANS","LOUISIANA","70112",0,54,89,-8,1.1,"r",1],
+  ["TAMPA","FLORIDA","33602",0,94,58,13,.95,"b",0]
 ];
-function postmark([city, region, x, y, rot, size, ink, cancel], i){
-  const fit = (t, max) => Math.min(11, max / (t.length * 0.62));
+const fitText = (t, max, cap) => Math.min(cap, max / (t.length * 0.62));
+// Round cancellation postmark: city over the top, state/country under the bottom, postal code in the middle.
+function postmark([city, region, zip, intl, x, y, rot, size, ink, cancel], i){
   const bars = cancel ? `<g class="pm-bars">${[0,1,2,3,4].map(k => `<path d="M118 ${40+k*10} q12 -6 24 0 t24 0 t24 0 t24 0"/>`).join('')}</g>` : '';
   return `<svg class="pm pm-${ink}" viewBox="0 0 220 120" style="left:${x}%;top:${y}%;--r:${rot}deg;--s:${size}">
     <g filter="url(#pm-rough)"><circle cx="60" cy="60" r="54"/><circle cx="60" cy="60" r="38"/>
     <path id="pmt${i}" d="M17 60 A43 43 0 0 1 103 60" fill="none" stroke="none"/><path id="pmb${i}" d="M14 60 A46 46 0 0 0 106 60" fill="none" stroke="none"/>
-    <text font-size="${fit(city,128)}" text-anchor="middle"><textPath href="#pmt${i}" startOffset="50%">${city}</textPath></text>
-    <text font-size="${fit(region,118)}" text-anchor="middle" dominant-baseline="hanging"><textPath href="#pmb${i}" startOffset="50%">${region}</textPath></text>
-    <text class="pm-star" x="60" y="67" font-size="20" text-anchor="middle">★</text>${bars}</g></svg>`;
+    <text font-size="${fitText(city,128,11)}" text-anchor="middle"><textPath href="#pmt${i}" startOffset="50%">${city}</textPath></text>
+    <text font-size="${fitText(region,124,10)}" text-anchor="middle" dominant-baseline="hanging"><textPath href="#pmb${i}" startOffset="50%">${region}</textPath></text>
+    <text x="60" y="66" font-size="${fitText(zip,60,17)}" text-anchor="middle">${zip}</text>${bars}</g></svg>`;
 }
-const postmarks = () => `<div class="postmarks" aria-hidden="true"><svg width="0" height="0" style="position:absolute"><filter id="pm-rough"><feTurbulence type="fractalNoise" baseFrequency=".9" numOctaves="2" seed="7"/><feColorMatrix values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 -1.6 1.25"/><feComposite in="SourceGraphic" operator="in"/></filter></svg>${POSTMARKS.map(postmark).join('')}</div>`;
+// Passport entry stamp: boxed or oval, ENTRY / ARRIVED, city, country, postal code and a plane.
+function passport([city, region, zip, intl, x, y, rot, size, ink], i){
+  const oval = i % 2;
+  const frame = oval ? `<ellipse cx="80" cy="50" rx="76" ry="46"/><ellipse cx="80" cy="50" rx="68" ry="38" stroke-dasharray="2 3"/>`
+                     : `<rect x="4" y="4" width="152" height="92" rx="10"/><rect x="11" y="11" width="138" height="78" rx="5"/>`;
+  const label = ["ENTRY","ARRIVED","ADMITTED","IMMIGRATION"][i % 4];
+  return `<svg class="pm pm-pp pm-${ink}" viewBox="0 0 160 100" style="left:${x}%;top:${y}%;--r:${rot}deg;--s:${size}">
+    <g filter="url(#pm-rough)">${frame}
+    <text x="80" y="${oval?30:28}" font-size="10" text-anchor="middle" letter-spacing="3">${label}</text>
+    <text x="80" y="54" font-size="${fitText(city,oval?88:110,18)}" text-anchor="middle">${city}</text>
+    <text x="80" y="70" font-size="${fitText(region,oval?100:120,10)}" text-anchor="middle">${region}</text>
+    <text x="80" y="${oval?84:83}" font-size="10" text-anchor="middle">✈ ${zip}</text></g></svg>`;
+}
+// Perforated postage stamp with a cancellation over one corner.
+function stamp([city, region, zip, intl, x, y, rot, size, ink, cancel], i){
+  const holes = [];
+  for (let k = 0; k <= 10; k++){ holes.push(`<circle cx="${k*10}" cy="0" r="3"/><circle cx="${k*10}" cy="124" r="3"/>`); }
+  for (let k = 0; k <= 12; k++){ holes.push(`<circle cx="0" cy="${k*10+2}" r="3"/><circle cx="100" cy="${k*10+2}" r="3"/>`); }
+  const bars = cancel ? `<g class="pm-bars" transform="translate(-70 -10)">${[0,1,2,3].map(k => `<path d="M118 ${40+k*9} q10 -5 20 0 t20 0 t20 0 t20 0"/>`).join('')}</g>` : '';
+  return `<svg class="pm pm-st pm-${ink}" viewBox="-6 -6 112 136" style="left:${x}%;top:${y}%;--r:${rot}deg;--s:${size}">
+    <defs><mask id="stm${i}"><rect x="0" y="0" width="100" height="124" fill="#fff"/><g fill="#000">${holes.join('')}</g></mask></defs>
+    <rect class="st-paper" x="0" y="0" width="100" height="124" mask="url(#stm${i})"/>
+    <rect class="st-panel" x="9" y="9" width="82" height="106"/>
+    <text class="st-ink" x="50" y="24" font-size="8" text-anchor="middle" letter-spacing="2">${intl ? 'AIR MAIL' : 'U.S. POSTAGE'}</text>
+    <text class="st-ink" x="50" y="60" font-size="${fitText(city,76,15)}" text-anchor="middle">${city}</text>
+    <text class="st-ink" x="50" y="74" font-size="${fitText(region,74,8)}" text-anchor="middle">${region}</text>
+    <text class="st-ink" x="50" y="104" font-size="${fitText(zip,60,16)}" text-anchor="middle">${zip}</text>
+    <g filter="url(#pm-rough)" class="st-cancel">${bars}</g></svg>`;
+}
+const PM_STYLE = window.PM_STYLE || 'postmark';
+const travelMark = (m, i) => PM_STYLE === 'stamps' ? stamp(m, i) : (PM_STYLE === 'passport' && m[3]) ? passport(m, i) : postmark(m, i);
+const postmarks = () => `<div class="postmarks pm-style-${PM_STYLE}" aria-hidden="true"><svg width="0" height="0" style="position:absolute"><filter id="pm-rough"><feTurbulence type="fractalNoise" baseFrequency=".9" numOctaves="2" seed="7"/><feColorMatrix values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 -1.6 1.25"/><feComposite in="SourceGraphic" operator="in"/></filter></svg>${POSTMARKS.map(travelMark).join('')}</div>`;
 
 const app = document.getElementById('app');
 
