@@ -344,7 +344,8 @@ const POSTMARKS = [
   ["MELBOURNE","AUSTRALIA",70,27,11,1.05,"r",0],["SYDNEY","AUSTRALIA",90,40,-9,.9,"c",1],["QUEENSTOWN","NEW ZEALAND",2,50,12,1.1,"b",0],
   ["CHRISTCHURCH","NEW ZEALAND",28,47,-7,1.15,"c",1],["AUSTIN","TX",56,50,19,.9,"c",0],["HOUSTON","TX",78,62,-15,1,"r",1],
   ["WASHINGTON","DC",14,71,-3,1.05,"c",0],["NEW YORK","NY",40,70,14,1.1,"b",1],["PORTLAND","OR",64,78,-11,.95,"c",0],
-  ["SEATTLE","WA",88,82,6,1.15,"r",1],["VANCOUVER","CANADA",4,88,-17,1,"c",1],["NIAGARA FALLS","CANADA",30,90,8,1.1,"c",0]
+  ["SEATTLE","WA",88,82,6,1.15,"r",1],["VANCOUVER","CANADA",4,88,-17,1,"c",1],["NIAGARA FALLS","CANADA",30,90,8,1.1,"c",0],
+  ["ATLANTA","GA",72,44,-12,.95,"c",0],["NEW ORLEANS","LA",54,89,-8,1.1,"r",1],["TAMPA","FL",94,58,13,.95,"b",0]
 ];
 function postmark([city, region, x, y, rot, size, ink, cancel], i){
   const fit = (t, max) => Math.min(11, max / (t.length * 0.62));
