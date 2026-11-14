@@ -159,16 +159,28 @@ button{font:inherit;color:inherit}
 .music-header nav a{font-size:11px;letter-spacing:.05em}
 .music-header nav a:hover{text-decoration:underline;text-underline-offset:5px}
 /* Highlighter swipe behind the current gallery's name, a different color per gallery. */
-.music-header nav a[aria-current]{position:relative;isolation:isolate;--hl:#ffe94d}
+.music-view{--hl:#ffe94d}
+.music-view[data-g="people"]{--hl:#ffe94d}
+.music-view[data-g="places"]{--hl:#7fd8ff}
+.music-view[data-g="things"]{--hl:#ff8fc7}
+.music-view[data-g="music"]{--hl:#ffb04d}
+.music-view[data-g="art"]{--hl:#c4a3ff}
+.music-view[data-g="sports"]{--hl:#8ef07c}
+.music-view[data-g="birds"]{--hl:#6ff0d6}
+.music-view[data-g="animals"]{--hl:#ff8a7a}
+.music-header nav a[aria-current]{position:relative;isolation:isolate}
 .music-header nav a[aria-current]::before{content:"";position:absolute;left:-7px;right:-9px;top:50%;height:1.45em;z-index:-1;transform:translateY(-48%) rotate(-2.5deg) skewX(-12deg);background:var(--hl);opacity:.78;mix-blend-mode:multiply;-webkit-mask:url("data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 200 40%22 preserveAspectRatio=%22none%22%3E%3Cpath d=%22M4 9 C18 6 40 7 62 6 C90 5 118 7 146 5 C166 4 184 6 195 8 C198 12 196 15 198 19 C196 24 199 28 196 33 C182 35 160 34 138 35 C110 36 84 34 58 35 C38 36 20 35 6 33 C3 29 5 25 2 21 C4 17 1 13 4 9 Z%22/%3E%3Cpath d=%22M8 32 C40 34 90 33 130 34 C160 35 182 34 194 32 L194 34 C180 36 150 37 120 36 C80 36 40 36 10 35 Z%22 opacity=%22.6%22/%3E%3C/svg%3E") center/100% 100% no-repeat;mask:url("data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 200 40%22 preserveAspectRatio=%22none%22%3E%3Cpath d=%22M4 9 C18 6 40 7 62 6 C90 5 118 7 146 5 C166 4 184 6 195 8 C198 12 196 15 198 19 C196 24 199 28 196 33 C182 35 160 34 138 35 C110 36 84 34 58 35 C38 36 20 35 6 33 C3 29 5 25 2 21 C4 17 1 13 4 9 Z%22/%3E%3Cpath d=%22M8 32 C40 34 90 33 130 34 C160 35 182 34 194 32 L194 34 C180 36 150 37 120 36 C80 36 40 36 10 35 Z%22 opacity=%22.6%22/%3E%3C/svg%3E") center/100% 100% no-repeat;pointer-events:none}
-.music-header nav a[href="#001-people"]{--hl:#ffe94d}
-.music-header nav a[href="#002-places"]{--hl:#7fd8ff}
-.music-header nav a[href="#003-things"]{--hl:#ff8fc7}
-.music-header nav a[href="#004-music"]{--hl:#ffb04d}
-.music-header nav a[href="#005-art"]{--hl:#c4a3ff}
-.music-header nav a[href="#006-sports"]{--hl:#8ef07c}
-.music-header nav a[href="#007-birds"]{--hl:#6ff0d6}
-.music-header nav a[href="#008-animals"]{--hl:#ff8a7a}
+/* Phones: the current gallery leaves the header menu; the swipe moves to the centered gallery title. */
+@media (max-width:700px){
+  .music-view .music-header nav{flex-wrap:nowrap;gap:12px}
+  .music-view .music-header nav a[aria-current]{display:none}
+  .music-view .music-header nav a{font-size:10.5px;white-space:nowrap}
+  .music-view .music-header{align-items:center}
+  .music-view .music-brand{flex-shrink:1;min-width:0}
+  .music-view .page-header h1{display:inline-block;position:relative;isolation:isolate;padding-inline:.15em}
+  .music-view .page-header h1::before{content:"";position:absolute;left:-.25em;right:-.3em;top:50%;height:1.15em;z-index:-1;transform:translateY(-48%) rotate(-2.5deg) skewX(-12deg);background:var(--hl);opacity:.78;mix-blend-mode:multiply;-webkit-mask:url("data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 200 40%22 preserveAspectRatio=%22none%22%3E%3Cpath d=%22M4 9 C18 6 40 7 62 6 C90 5 118 7 146 5 C166 4 184 6 195 8 C198 12 196 15 198 19 C196 24 199 28 196 33 C182 35 160 34 138 35 C110 36 84 34 58 35 C38 36 20 35 6 33 C3 29 5 25 2 21 C4 17 1 13 4 9 Z%22/%3E%3Cpath d=%22M8 32 C40 34 90 33 130 34 C160 35 182 34 194 32 L194 34 C180 36 150 37 120 36 C80 36 40 36 10 35 Z%22 opacity=%22.6%22/%3E%3C/svg%3E") center/100% 100% no-repeat;mask:url("data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 200 40%22 preserveAspectRatio=%22none%22%3E%3Cpath d=%22M4 9 C18 6 40 7 62 6 C90 5 118 7 146 5 C166 4 184 6 195 8 C198 12 196 15 198 19 C196 24 199 28 196 33 C182 35 160 34 138 35 C110 36 84 34 58 35 C38 36 20 35 6 33 C3 29 5 25 2 21 C4 17 1 13 4 9 Z%22/%3E%3Cpath d=%22M8 32 C40 34 90 33 130 34 C160 35 182 34 194 32 L194 34 C180 36 150 37 120 36 C80 36 40 36 10 35 Z%22 opacity=%22.6%22/%3E%3C/svg%3E") center/100% 100% no-repeat;pointer-events:none}
+}
+@media (max-width:380px){.music-view .music-header nav{gap:9px}.music-view .music-header nav a{font-size:10px}.music-view .music-brand{font-size:16px}}
 .music-view .page-header{width:65%;margin:auto;padding:0 0 10px;text-align:left}
 .music-view .page-header h1{font-size:26px;line-height:1.2;text-transform:none;letter-spacing:.04em}
 .music-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr))}
@@ -376,7 +388,7 @@ function galleryView(p){
       const j = Math.floor(Math.random() * (i + 1));
       [order[i], order[j]] = [order[j], order[i]];
     }
-    app.innerHTML = `<div class="view music-view">
+    app.innerHTML = `<div class="view music-view" data-g="${p.key}">
       <header class="music-header"><a class="music-brand" href="#work">${NAME}</a>
         <nav aria-label="Site"><a href="#work">PORTFOLIO</a><a href="#${p.slug}" aria-current="page">${p.title}</a><a href="#about-me">ABOUT</a><a href="mailto:andreograves@gmail.com">CONNECT</a></nav>
       </header>
