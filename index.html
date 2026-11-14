@@ -169,7 +169,26 @@ button{font:inherit;color:inherit}
 .music-view[data-g="birds"]{--hl:#6ff0d6}
 .music-view[data-g="animals"]{--hl:#ff8a7a}
 .music-header nav a[aria-current]{position:relative;isolation:isolate}
-.music-header nav a[aria-current]::before{content:"";position:absolute;left:-7px;right:-9px;top:50%;height:1.45em;z-index:-1;transform:translateY(-48%) rotate(-2.5deg) skewX(-12deg);background:var(--hl);opacity:.78;mix-blend-mode:multiply;-webkit-mask:url("data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 200 40%22 preserveAspectRatio=%22none%22%3E%3Cpath d=%22M4 9 C18 6 40 7 62 6 C90 5 118 7 146 5 C166 4 184 6 195 8 C198 12 196 15 198 19 C196 24 199 28 196 33 C182 35 160 34 138 35 C110 36 84 34 58 35 C38 36 20 35 6 33 C3 29 5 25 2 21 C4 17 1 13 4 9 Z%22/%3E%3Cpath d=%22M8 32 C40 34 90 33 130 34 C160 35 182 34 194 32 L194 34 C180 36 150 37 120 36 C80 36 40 36 10 35 Z%22 opacity=%22.6%22/%3E%3C/svg%3E") center/100% 100% no-repeat;mask:url("data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 200 40%22 preserveAspectRatio=%22none%22%3E%3Cpath d=%22M4 9 C18 6 40 7 62 6 C90 5 118 7 146 5 C166 4 184 6 195 8 C198 12 196 15 198 19 C196 24 199 28 196 33 C182 35 160 34 138 35 C110 36 84 34 58 35 C38 36 20 35 6 33 C3 29 5 25 2 21 C4 17 1 13 4 9 Z%22/%3E%3Cpath d=%22M8 32 C40 34 90 33 130 34 C160 35 182 34 194 32 L194 34 C180 36 150 37 120 36 C80 36 40 36 10 35 Z%22 opacity=%22.6%22/%3E%3C/svg%3E") center/100% 100% no-repeat;pointer-events:none}
+.music-header nav a[aria-current]::before{content:"";position:absolute;left:-7px;right:-9px;top:50%;height:1.45em;z-index:-1;transform:translateY(-48%) rotate(-2.5deg) skewX(-12deg);background:var(--hl);opacity:.78;mix-blend-mode:multiply;-webkit-mask:var(--swipe) center/100% 100% no-repeat;mask:var(--swipe) center/100% 100% no-repeat;pointer-events:none}
+/* Hover: the same swipe, in the gallery's color, sweeps in under any text link. */
+.music-view .music-brand,.music-header nav a,.music-view .pager b,.music-view .pager .all span{position:relative;isolation:isolate}
+.music-view .pager b{width:fit-content}
+.music-view .music-brand::before,.music-header nav a:not([aria-current])::before,.music-view .pager b::before,.music-view .pager .all span::before{content:"";position:absolute;left:-6px;right:-8px;top:50%;height:1.45em;z-index:-1;transform:translateY(-48%) rotate(-2.5deg) skewX(-12deg);background:var(--hl);opacity:.78;mix-blend-mode:multiply;-webkit-mask:var(--swipe) center/100% 100% no-repeat;mask:var(--swipe) center/100% 100% no-repeat;pointer-events:none;clip-path:inset(0 100% 0 0);transition:clip-path .28s ease-out}
+.music-view .music-brand:hover::before,.music-header nav a:hover::before,.music-view .pager a:hover b::before,.music-view .pager .all:hover span::before,.music-view .music-brand:focus-visible::before,.music-header nav a:focus-visible::before{clip-path:inset(0 0 0 0)}
+.music-header nav a:hover{text-decoration:none}
+.music-view .pager a:hover{color:#000}
+@media (hover:none){.music-view .music-brand::before,.music-header nav a:not([aria-current])::before,.music-view .pager b::before,.music-view .pager .all span::before{display:none}}
+/* House color: the same hover swipe in People yellow on the Portfolio, About and Home pages and the phone menu. */
+:root{--hl:#ffe94d}
+.site-header .pages a,.splash a,.about-page .pager .all span,.menu a{position:relative;isolation:isolate}
+.site-header .pages a::before,.splash a::before,.about-page .pager .all span::before,.menu a::before{content:"";position:absolute;left:-6px;right:-8px;top:50%;height:1.45em;z-index:-1;transform:translateY(-48%) rotate(-2.5deg) skewX(-12deg);background:var(--hl);opacity:.78;mix-blend-mode:multiply;-webkit-mask:var(--swipe) center/100% 100% no-repeat;mask:var(--swipe) center/100% 100% no-repeat;pointer-events:none;clip-path:inset(0 100% 0 0);transition:clip-path .28s ease-out}
+.site-header .pages a:hover::before,.splash a:hover::before,.about-page .pager .all:hover span::before,.menu a:hover::before,.site-header .pages a:focus-visible::before,.splash a:focus-visible::before,.menu a:focus-visible::before{clip-path:inset(0 0 0 0)}
+.site-header .pages a:hover{color:#000}
+/* On photos, white text can't sit on translucent yellow: the swipe goes solid and the text turns black. */
+.splash a::before,.about-page .site-header .pages a::before,.about-page .pager .all span::before{opacity:1;mix-blend-mode:normal}
+.about-page .pager .all span::before,.music-view .pager .all span::before{height:1.5em;transform:translateY(-62%) rotate(-2.5deg) skewX(-12deg)}
+.splash a:hover,.about-page .site-header .pages a:hover,.about-page .pager .all:hover{color:#111!important}
+@media (hover:none){.site-header .pages a::before,.splash a::before,.about-page .pager .all span::before,.menu a::before{display:none}}
 /* Phones: the current gallery leaves the header menu; the swipe moves to the centered gallery title. */
 @media (max-width:700px){
   .music-view .music-header nav{flex-wrap:nowrap;gap:12px}
@@ -178,7 +197,7 @@ button{font:inherit;color:inherit}
   .music-view .music-header{align-items:center}
   .music-view .music-brand{flex-shrink:1;min-width:0}
   .music-view .page-header h1{display:inline-block;position:relative;isolation:isolate;padding-inline:.15em}
-  .music-view .page-header h1::before{content:"";position:absolute;left:-.25em;right:-.3em;top:50%;height:1.15em;z-index:-1;transform:translateY(-48%) rotate(-2.5deg) skewX(-12deg);background:var(--hl);opacity:.78;mix-blend-mode:multiply;-webkit-mask:url("data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 200 40%22 preserveAspectRatio=%22none%22%3E%3Cpath d=%22M4 9 C18 6 40 7 62 6 C90 5 118 7 146 5 C166 4 184 6 195 8 C198 12 196 15 198 19 C196 24 199 28 196 33 C182 35 160 34 138 35 C110 36 84 34 58 35 C38 36 20 35 6 33 C3 29 5 25 2 21 C4 17 1 13 4 9 Z%22/%3E%3Cpath d=%22M8 32 C40 34 90 33 130 34 C160 35 182 34 194 32 L194 34 C180 36 150 37 120 36 C80 36 40 36 10 35 Z%22 opacity=%22.6%22/%3E%3C/svg%3E") center/100% 100% no-repeat;mask:url("data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 200 40%22 preserveAspectRatio=%22none%22%3E%3Cpath d=%22M4 9 C18 6 40 7 62 6 C90 5 118 7 146 5 C166 4 184 6 195 8 C198 12 196 15 198 19 C196 24 199 28 196 33 C182 35 160 34 138 35 C110 36 84 34 58 35 C38 36 20 35 6 33 C3 29 5 25 2 21 C4 17 1 13 4 9 Z%22/%3E%3Cpath d=%22M8 32 C40 34 90 33 130 34 C160 35 182 34 194 32 L194 34 C180 36 150 37 120 36 C80 36 40 36 10 35 Z%22 opacity=%22.6%22/%3E%3C/svg%3E") center/100% 100% no-repeat;pointer-events:none}
+  .music-view .page-header h1::before{content:"";position:absolute;left:-.25em;right:-.3em;top:50%;height:1.15em;z-index:-1;transform:translateY(-48%) rotate(-2.5deg) skewX(-12deg);background:var(--hl);opacity:.78;mix-blend-mode:multiply;-webkit-mask:var(--swipe) center/100% 100% no-repeat;mask:var(--swipe) center/100% 100% no-repeat;pointer-events:none}
 }
 @media (max-width:380px){.music-view .music-header nav{gap:9px}.music-view .music-header nav a{font-size:10px}.music-view .music-brand{font-size:16px}}
 .music-view .page-header{width:65%;margin:auto;padding:0 0 10px;text-align:left}
@@ -218,7 +237,7 @@ button{font:inherit;color:inherit}
 
 /* Fit to the window: on tablets and up, each page's grid is sized so the whole page,
    header to footer, fits the viewport height. Phones keep the scrolling layout. */
-:root{--vh:100vh}
+:root{--vh:100vh;--swipe:url("data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 200 40%22 preserveAspectRatio=%22none%22%3E%3Cpath d=%22M4 9 C18 6 40 7 62 6 C90 5 118 7 146 5 C166 4 184 6 195 8 C198 12 196 15 198 19 C196 24 199 28 196 33 C182 35 160 34 138 35 C110 36 84 34 58 35 C38 36 20 35 6 33 C3 29 5 25 2 21 C4 17 1 13 4 9 Z%22/%3E%3Cpath d=%22M8 32 C40 34 90 33 130 34 C160 35 182 34 194 32 L194 34 C180 36 150 37 120 36 C80 36 40 36 10 35 Z%22 opacity=%22.6%22/%3E%3C/svg%3E")}
 @supports (height:100svh){:root{--vh:100svh}}
 .site-footer{padding-block:clamp(20px,4vh,60px) clamp(14px,2.4vh,22px)}
 @media (min-width:701px){
@@ -366,7 +385,7 @@ const GALLERIES = PAGES.filter(p => p.key !== 'about');
 const nice = s => s.charAt(0) + s.slice(1).toLowerCase();
 function pager(current){
   const i = GALLERIES.findIndex(p => p.slug === current);
-  const all = `<a class="all" href="#work">ALL GALLERIES</a>`;
+  const all = `<a class="all" href="#work"><span>ALL GALLERIES</span></a>`;
   if (i < 0) return `<nav class="pager" aria-label="Galleries"><span></span>${all}<span></span></nav>`;
   const prev = GALLERIES[(i - 1 + GALLERIES.length) % GALLERIES.length], next = GALLERIES[(i + 1) % GALLERIES.length];
   return `<nav class="pager" aria-label="Galleries">
