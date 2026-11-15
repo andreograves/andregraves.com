@@ -592,24 +592,34 @@ lb.addEventListener('touchend', e => { if (tx === null) return; const dx = e.cha
 // Measures the real height of everything else, so it works for any window size, browser toolbar or font.
 function fitGrid(){
   const g = document.querySelector('.covers, .music-grid');
-  const fitted = document.querySelectorAll('[data-fit]');
-  fitted.forEach(el => { el.style.width = ''; el.removeAttribute('data-fit'); });
+  const bottom = document.querySelector('.music-view .music-bottom');
+  document.querySelectorAll('[data-fit]').forEach(el => { el.style.width = ''; el.removeAttribute('data-fit'); });
   if (!g || innerWidth <= 700) return;
-  const gap = parseFloat(getComputedStyle(g).columnGap) || 0;
-  const cols = getComputedStyle(g).gridTemplateColumns.split(' ').length;
+  const cs = getComputedStyle(g);
+  const gap = parseFloat(cs.rowGap) || parseFloat(cs.gap) || 0;
+  const cols = cs.gridTemplateColumns.split(' ').filter(Boolean).length || 1;
   const rows = Math.ceil(g.children.length / cols);
   const gx = gap * (cols - 1), gy = gap * (rows - 1);
-  const w0 = g.getBoundingClientRect().width, h0 = g.getBoundingClientRect().height;
-  const chrome = document.documentElement.scrollHeight - h0;
-  const room = innerHeight - chrome - 1;
-  if (room <= gy || h0 <= gy) return;
-  const w = Math.max(160, gx + (w0 - gx) * (room - gy) / (h0 - gy));
-  [g, document.querySelector('.music-view .music-bottom')].forEach(el => { if (el){ el.style.width = w + 'px'; el.setAttribute('data-fit',''); } });
+  const setW = w => [g, bottom].forEach(el => { if (el){ el.style.width = w + 'px'; el.setAttribute('data-fit',''); } });
+  const over = () => document.documentElement.scrollHeight - innerHeight;
+  // Shrink (or grow) the grid until the page fits; repeat to absorb rounding and browser differences.
+  for (let i = 0; i < 4; i++){
+    const r = g.getBoundingClientRect(), o = over();
+    if (i > 0 && o <= 0 && o > -6) break;
+    const room = r.height - o - 3;
+    if (room <= gy || r.height <= gy) break;
+    let w = gx + (r.width - gx) * (room - gy) / (r.height - gy);
+    setW(Math.max(160, w));
+    if (getComputedStyle(g).maxWidth !== 'none' && g.getBoundingClientRect().width < w - 1 && over() <= 0) break; // capped by max width
+  }
 }
 let fitRaf = 0;
 const queueFit = () => { cancelAnimationFrame(fitRaf); fitRaf = requestAnimationFrame(fitGrid); };
 addEventListener('resize', queueFit);
-if (document.fonts) document.fonts.ready.then(queueFit);
+addEventListener('load', queueFit);
+if (document.fonts){ document.fonts.ready.then(queueFit); document.fonts.addEventListener && document.fonts.addEventListener('loadingdone', queueFit); }
+// Re-fit whenever the header, title, pager or footer change height (late fonts, zoom, Safari layout).
+if (window.ResizeObserver){ let lastH = 0; new ResizeObserver(() => { const h = document.documentElement.scrollHeight; if (Math.abs(h - innerHeight) > 0 && h !== lastH){ lastH = h; queueFit(); } }).observe(document.body); }
 window.addEventListener('hashchange', route);
 route();
 </script>
