@@ -10,9 +10,9 @@
 <meta property="og:description" content="People, Places, Things. Photography by André O. Graves.">
 <meta property="og:url" content="https://andregraves.com/">
 <meta property="og:type" content="website">
-<link rel="icon" href="favicon.ico?v=camera3" sizes="48x48">
-<link rel="icon" href="img/favicon.svg?v=camera3" type="image/svg+xml">
-<link rel="apple-touch-icon" href="img/apple-touch-icon.png?v=camera3">
+<link rel="icon" href="favicon.ico?v=a1" sizes="48x48">
+<link rel="icon" href="img/favicon.svg?v=a1" type="image/svg+xml" id="favsvg">
+<link rel="apple-touch-icon" href="img/apple-touch-icon.png?v=a1">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Special+Elite&display=swap">
@@ -623,6 +623,31 @@ addEventListener('load', queueFit);
 if (document.fonts){ document.fonts.ready.then(queueFit); document.fonts.addEventListener && document.fonts.addEventListener('loadingdone', queueFit); }
 // Re-fit whenever the header, title, pager or footer change height (late fonts, zoom, Safari layout).
 if (window.ResizeObserver){ let lastH = 0; new ResizeObserver(() => { const h = document.documentElement.scrollHeight; if (Math.abs(h - innerHeight) > 0 && h !== lastH){ lastH = h; queueFit(); } }).observe(document.body); }
+// Favicon: the "A." swipe cycles through the gallery colors as the site loads, then settles on the
+// current page's color (each gallery's own color; house yellow elsewhere).
+const FAV_COLORS = {people:'#ffe94d',places:'#7fd8ff',things:'#ff8fc7',music:'#ffb04d',art:'#c4a3ff',sports:'#8ef07c',birds:'#6ff0d6',animals:'#ff8a7a'};
+let favSrc = null, favTimer = null;
+const favLink = document.getElementById('favsvg');
+function setFav(color){
+  if (!favSrc || !favLink) return;
+  const svg = favSrc.replace(/fill="#[0-9a-f]{6}" id="sw"/i, `fill="${color}" id="sw"`);
+  favLink.href = 'data:image/svg+xml,' + encodeURIComponent(svg);
+}
+function pageFavColor(){
+  const p = PAGES.find(x => x.slug === location.hash.replace(/^#\/?/, '').replace(/-\d+$/, ''));
+  return (p && FAV_COLORS[p.key]) || FAV_COLORS.people;
+}
+function settleFav(){ if (!favTimer) setFav(pageFavColor()); }
+fetch('img/favicon.svg?v=a1').then(r => r.ok ? r.text() : null).then(t => {
+  if (!t) return; favSrc = t;
+  const cycle = Object.values(FAV_COLORS); let i = 0;
+  if (matchMedia('(prefers-reduced-motion: reduce)').matches) return settleFav();
+  favTimer = setInterval(() => {
+    setFav(cycle[i % cycle.length]);
+    if (++i >= cycle.length * 2){ clearInterval(favTimer); favTimer = null; settleFav(); }
+  }, 160);
+}).catch(() => {});
+window.addEventListener('hashchange', settleFav);
 window.addEventListener('hashchange', route);
 route();
 </script>
