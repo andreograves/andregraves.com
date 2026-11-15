@@ -92,7 +92,8 @@ button{font:inherit;color:inherit}
 .cover img.on{opacity:1}
 .cover:hover img,.cover:focus-visible img{filter:grayscale(0)}
 .cover::after{content:"";position:absolute;inset:0;background:#000;opacity:0;transition:opacity .3s}
-.cover span{position:absolute;inset:0;z-index:1;display:grid;place-items:center;text-align:center;padding:0 10%;color:var(--white);font-size:clamp(34px,4.9vw,70px);line-height:1.05;opacity:0;transition:opacity .15s}
+.cover{container-type:inline-size}
+.cover span{position:absolute;inset:0;z-index:1;display:grid;place-items:center;text-align:center;padding:0 6%;color:var(--white);font-size:min(19cqw,70px);white-space:nowrap;line-height:1.05;opacity:0;transition:opacity .15s}
 .cover:hover::after,.cover:focus-visible::after{opacity:.22}
 .cover:hover span,.cover:focus-visible span{opacity:1}
 
