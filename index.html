@@ -92,7 +92,8 @@ button{font:inherit;color:inherit}
 .cover img.on{opacity:1}
 .cover:hover img,.cover:focus-visible img{filter:grayscale(0)}
 .cover::after{content:"";position:absolute;inset:0;background:#000;opacity:0;transition:opacity .3s}
-.cover span{position:absolute;inset:0;z-index:1;display:grid;place-items:center;text-align:center;padding:0 10%;color:var(--white);font-size:clamp(34px,4.9vw,70px);line-height:1.05;opacity:0;transition:opacity .15s}
+.cover{container-type:inline-size}
+.cover span{position:absolute;inset:0;z-index:1;display:grid;place-items:center;text-align:center;padding:0 6%;color:var(--white);font-size:min(19cqw,70px);white-space:nowrap;line-height:1.05;opacity:0;transition:opacity .15s}
 .cover:hover::after,.cover:focus-visible::after{opacity:.22}
 .cover:hover span,.cover:focus-visible span{opacity:1}
 
@@ -233,20 +234,6 @@ button{font:inherit;color:inherit}
 @media(max-width:420px){.music-header nav a{font-size:10px}.music-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
 
 
-/* Portrait previews favor faces; individual Music focal points override this. */
-.music-grid img{object-position:50% 20%}
-/* Per-photo focal points keep performers in the preview crop. */
-.music-grid img[src="img/music-11.jpg"]{object-position:50% 0%}
-.music-grid img[src="img/music-12.jpg"]{object-position:50% 15%}
-.music-grid img[src="img/music-15.jpg"]{object-position:50% 10%}
-.music-grid img[src="img/music-18.jpg"]{object-position:50% 0%}
-.music-grid img[src="img/music-21.jpg"]{object-position:50% 10%}
-.music-grid img[src="img/music-03.jpg"]{object-position:50% 20%}
-.music-grid img[src="img/music-05.jpg"]{object-position:50% 15%}
-.music-grid img[src="img/music-06.jpg"]{object-position:50% 0%}
-.music-grid img[src="img/music-08.jpg"]{object-position:50% 0%}
-.music-grid img[src="img/music-09.jpg"]{object-position:50% 10%}
-.music-grid img[src="img/sports-12.jpg"]{object-position:50% 70%}
 
 /* Give the Music collection breathing room and a centered title. */
 .music-view .page-header{width:100%;padding:20px 24px 32px;text-align:center}
@@ -329,6 +316,21 @@ button{font:inherit;color:inherit}
 
 <script>
 const PHOTOS = {"people":[["people-05.jpg",1066,1600],["people-02.jpg",1066,1600],["people-03.jpg",1066,1600],["people-01.jpg",1600,1068],["people-04.jpg",1600,1068],["people-07.jpg",1600,1067],["people-08.jpg",967,1600],["people-06.jpg",1066,1600],["people-09.jpg",1067,1600],["people-10.jpg",1600,1067],["people-11.jpg",1067,1600],["people-13.jpg",1600,1068]],"places":[["places-11.jpg",1067,1600],["places-10.jpg",1600,1068],["places-07.jpg",1600,1067],["places-08.jpg",1600,1067],["places-09.jpg",1600,1068],["places-06.jpg",1600,1098],["places-05.jpg",1048,1600],["places-04.jpg",1067,1600],["places-01.jpg",1066,1600],["places-02.jpg",1066,1600],["places-03.jpg",1066,1600],["places-12.jpg",1600,1143]],"things":[["things-01.jpg",1067,1600],["things-02.jpg",1600,1068],["things-03.jpg",1600,1068],["things-04.jpg",1600,1067],["things-07.jpg",1600,1143],["things-08.jpg",1600,1067],["things-05.jpg",1600,1143],["things-06.jpg",1600,1143],["things-09.jpg",1600,1066],["things-10.jpg",1600,1066],["things-11.jpg",1600,1066],["things-12.jpg",1600,1066]],"music":[["music-22.jpg",1600,1067],["music-10.jpg",1600,1067],["music-07.jpg",1600,1068],["music-04.jpg",1600,1067],["music-06.jpg",1067,1600],["music-15.jpg",1066,1600],["music-23.jpg",1600,1067],["music-19.jpg",1600,1067],["music-14.jpg",1600,1067],["music-12.jpg",1067,1600],["music-09.jpg",1066,1600],["music-21.jpg",1066,1600]],"art":[["art-32.jpg",1600,1068],["art-04.jpg",1066,1600],["art-01.jpg",1066,1600],["art-02.jpg",1600,1073],["art-03.jpg",1066,1600],["art-06.jpg",1600,1059],["art-07.jpg",1600,1067],["art-09.jpg",1600,1067],["art-10.jpg",1600,1067],["art-14.jpg",1067,1600],["art-20.jpg",1600,1068],["art-05.jpg",1066,1600]],"sports":[["sports-11.jpg",1600,1104],["sports-10.jpg",1600,1067],["sports-07.jpg",1600,1068],["sports-09.jpg",1600,1067],["sports-08.jpg",1066,1600],["sports-06.jpg",1600,1068],["sports-05.jpg",1600,1067],["sports-04.jpg",1600,1067],["sports-01.jpg",1066,1600],["sports-02.jpg",1600,1067],["sports-03.jpg",1600,1053],["sports-12.jpg",1066,1600]],"birds":[["birds-02.jpg",1067,1600],["birds-07.jpg",1600,1067],["birds-04.jpg",1066,1600],["birds-01.jpg",1066,1600],["birds-15.jpg",1066,1600],["birds-03.jpg",1146,1600],["birds-06.jpg",1600,1067],["birds-08.jpg",1600,1600],["birds-09.jpg",1225,1600],["birds-12.jpg",1600,1067],["birds-11.jpg",1066,1600],["birds-13.jpg",1031,1600]],"animals":[["animals-02.jpg",1600,1068],["animals-06.jpg",1600,1067],["animals-08.jpg",1555,1555],["animals-07.jpg",1600,1096],["animals-04.jpg",1600,1067],["animals-01.jpg",1600,1091],["animals-03.jpg",1600,1144],["animals-09.jpg",1066,1600],["animals-05.jpg",1600,1068],["animals-10.jpg",1600,1067],["animals-11.jpg",1600,1143],["animals-12.jpg",1600,1066]]};
+// Hand-picked focal point (x%, y%) per photo, so every crop centers on the subject.
+const FOCUS = {"people-01":[50,40],"people-02":[50,42],"people-03":[50,38],"people-04":[55,40],"people-05":[50,35],"people-06":[50,38],"people-07":[50,50],"people-08":[55,35],"people-09":[42,26],"people-10":[58,42],"people-11":[42,25],"people-13":[48,45],"music-04":[50,40],"music-06":[48,25],"music-07":[50,35],"music-09":[50,38],"music-10":[65,40],"music-12":[45,42],"music-14":[50,55],"music-15":[45,30],"music-19":[60,40],"music-21":[50,42],"music-22":[40,45],"music-23":[55,50],"art-01":[50,50],"art-02":[50,45],"art-03":[45,40],"art-04":[55,40],"art-05":[35,24],"art-06":[50,35],"art-07":[40,40],"art-09":[50,50],"art-10":[40,45],"art-14":[50,32],"art-20":[68,42],"art-32":[68,40],"sports-01":[40,58],"sports-02":[55,45],"sports-03":[50,50],"sports-04":[55,55],"sports-05":[50,40],"sports-06":[50,35],"sports-07":[55,45],"sports-08":[45,38],"sports-09":[62,45],"sports-10":[45,50],"sports-11":[50,45],"sports-12":[60,62],"places-01":[35,45],"places-02":[50,48],"places-03":[55,48],"places-04":[55,35],"places-05":[60,50],"places-06":[50,40],"places-07":[50,45],"places-08":[55,60],"places-09":[50,55],"places-10":[50,55],"places-11":[50,55],"places-12":[50,60],"things-01":[30,38],"things-02":[50,55],"things-03":[52,50],"things-04":[50,65],"things-05":[55,58],"things-06":[50,50],"things-07":[50,50],"things-08":[55,55],"things-09":[52,48],"things-10":[45,50],"things-11":[65,45],"things-12":[50,50],"birds-01":[45,52],"birds-02":[45,42],"birds-03":[55,42],"birds-04":[55,35],"birds-06":[60,50],"birds-07":[50,50],"birds-08":[45,50],"birds-09":[55,42],"birds-11":[40,40],"birds-12":[40,45],"birds-13":[35,40],"birds-15":[45,35],"animals-01":[40,45],"animals-02":[55,40],"animals-03":[62,45],"animals-04":[55,60],"animals-05":[45,40],"animals-06":[50,55],"animals-07":[50,50],"animals-08":[50,48],"animals-09":[45,38],"animals-10":[45,45],"animals-11":[40,55],"animals-12":[50,60],"cover-about":[47,45],"cover-animals":[50,40],"cover-art":[50,50],"cover-birds":[47,50],"cover-music":[66,48],"cover-people":[55,40],"cover-places":[60,50],"cover-sports":[37,50],"cover-things":[43,50]};
+const focusKey = src => src.replace(/^.*\//,"").replace(/\.jpg$/,"");
+const focusOf = src => { const f = FOCUS[focusKey(src)]; return f ? `${f[0]}% ${f[1]}%` : "50% 50%"; };
+// object-position aligns a point, it doesn't centre on it: convert the focal point into the
+// position that puts it in the middle of this tile's crop (per tile shape, so desktop and phone both work).
+function centerFocus(img){
+  const f = FOCUS[focusKey(img.getAttribute('src') || '')]; if (!f || !img.naturalWidth) return;
+  const bw = img.clientWidth, bh = img.clientHeight; if (!bw || !bh) return;
+  const s = Math.max(bw / img.naturalWidth, bh / img.naturalHeight);
+  const cx = bw / (img.naturalWidth * s), cy = bh / (img.naturalHeight * s);      // visible fraction of the photo
+  const pos = (fp, c) => c >= 0.999 ? 50 : Math.min(100, Math.max(0, (fp / 100 - c / 2) / (1 - c) * 100));
+  img.style.objectPosition = `${pos(f[0], cx).toFixed(1)}% ${pos(f[1], cy).toFixed(1)}%`;
+}
+function centerAll(){ app.querySelectorAll('.music-grid img, .cover img').forEach(i => i.complete ? centerFocus(i) : i.addEventListener('load', () => centerFocus(i), {once:true})); }
 // Same order and covers as the live Portfolio grid; About sits in the centre.
 const PAGES = [
   {slug:"001-people",  key:"people",  title:"PEOPLE"},
@@ -393,7 +395,7 @@ function header(active){
 }
 const footer = () => `<footer class="site-footer">${SOCIAL.map(([h,l,i]) =>
   `<a href="${h}" target="_blank" rel="noopener" aria-label="${l}" title="${l}"><svg viewBox="0 0 30 24" aria-hidden="true">${ICONS[i]}</svg></a>`).join('')}</footer>`;
-const cover = p => `<a class="cover" href="#${p.slug}" data-key="${p.key}" aria-label="${p.title}"><img class="on" src="img/cover-${p.key}.jpg" alt=""><img alt=""><span aria-hidden="true">${p.title}</span></a>`;
+const cover = p => `<a class="cover" href="#${p.slug}" data-key="${p.key}" aria-label="${p.title}"><img class="on" src="img/cover-${p.key}.jpg" style="object-position:${focusOf('cover-'+p.key)}" alt=""><img alt=""><span aria-hidden="true">${p.title}</span></a>`;
 
 // Living covers: every ~1.2s one tile (never the one under the pointer) fades to another photo from its gallery.
 let liveTimer = null;
@@ -415,7 +417,7 @@ function startLiveCovers(){
     t.busy = true;
     back.onload = () => { back.classList.add('on'); front.classList.remove('on'); setTimeout(() => t.busy = false, 1500); };
     back.onerror = () => { t.busy = false; };
-    back.src = t.list[t.n++ % t.list.length];
+    const nextSrc = t.list[t.n++ % t.list.length]; back.style.objectPosition = focusOf(nextSrc); back.addEventListener('load', () => centerFocus(back), {once:true}); back.src = nextSrc;
   }, 1200);
 }
 function stopLiveCovers(){ clearInterval(liveTimer); liveTimer = null; }
@@ -469,7 +471,7 @@ function galleryView(p){
         <nav aria-label="Site"><a href="#work">PORTFOLIO</a><a href="#${p.slug}" aria-current="page">${p.title}</a><a href="#about-me">ABOUT</a><a href="mailto:andreograves@gmail.com">CONNECT</a></nav>
       </header>
       <div class="page-header"><h1>${nice(p.title)}</h1></div>
-      <div class="music-grid">${order.map((k,position) => { const f = photos[k]; return `<button data-i="${k}" aria-label="Open ${nice(p.title)} photo ${k+1}"><img src="img/${f[0]}" width="${f[1]}" height="${f[2]}" alt="${nice(p.title)}, photo ${k+1}" loading="${position<4?'eager':'lazy'}"></button>`; }).join('')}</div>
+      <div class="music-grid">${order.map((k,position) => { const f = photos[k]; return `<button data-i="${k}" aria-label="Open ${nice(p.title)} photo ${k+1}"><img src="img/${f[0]}" style="object-position:${focusOf(f[0])}" width="${f[1]}" height="${f[2]}" alt="${nice(p.title)}, photo ${k+1}" loading="${position<4?'eager':'lazy'}"></button>`; }).join('')}</div>
       <div class="music-bottom">${pager(p.slug)}${footer()}</div></div>`;
     app.querySelectorAll('.music-grid button').forEach(b => b.onclick = () => openLb(+b.dataset.i));
     return;
@@ -527,6 +529,7 @@ function route(){
   else splashView();
   window.scrollTo(0, 0);
   fitGrid();
+  centerAll();
   track();
 }
 
@@ -614,7 +617,7 @@ function fitGrid(){
   }
 }
 let fitRaf = 0;
-const queueFit = () => { cancelAnimationFrame(fitRaf); fitRaf = requestAnimationFrame(fitGrid); };
+const queueFit = () => { cancelAnimationFrame(fitRaf); fitRaf = requestAnimationFrame(() => { fitGrid(); centerAll(); }); };
 addEventListener('resize', queueFit);
 addEventListener('load', queueFit);
 if (document.fonts){ document.fonts.ready.then(queueFit); document.fonts.addEventListener && document.fonts.addEventListener('loadingdone', queueFit); }
